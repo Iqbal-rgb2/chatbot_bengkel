@@ -72,6 +72,17 @@ DATABASE_PATH = os.path.join(
     'chatbot.db'
 )
 
+
+def get_db_connection():
+
+    conn = sqlite3.connect(
+        DATABASE_PATH
+    )
+
+    conn.row_factory = sqlite3.Row
+
+    return conn
+
 # =====================================
 # LOAD DATA
 # =====================================
@@ -235,19 +246,17 @@ def load_fuzzy_vocabulary():
 
                 vocabulary.add(word)
 
-    conn = sqlite3.connect(
-        DATABASE_PATH
-    )
+    with get_db_connection() as conn:
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
-    cursor.execute("""
+        cursor.execute("""
         SELECT nama_barang,
                kategori
         FROM barang
     """)
 
-    data_barang = cursor.fetchall()
+        data_barang = cursor.fetchall()
 
     for barang in data_barang:
 
@@ -673,11 +682,9 @@ def handle_list_barang(user_input):
 
     text = user_input.lower()
 
-    conn = sqlite3.connect(
-        DATABASE_PATH
-    )
+    with get_db_connection() as conn:
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
     cursor.execute("""
         SELECT nama_kategori
@@ -726,9 +733,7 @@ def handle_list_barang(user_input):
                      nama_barang
         """)
 
-    data_barang = cursor.fetchall()
-
-    conn.close()
+        data_barang = cursor.fetchall()
 
     if not data_barang:
 
@@ -976,22 +981,18 @@ def handle_check_stock(user_input):
 
     text = user_input.lower()
 
-    conn = sqlite3.connect(
-        DATABASE_PATH
-    )
+    with get_db_connection() as conn:
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
-    cursor.execute("""
-        SELECT nama_barang,
-               kategori,
-               stok
-        FROM barang
-    """)
+        cursor.execute("""
+            SELECT nama_barang,
+                   kategori,
+                   stok
+            FROM barang
+        """)
 
-    data_barang = cursor.fetchall()
-
-    conn.close()
+        data_barang = cursor.fetchall()
 
     barang = find_best_barang(
         text,
@@ -1008,7 +1009,8 @@ def handle_check_stock(user_input):
         )
 
     return (
-        "Barang yang dicari tidak ditemukan."
+        "Barang yang dicari tidak ditemukan. "
+        "Silakan ketik 'daftar barang' untuk melihat stok tersedia."
     )
 
 # =====================================
@@ -1018,23 +1020,19 @@ def handle_info_barang(user_input):
 
     text = user_input.lower()
 
-    conn = sqlite3.connect(
-        DATABASE_PATH
-    )
+    with get_db_connection() as conn:
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
-    cursor.execute("""
-        SELECT nama_barang,
-               kategori,
-               harga,
-               stok
-        FROM barang
-    """)
+        cursor.execute("""
+            SELECT nama_barang,
+                   kategori,
+                   harga,
+                   stok
+            FROM barang
+        """)
 
-    data_barang = cursor.fetchall()
-
-    conn.close()
+        data_barang = cursor.fetchall()
 
     barang = find_best_barang(
         text,
@@ -1054,7 +1052,8 @@ def handle_info_barang(user_input):
         )
 
     return (
-        "Informasi barang tidak ditemukan."
+        "Informasi barang tidak ditemukan. "
+        "Coba gunakan nama produk atau kategori yang lebih spesifik."
     )
 
 # =====================================
