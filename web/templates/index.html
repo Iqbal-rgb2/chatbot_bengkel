@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Chatbot Bengkel</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>Chatbot Bengkel</h1>
+
+        <button
+            id="dark-toggle"
+            class="dark-btn"
+            onclick="toggleDarkMode()"
+        >
+            &#127769;
+        </button>
+
+    </div>
+
+    <!-- SUGGESTION -->
+    <div class="suggestion-box">
+
+        <button onclick="setSuggestion(this)">
+            Jam buka bengkel
+        </button>
+
+        <button onclick="setSuggestion(this)">
+            Lokasi bengkel
+        </button>
+
+        <button onclick="setSuggestion(this)">
+            Oli untuk Beat
+        </button>
+
+        <button onclick="setSuggestion(this)">
+            Motor saya brebet
+        </button>
+
+    </div>
+
+    <!-- =========================
+     TOP BAR PETUGAS
+    ========================= -->
+    <div class="top-bar">
+
+    <a href="/login" class="petugas-btn">
+        &#128100; Petugas
+    </a>
+
+    </div>
+
+    <!-- CHAT BOX -->
+    <div
+        id="chat-box"
+        class="chat-box"
+    ></div>
+
+    <!-- INPUT -->
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="user-input"
+            placeholder="Tulis pertanyaan..."
+            onkeypress="handleEnter(event)"
+        >
+
+        <button onclick="sendMessage()">
+            Kirim
+        </button>
+
+    </div>
+
+    <!-- RESET BUTTON -->
+    <div class="reset-container">
+
+        <button
+            class="reset-btn"
+            onclick="resetChat()"
+        >
+            Reset Chat
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+    // =========================
+    // ENTER
+    // =========================
+    function handleEnter(event) {
+
+        if (event.key === "Enter") {
+
+            sendMessage();
+        }
+    }
+
+    // =========================
+    // GET CURRENT TIME
+    // =========================
+    function getCurrentTime() {
+
+        const now = new Date();
+
+        const hours = String(
+            now.getHours()
+        ).padStart(2, "0");
+
+        const minutes = String(
+            now.getMinutes()
+        ).padStart(2, "0");
+
+        return `${hours}:${minutes}`;
+    }
+
+    // =========================
+    // ESCAPE HTML
+    // =========================
+    function escapeHtml(text) {
+
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    // =========================
+    // SEND MESSAGE
+    // =========================
+    async function sendMessage() {
+
+        const input = document.getElementById(
+            "user-input"
+        );
+
+        const message = input.value.trim();
+
+        if (message === "") return;
+
+        const safeMessage = escapeHtml(
+            message
+        );
+
+        const chatBox = document.getElementById(
+            "chat-box"
+        );
+
+        // USER MESSAGE
+        chatBox.innerHTML += `
+            <div class="user-message">
+
+                <div>
+                    <b>Anda:</b> ${safeMessage}
+                </div>
+
+                <div class="chat-time">
+                    ${getCurrentTime()}
+                </div>
+
+            </div>
+        `;
+
+        input.value = "";
+
+        scrollChat();
+
+        try {
+
+            const response = await fetch(
+                "/chat",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message: message
+                    })
+
+                }
+            );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Server error"
+                );
+            }
+
+            const data = await response.json();
+
+            // BOT MESSAGE
+            chatBox.innerHTML += `
+                <div class="bot-message">
+
+                    <div>
+                        <b>Chatbot:</b>
+                        ${data.response}
+                    </div>
+
+                    <div class="chat-time">
+                        ${getCurrentTime()}
+                    </div>
+
+                </div>
+            `;
+
+            // ACTION BUTTON
+            handleAction(
+                data.action,
+                chatBox
+            );
+
+            scrollChat();
+
+        } catch(error) {
+
+            console.error(error);
+
+            chatBox.innerHTML += `
+                <div class="bot-message">
+
+                    <div>
+                        <b>Chatbot:</b>
+                        Terjadi kesalahan server.
+                    </div>
+
+                    <div class="chat-time">
+                        ${getCurrentTime()}
+                    </div>
+
+                </div>
+            `;
+
+            scrollChat();
+        }
+    }
+
+    // =========================
+    // ACTION HANDLER
+    // =========================
+    function handleAction(action, chatBox) {
+
+        if (
+            action === null ||
+            action === undefined ||
+            action === ""
+        ) {
+
+            return;
+        }
+
+        // =========================
+        // GOOGLE MAPS BUTTON
+        // =========================
+        if (action === "open_maps") {
+
+            chatBox.innerHTML += `
+                <div class="action-box">
+
+                    <button
+                        class="action-btn"
+                        onclick="openMaps()"
+                    >
+                        &#128205; Lihat lokasi di Google Maps
+                    </button>
+
+                </div>
+            `;
+        }
+
+        // =========================
+        // WHATSAPP BUTTON
+        // =========================
+        else if (action === "open_wa") {
+
+            chatBox.innerHTML += `
+                <div class="action-box">
+
+                    <button
+                        class="action-btn"
+                        onclick="openWhatsApp()"
+                    >
+                        &#128172; Hubungi via WhatsApp
+                    </button>
+
+                </div>
+            `;
+        }
+
+        // =========================
+        // DEBUG ACTION
+        // =========================
+        else if (action === "diagnosa") {
+
+            console.log(
+                "Menjalankan diagnosa..."
+            );
+        }
+
+        else if (action === "saran_produk") {
+
+            console.log(
+                "Menampilkan rekomendasi produk..."
+            );
+        }
+
+        else if (action === "check_stock") {
+
+            console.log(
+                "Cek stok barang..."
+            );
+        }
+
+        else {
+
+            console.log(
+                "Action tidak dikenali:",
+                action
+            );
+        }
+
+        scrollChat();
+    }
+
+    // =========================
+    // OPEN MAPS
+    // =========================
+    function openMaps() {
+
+        const url =
+        "https://www.google.com/maps?q=AHASS+00955+Kurnia+Motor+Lumajang";
+
+        window.open(
+            url,
+            "_blank"
+        );
+    }
+
+    // =========================
+    // OPEN WHATSAPP
+    // =========================
+    function openWhatsApp() {
+
+        const url =
+        "https://wa.me/6285606213825";
+
+        window.open(
+            url,
+            "_blank"
+        );
+    }
+
+    // =========================
+    // RESET CHAT
+    // =========================
+    function resetChat() {
+
+        document.getElementById(
+            "chat-box"
+        ).innerHTML = "";
+    }
+
+    // =========================
+    // AUTO SCROLL
+    // =========================
+    function scrollChat() {
+
+        const chatBox = document.getElementById(
+            "chat-box"
+        );
+
+        chatBox.scrollTop =
+        chatBox.scrollHeight;
+    }
+
+    // =========================
+    // DARK MODE
+    // =========================
+    function toggleDarkMode() {
+
+        document.body.classList.toggle(
+            "dark-mode"
+        );
+
+        const button = document.getElementById(
+            "dark-toggle"
+        );
+
+        if (
+            document.body.classList.contains(
+                "dark-mode"
+            )
+        ) {
+
+            button.innerHTML = "&#9728;";
+
+        } else {
+
+            button.innerHTML = "&#127769;";
+        }
+    }
+
+    // =========================
+    // SUGGESTION BUTTON
+    // =========================
+    function setSuggestion(button) {
+
+        document.getElementById(
+            "user-input"
+        ).value = button.innerText;
+    }
+
+</script>
+
+</body>
+</html>

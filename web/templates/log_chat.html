@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Log Chat</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f5f5f5;
+            padding:30px;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        .header h1{
+            font-size:28px;
+        }
+
+        .header-actions{
+            display:flex;
+            gap:10px;
+        }
+
+        .back-btn,
+        .logout-btn{
+            color:white;
+            border:none;
+            padding:10px 18px;
+            border-radius:8px;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .back-btn{
+            background:#007bff;
+        }
+
+        .logout-btn{
+            background:#dc3545;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        table th,
+        table td{
+            border:1px solid #ddd;
+            padding:12px;
+            text-align:center;
+            vertical-align:top;
+        }
+
+        table th{
+            background:#333;
+            color:white;
+        }
+
+        .text-cell{
+            text-align:left;
+            line-height:1.4;
+        }
+
+        .klasifikasi-form{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            min-width:220px;
+        }
+
+        .klasifikasi-form select{
+            padding:8px;
+            border:1px solid #ccc;
+            border-radius:6px;
+        }
+
+        .save-btn{
+            background:#28a745;
+            color:white;
+            border:none;
+            padding:8px;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        .save-btn:hover{
+            opacity:0.9;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Log Chat</h1>
+
+        <div class="header-actions">
+
+            <a
+                href="/dashboard_barang"
+                class="back-btn"
+            >
+                Kembali
+            </a>
+
+            <a
+                href="/logout"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Pertanyaan</th>
+
+                <th>Hasil Fuzzy</th>
+
+                <th>Intent</th>
+
+                <th>Jawaban</th>
+
+                <th>Waktu</th>
+
+                <th>Klasifikasi</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for log in data_log_chat %}
+
+            <tr>
+
+                <td>{{ log[0] }}</td>
+
+                <td class="text-cell">{{ log[1] }}</td>
+
+                <td class="text-cell">{{ log[2] or '-' }}</td>
+
+                <td>{{ log[3] }}</td>
+
+                <td class="text-cell">{{ log[4] }}</td>
+
+                <td>{{ log[5] }}</td>
+
+                <td>
+
+                    <form
+                        action="/update_klasifikasi_chat/{{ log[0] }}"
+                        method="POST"
+                        class="klasifikasi-form"
+                    >
+
+                        <select name="klasifikasi">
+
+                            <option value="">
+                                Belum diklasifikasi
+                            </option>
+
+                            <option
+                                value="ada_di_database"
+                                {% if log[6] == 'ada_di_database' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Ada di database
+                            </option>
+
+                            <option
+                                value="lingkup_bengkel_belum_ada"
+                                {% if log[6] == 'lingkup_bengkel_belum_ada' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Lingkup bengkel, belum ada di database
+                            </option>
+
+                            <option
+                                value="melenceng"
+                                {% if log[6] == 'melenceng' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Melenceng dari lingkup bengkel
+                            </option>
+
+                        </select>
+
+                        <button
+                            type="submit"
+                            class="save-btn"
+                        >
+                            Simpan
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
