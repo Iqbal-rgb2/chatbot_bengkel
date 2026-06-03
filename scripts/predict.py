@@ -22,7 +22,7 @@ DATA_PATH = os.path.join(
     BASE_DIR,
     'data',
     'processed',
-    'dataset_clean.csv'
+    'dataset_augmented.csv'
 )
 
 DB_PATH = os.path.join(
@@ -34,19 +34,19 @@ DB_PATH = os.path.join(
 VECTORIZER_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'tfidf_vectorizer.pkl'
+    'tfidf_vectorizer_augmented.pkl'
 )
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'naive_bayes_model.pkl'
+    'naive_bayes_model_augmented.pkl'
 )
 
 LABEL_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'label_encoder.pkl'
+    'label_encoder_augmented.pkl'
 )
 
 # =========================

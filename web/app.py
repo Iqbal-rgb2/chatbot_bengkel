@@ -45,25 +45,25 @@ DATA_PATH = os.path.join(
     BASE_DIR,
     'data',
     'processed',
-    'dataset_clean.csv'
+    'dataset_augmented.csv'
 )
 
 VECTORIZER_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'tfidf_vectorizer.pkl'
+    'tfidf_vectorizer_augmented.pkl'
 )
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'naive_bayes_model.pkl'
+    'naive_bayes_model_augmented.pkl'
 )
 
 LABEL_PATH = os.path.join(
     BASE_DIR,
     'models',
-    'label_encoder.pkl'
+    'label_encoder_augmented.pkl'
 )
 
 DATABASE_PATH = os.path.join(
@@ -202,7 +202,12 @@ domain_keywords = [
     "putih",
     "percaya",
     "dipercaya",
-    "murah"
+    "murah",
+    "velg",
+    "spion",
+    "cdi",
+    "roller",
+    "switch"
 ]
 
 # =====================================
@@ -496,8 +501,19 @@ def prioritize_intent(text, predicted_intent):
         "aki",
         "ban",
         "kampas",
+        "rem",
+        "cakram",
         "filter",
         "udara",
+        "lampu",
+        "velg",
+        "knalpot",
+        "karburator",
+        "cdi",
+        "spion",
+        "roller",
+        "switch",
+        "starter",
         "honda",
         "yamaha",
         "mio",
@@ -642,12 +658,13 @@ def prioritize_intent(text, predicted_intent):
         contains_any(
             text_lower,
             [
-            "stok",
-            "tersedia",
-            "ada",
-            "sedia"
-        ]
-    )
+                "stok",
+                "tersedia",
+                "ada",
+                "sedia",
+                "cek"
+            ]
+        )
         and contains_any(
             text_lower,
             product_keywords
@@ -683,55 +700,54 @@ def handle_list_barang(user_input):
     text = user_input.lower()
 
     with get_db_connection() as conn:
-
         cursor = conn.cursor()
 
-    cursor.execute("""
-        SELECT nama_kategori
-        FROM kategori_barang
-    """)
-
-    kategori_barang = [
-        row[0].lower()
-        for row in cursor.fetchall()
-    ]
-
-    selected_kategori = None
-
-    for kategori in kategori_barang:
-
-        if kategori in text:
-
-            selected_kategori = kategori
-
-            break
-
-    if selected_kategori:
-
-        cursor.execute(
-            """
-            SELECT nama_barang,
-                   stok,
-                   harga
-            FROM barang
-            WHERE LOWER(kategori) = ?
-              AND stok > 0
-            ORDER BY nama_barang
-            """,
-            (selected_kategori,)
-        )
-
-    else:
-
         cursor.execute("""
-            SELECT nama_barang,
-                   stok,
-                   harga
-            FROM barang
-            WHERE stok > 0
-            ORDER BY kategori,
-                     nama_barang
+            SELECT nama_kategori
+            FROM kategori_barang
         """)
+
+        kategori_barang = [
+            row[0].lower()
+            for row in cursor.fetchall()
+        ]
+
+        selected_kategori = None
+
+        for kategori in kategori_barang:
+
+            if kategori in text:
+
+                selected_kategori = kategori
+
+                break
+
+        if selected_kategori:
+
+            cursor.execute(
+                """
+                SELECT nama_barang,
+                       stok,
+                       harga
+                FROM barang
+                WHERE LOWER(kategori) = ?
+                  AND stok > 0
+                ORDER BY nama_barang
+                """,
+                (selected_kategori,)
+            )
+
+        else:
+
+            cursor.execute("""
+                SELECT nama_barang,
+                       stok,
+                       harga
+                FROM barang
+                WHERE stok > 0
+                ORDER BY kategori,
+                         nama_barang
+            """)
 
         data_barang = cursor.fetchall()
 
