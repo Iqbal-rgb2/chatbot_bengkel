@@ -1,0 +1,52 @@
+# ==============================================================================
+# AI AGENT BEHAVIOR CONSTRAINTS & WORKFLOW RULES
+# ==============================================================================
+
+## 1. Laser-Focused Problem Solving (Prioritas Masalah)
+- Anda harus selalu fokus 100% untuk menyelesaikan permasalahan spesifik yang diberikan oleh pengguna terlebih dahulu.
+- DILARANG KERAS mencari, mengutak-atik, atau memperbaiki masalah lain di luar instruksi tanpa izin tertulis dari pengguna di chat.
+- Alur kerja pemecahan masalah wajib mengikuti hierarki berikut:
+  1. Selesaikan masalah utama menggunakan pendekatan langsung pada area yang dilaporkan.
+  2. JIKA DAN HANYA JIKA masalah tidak bisa diselesaikan secara langsung, Anda diizinkan menganalisis apakah ada akar masalah (root cause) dari modul/file lain yang memicunya. Laporkan temuan ini kepada pengguna sebelum melakukan tindakan masif.
+
+## 2. Surgical & Minimalist Code Changes (Modifikasi Efisien)
+- Terapkan pendekatan "Surgical Edits" (Bedah Selektif). Ubah kode seperlunya saja dan sesuaikan secara ketat dengan instruksi pengguna.
+- JANGAN PERNAH melakukan refactoring total, mengubah gaya penulisan kode (styling), atau mendesain ulang arsitektur fungsi yang sudah berjalan normal, sekalipun perubahan tersebut menurut Anda dapat mengimprovisasi atau mempercantik sistem.
+- Pertahankan keaslian kode di sekitar area perubahan agar stabilitas sistem lama tetap terjaga.
+
+## 3. Token & Resource Efficiency (Kehematan Token)
+- Anda harus mengeksekusi setiap perintah dengan seefisien mungkin guna meminimalkan penggunaan token (baik input maupun output context).
+- Hindari menulis ulang seluruh isi file (full-file rewrites) jika perubahan hanya terjadi pada beberapa baris. Gunakan potongan kode (snippets) atau edit baris yang ditargetkan saja.
+- Berikan penjelasan yang padat, jelas, dan langsung pada inti solusi tanpa basa-basi atau tumpukan teks log yang tidak diperlukan.
+
+## 4. Simple Testing & Regression Evaluation (Evaluasi & Pengujian)
+- Setelah melakukan modifikasi kode, Anda WAJIB melakukan testing dan evaluasi sederhana secara mandiri guna memastikan perubahan tersebut benar-benar berjalan dengan baik.
+- Lakukan pengecekan dampak (regression check) untuk memastikan bahwa perubahan baru tidak merusak fungsi lama, tidak memicu error baru di file yang sama, maupun di file/komponen lain yang saling terkait.
+- Jika testing mendeteksi adanya kejanggalan atau potensi error baru, batalkan perubahan (rollback) atau perbaiki segera sebelum menyerahkan hasil akhir kepada pengguna.
+
+## 5. Technical & Coding Guidelines (Aturan Teknis Penulisan Kode)
+- **Bahasa Respon Chatbot**: Pastikan respon chatbot selalu menggunakan Bahasa Indonesia yang ramah, sopan, komunikatif, dan sesuai dengan konteks layanan bengkel motor.
+- **Koneksi Database SQLite**: Selalu kelola koneksi database menggunakan context manager (`with get_db_connection() as conn:`) untuk mencegah kebocoran koneksi (connection leaks).
+- **Keamanan SQL (Anti-SQL Injection)**: Dilarang keras melakukan string formatting (seperti f-string atau `%s`) untuk memasukkan input user ke dalam query SQL. Gunakan *parameterized query* dengan placeholder tanda tanya (`?`).
+- **Konsistensi Preprocessing NLP**: Setiap manipulasi teks input dari pengguna untuk kebutuhan klasifikasi harus menggunakan fungsi `preprocess_text` yang memanfaatkan Sastrawi secara konsisten (lowercase, simbol removal, stopword removal, dan stemming).
+- **Keamanan Flask Session**: Pastikan secret key untuk session Flask tetap menggunakan fallback yang aman (`secrets.token_hex(32)`) apabila variabel lingkungan tidak diset.
+
+## 6. Automated Micro-Commits Workflow:
+- To prevent the VS Code Source Control panel from piling up, every time you successfully complete a targeted small task and verify it works, you must automatically offer to run a Git Commit with a clear, concise message in Bahasa Indonesia (e.g., "fix: perbaiki validasi kata kasar"). 
+- DO NOT pile up multiple changes without committing. 
+- Always ask for permission before running a Git Push.
+
+# ==============================================================================
+# PROJECT CONTEXT & ARCHITECTURE (PANDUAN PROYEK)
+# ==============================================================================
+- **Platform/Framework**: Python Flask (`web/app.py` & folder `web/static/`, `web/templates/`)
+- **Model Machine Learning**: Naive Bayes (MultinomialNB) menggunakan representasi teks TF-IDF. File model tersimpan di direktori `models/`.
+- **Database**: SQLite (`database/chatbot.db`), dikelola menggunakan pustaka bawaan `sqlite3`.
+- **Preprocessing Text**: Menggunakan pustaka `Sastrawi` untuk Stemming dan Stopword removal Bahasa Indonesia.
+- **Data Path**:
+  - Raw Data Chatbot: `data/raw/dataset_chatbot.csv`
+  - Cleaned & Augmented: `data/processed/` (`dataset_clean.csv` dan `dataset_augmented.csv`)
+- **Skrip Penting**:
+  - Retraining & Augmentasi: `scripts/augment_and_retrain.py`
+  - Preprocessing Data: `scripts/preprocessing.py`
+  - Setup Database: `scripts/setup_database.py`
