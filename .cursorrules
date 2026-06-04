@@ -31,12 +31,12 @@
 - **Konsistensi Preprocessing NLP**: Setiap manipulasi teks input dari pengguna untuk kebutuhan klasifikasi harus menggunakan fungsi `preprocess_text` yang memanfaatkan Sastrawi secara konsisten (lowercase, simbol removal, stopword removal, dan stemming).
 - **Keamanan Flask Session**: Pastikan secret key untuk session Flask tetap menggunakan fallback yang aman (`secrets.token_hex(32)`) apabila variabel lingkungan tidak diset.
 
-## 6. Automated Git & Micro-Commits Workflow:
-- To prevent the VS Code Source Control panel from piling up, every time you successfully complete a targeted small task and verify it works (with no unresolved errors/problems in the project), you must automatically execute a Git Commit and Git Push with a clear, concise message in Bahasa Indonesia (e.g., "fix: perbaiki validasi kata kasar").
-- DO NOT pile up multiple changes without committing and pushing.
-- All Git processes (commit & push) should be run automatically as long as the current changes are verified and there are no outstanding issues in the project.
+## 6. Automated Git & Micro-Commits Workflow (Alur Kerja Git & Micro-Commit Otomatis)
+- Untuk mencegah penumpukan panel Source Control di VS Code, setiap kali Anda berhasil menyelesaikan tugas kecil yang ditargetkan dan memverifikasi bahwa tugas tersebut berjalan (tanpa adanya error/masalah yang belum terselesaikan di dalam proyek), Anda harus secara otomatis melakukan Git Commit dan Git Push dengan pesan commit yang jelas dan ringkas dalam Bahasa Indonesia (contoh: "fix: perbaiki validasi kata kasar").
+- DILARANG MENUMPUK banyak perubahan sekaligus tanpa melakukan commit dan push.
+- Seluruh proses Git (commit & push) harus dijalankan secara otomatis selama perubahan saat ini sudah terverifikasi dan tidak ada masalah yang tertinggal dalam proyek.
 
-## 7. Proactive Alternative Proposing & Impact Analysis:
+## 7. Proactive Alternative Proposing & Impact Analysis (Analisis Dampak & Usulan Alternatif Proaktif)
 - Jika kamu menemukan bahwa permintaan atau metode spesifik dari pengguna tidak memungkinkan untuk diterapkan, sangat tidak efisien, atau memicu rentetan error yang berbahaya (misalnya konflik library/pustaka), JANGAN JALANKAN SECARA BUTA dengan solusi tambal sulam yang berantakan.
 - Sebaliknya, BERHENTILAH SEJENAK dan segera ajukan solusi alternatif yang lebih baik yang mungkin terlewat oleh pengguna.
 - Untuk setiap alternatif yang diusulkan, kamu WAJIB menjelaskan secara jelas:
