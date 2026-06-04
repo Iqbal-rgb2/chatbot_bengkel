@@ -31,10 +31,10 @@
 - **Konsistensi Preprocessing NLP**: Setiap manipulasi teks input dari pengguna untuk kebutuhan klasifikasi harus menggunakan fungsi `preprocess_text` yang memanfaatkan Sastrawi secara konsisten (lowercase, simbol removal, stopword removal, dan stemming).
 - **Keamanan Flask Session**: Pastikan secret key untuk session Flask tetap menggunakan fallback yang aman (`secrets.token_hex(32)`) apabila variabel lingkungan tidak diset.
 
-## 6. Automated Micro-Commits Workflow:
-- To prevent the VS Code Source Control panel from piling up, every time you successfully complete a targeted small task and verify it works, you must automatically offer to run a Git Commit with a clear, concise message in Bahasa Indonesia (e.g., "fix: perbaiki validasi kata kasar"). 
-- DO NOT pile up multiple changes without committing. 
-- Always ask for permission before running a Git Push.
+## 6. Automated Git & Micro-Commits Workflow:
+- To prevent the VS Code Source Control panel from piling up, every time you successfully complete a targeted small task and verify it works (with no unresolved errors/problems in the project), you must automatically execute a Git Commit and Git Push with a clear, concise message in Bahasa Indonesia (e.g., "fix: perbaiki validasi kata kasar").
+- DO NOT pile up multiple changes without committing and pushing.
+- All Git processes (commit & push) should be run automatically as long as the current changes are verified and there are no outstanding issues in the project.
 
 # ==============================================================================
 # PROJECT CONTEXT & ARCHITECTURE (PANDUAN PROYEK)
