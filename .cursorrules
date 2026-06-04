@@ -36,6 +36,15 @@
 - DO NOT pile up multiple changes without committing and pushing.
 - All Git processes (commit & push) should be run automatically as long as the current changes are verified and there are no outstanding issues in the project.
 
+## 7. Proactive Alternative Proposing & Impact Analysis:
+- Jika kamu menemukan bahwa permintaan atau metode spesifik dari pengguna tidak memungkinkan untuk diterapkan, sangat tidak efisien, atau memicu rentetan error yang berbahaya (misalnya konflik library/pustaka), JANGAN JALANKAN SECARA BUTA dengan solusi tambal sulam yang berantakan.
+- Sebaliknya, BERHENTILAH SEJENAK dan segera ajukan solusi alternatif yang lebih baik yang mungkin terlewat oleh pengguna.
+- Untuk setiap alternatif yang diusulkan, kamu WAJIB menjelaskan secara jelas:
+  - Mengapa metode asli/awal gagal.
+  - Bagaimana cara kerja alternatif yang baru.
+  - Kelebihan, kekurangan, serta dampak jangka panjangnya terhadap arsitektur proyek.
+- Selalu tunggu konfirmasi mutlak dari pengguna sebelum kamu menulis kode apa pun untuk jalur alternatif tersebut.
+
 # ==============================================================================
 # PROJECT CONTEXT & ARCHITECTURE (PANDUAN PROYEK)
 # ==============================================================================
