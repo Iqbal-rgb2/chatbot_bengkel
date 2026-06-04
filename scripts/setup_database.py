@@ -16,6 +16,28 @@ DB_PATH = os.path.join(
     'chatbot.db'
 )
 
+SQL_PATH = os.path.join(
+    BASE_DIR,
+    'database',
+    'schema_and_seed.sql'
+)
+
+# =========================
+# INITIALIZE DB IF MISSING
+# =========================
+db_exists = os.path.exists(DB_PATH)
+
+if not db_exists and os.path.exists(SQL_PATH):
+    print("Database tidak ditemukan. Menginisialisasi dari schema_and_seed.sql...")
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    with open(SQL_PATH, 'r', encoding='utf-8') as f:
+        sql_script = f.read()
+    cursor.executescript(sql_script)
+    conn.commit()
+    conn.close()
+    print("Inisialisasi database berhasil!")
+
 # =========================
 # CONNECT DATABASE
 # =========================

@@ -65,16 +65,22 @@ graph TD
 
 ## 3. Alur Pembaruan Inventaris Barang (Database)
 
-Informasi stok sparepart dan harga yang dibaca oleh chatbot disimpan di dalam database SQLite (`database/chatbot.db`).
+Informasi stok sparepart dan harga yang dibaca oleh chatbot disimpan di dalam database SQLite lokal (`database/chatbot.db`). File database asli tidak dilacak oleh Git agar tidak terjadi konflik perubahan data chat/stok lokal. Sebagai gantinya, Git melacak berkas `database/schema_and_seed.sql`.
 
-### Langkah-langkah:
+### Langkah-langkah Pembaruan Data Barang:
 1. **Perbarui Skrip Data:**
    Buka file `scripts/populate_barang_spareparts.py` dan sesuaikan data daftar barang, stok, atau harganya sesuai kebutuhan.
 2. **Populasi Ulang Data:**
-   Jalankan perintah berikut untuk mengisi atau memperbarui data barang di database:
+   Jalankan perintah berikut untuk mengisi atau memperbarui data barang di database lokal:
    ```bash
    python scripts/populate_barang_spareparts.py
    ```
+3. **Simpan Perubahan Database ke Repositori Git:**
+   Jika Anda menambah barang, kategori baru, atau memodifikasi tabel, Anda **WAJIB** menyimpan perubahan tersebut ke dalam SQL backup agar dapat diunggah ke GitHub:
+   ```bash
+   python scripts/dump_db.py
+   ```
+   *Perintah ini akan memperbarui `database/schema_and_seed.sql` sehingga perubahan struktur database dan data master terekam di Git.*
 
 ---
 
