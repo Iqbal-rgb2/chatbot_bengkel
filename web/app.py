@@ -829,6 +829,42 @@ def add_conversational_follow_up(intent, response, normalized_input):
     return response + follow_up_text, suggestions
 
 # =====================================
+# CONVERSATIONAL CONTEXT CHECKER
+# =====================================
+def check_conversational_context(user_input):
+    text = user_input.strip().lower()
+    
+    # List kata konfirmasi bahasa Indonesia
+    confirm_words = {
+        "boleh", "iya", "ya", "mau", "oke", "ok", "silakan", "silahkan", 
+        "boleh dong", "kirim dong", "minta dong", "yup", "sip", "okey", "y",
+        "boleh deh", "bolehdeh", "yo", "yoi", "mau dong", "mau ya", "tentu",
+        "kirim", "minta", "oke deh", "okedeh"
+    }
+    
+    # List kata penolakan bahasa Indonesia
+    reject_words = {
+        "tidak", "nggak", "ngga", "ga", "gak", "no", "engga", "enggak", 
+        "tidak usah", "ga usah", "g usah", "gosa", "gosaah", "no thanks",
+        "nanti saja", "nanti", "belum"
+    }
+    
+    # Jika input adalah konfirmasi dan ada suggestion sebelumnya
+    if text in confirm_words:
+        last_sug = session.get('last_suggestions')
+        if last_sug and len(last_sug) > 0:
+            # Ambil suggestion pertama sebagai target query
+            target_query = last_sug[0]
+            return target_query, None
+            
+    # Jika input adalah penolakan
+    if any(rw in text for rw in reject_words) and len(text) <= 12:
+        session.pop('last_suggestions', None)
+        response = "Baik, silakan tanyakan hal lain jika ada yang ingin Anda ketahui tentang Bengkel Motor Kurnia. 😊"
+        suggestions = ["Jam Buka Bengkel", "Lokasi Bengkel", "Biaya Servis Motor"]
+        return None, (response, suggestions)
+        
+    return None, None
 
 # =====================================
 # DAFTAR BARANG TERSEDIA
@@ -1884,6 +1920,7 @@ def chat():
             response
         )
         
+        session['last_suggestions'] = suggestions
         return jsonify({
             'intent': 'sarkasme_kasar',
             'response': response,
@@ -1891,6 +1928,24 @@ def chat():
             'confidence': 1.0,
             'suggestions': suggestions
         })
+
+    # =====================================
+    # CONVERSATIONAL CONTEXT CHECKER (YES/NO CONFIRMATIONS)
+    # =====================================
+    target_query, direct_response = check_conversational_context(user_input)
+    if direct_response:
+        response, suggestions = direct_response
+        simpan_log_chat(user_input, user_input, "konfirmasi_penolakan", response)
+        session['last_suggestions'] = suggestions
+        return jsonify({
+            'intent': 'konfirmasi_penolakan',
+            'response': response,
+            'action': None,
+            'confidence': 1.0,
+            'suggestions': suggestions
+        })
+    elif target_query:
+        user_input = target_query
 
     # =====================================
     # PREPROCESSING
@@ -1970,6 +2025,7 @@ def chat():
             response
         )
 
+        session['last_suggestions'] = suggestions
         return jsonify({
 
             'intent': fallback_intent,
@@ -2028,6 +2084,7 @@ def chat():
             response
         )
 
+        session['last_suggestions'] = suggestions
         return jsonify({
 
             'intent': fallback_intent,
@@ -2119,6 +2176,7 @@ def chat():
         response
     )
 
+    session['last_suggestions'] = suggestions
     return jsonify({
 
         'intent': predicted_intent,
