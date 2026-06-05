@@ -535,6 +535,39 @@ def main():
     print(f"Confusion Matrix successfully saved to:")
     print(f"  - {models_cm_path}")
     print(f"  - {web_cm_path}")
+
+    # 6.2. Generate and Save Classification Report Heatmap
+    report_dict = classification_report(y_test, y_pred, target_names=le_eval.classes_, output_dict=True)
+    df_report = pd.DataFrame(report_dict).transpose()
+    
+    # Drop 'support' since it is on a different scale (integer count vs 0.0-1.0 probabilities)
+    df_metrics = df_report.drop(columns=['support'])
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(
+        df_metrics,
+        annot=True,
+        fmt='.4f',
+        cmap='Blues',
+        cbar=True,
+        linewidths=0.5,
+        linecolor='lightgrey'
+    )
+    plt.title('Classification Report Metrics - Chatbot Intent (80-20 Split)', fontsize=14, fontweight='bold', pad=20)
+    plt.xlabel('Evaluation Metrics', fontsize=12, labelpad=10)
+    plt.ylabel('Intent Classes / Averages', fontsize=12, labelpad=10)
+    plt.tight_layout()
+    
+    models_rep_path = BASE_DIR / 'models' / 'classification_report.png'
+    web_rep_path = BASE_DIR / 'web' / 'static' / 'images' / 'classification_report.png'
+    
+    plt.savefig(models_rep_path, dpi=300)
+    plt.savefig(web_rep_path, dpi=300)
+    plt.close()
+    
+    print(f"Classification Report image successfully saved to:")
+    print(f"  - {models_rep_path}")
+    print(f"  - {web_rep_path}")
     
     # Clean up evaluation temporary label column
     combined = combined.drop(columns=['label'])
