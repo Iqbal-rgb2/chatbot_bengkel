@@ -86,18 +86,21 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #111827;
-    color: #ffffff;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
     padding: 8px 14px;
     border-radius: 20px;
     text-decoration: none;
     font-size: 13px;
     font-weight: 700;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: all 0.2s ease;
 }
 
 .petugas-btn:hover {
-    background: #374151;
+    background: #e2e8f0;
+    color: #0f172a;
+    border-color: #94a3b8;
     transform: translateY(-1px);
 }
 
@@ -361,6 +364,8 @@ button:active {
 
 .dark-mode .petugas-btn:hover {
     background-color: #374151;
+    border-color: #64748b;
+    color: #ffffff;
 }
 
 .dark-mode .back-link {
