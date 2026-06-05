@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performa Chatbot - Kurnia Motor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-app: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --success-hover: #059669;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        .back-btn {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        /* AKURASI WRAPPER */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .accuracy-card {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #1e1b4b;
+        }
+
+        .accuracy-val {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4338ca, #312e81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .accuracy-lbl {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4338ca;
+            margin-bottom: 15px;
+        }
+
+        .accuracy-desc {
+            font-size: 14px;
+            color: #312e81;
+            line-height: 1.5;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .info-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .info-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* STATUS BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* METRICS TABLE */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-container {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 35px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-main);
+            font-weight: 700;
+            padding: 14px 18px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .intent-sub {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* PLOTS GRID */
+        .plots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .plot-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .plot-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .plot-img-container {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #f1f5f9;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        .plot-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .plot-img-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* ACCORDION PANDUAN */
+        .faq-section {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .faq-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            .plots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            th, td {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+            .accuracy-val {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Performa & Evaluasi Chatbot</h1>
+        <a href="/dashboard_barang" class="back-btn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l-4 4a.5.5 0 0 0 .708.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Kembali ke Dashboard
+        </a>
+    </div>
+
+    {% if metrics %}
+    <!-- SUMMARY CARDS -->
+    <div class="summary-grid">
+        <div class="accuracy-card">
+            <div class="accuracy-lbl">Tingkat Kepintaran</div>
+            <div class="accuracy-val">{{ (metrics.accuracy * 100) | round(2) }}%</div>
+            <div class="accuracy-desc">Model Chatbot saat ini bekerja secara optimal.</div>
+        </div>
+        <div class="info-card">
+            <h2>Penjelasan Sederhana untuk Petugas Bengkel</h2>
+            <p>
+                Akurasi di atas menunjukkan seberapa pintar chatbot dalam mengidentifikasi keinginan pelanggan. 
+                Dengan angka <strong>{{ (metrics.accuracy * 100) | round(2) }}%</strong>, artinya jika ada 10 pelanggan bertanya secara acak tentang produk atau jadwal servis, 
+                chatbot mampu menangkap maksud dan menjawab sekitar <strong>8 pertanyaan</strong> dengan benar.
+            </p>
+            <p style="font-size: 13px; color: var(--text-muted);">
+                *Data dievaluasi pada <strong>{{ metrics.total_test_samples }}</strong> pertanyaan simulasi baru. Terakhir diperbarui pada: <strong>{{ metrics.timestamp }}</strong>.
+            </p>
+        </div>
+    </div>
+
+    <!-- METRICS TABLE -->
+    <h2 class="section-title">📦 Detail Performa per Kategori Pertanyaan</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Topik Pertanyaan</th>
+                    <th>Keakuratan Jawaban (Precision)</th>
+                    <th>Daya Tangkap (Recall)</th>
+                    <th>Kestabilan (F1-Score)</th>
+                    <th>Status Topik</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, val in metrics.classification_report.items() %}
+                {% if key not in ['accuracy', 'macro avg', 'weighted avg'] %}
+                
+                {# Mapping Friendly Names #}
+                {% set friendly_name = "" %}
+                {% if key == 'cek_stok' %}{% set friendly_name = "📦 Cek Stok Barang" %}
+                {% elif key == 'harga_servis' %}{% set friendly_name = "💰 Biaya Servis & Jasa" %}
+                {% elif key == 'layanan_servis' %}{% set friendly_name = "🔧 Diagnosa Keluhan Motor" %}
+                {% elif key == 'jadwal_bengkel' %}{% set friendly_name = "📅 Jadwal Buka Bengkel" %}
+                {% elif key == 'lokasi_bengkel' %}{% set friendly_name = "📍 Alamat & Peta Lokasi" %}
+                {% elif key == 'kontak_admin' %}{% set friendly_name = "📞 Kontak Admin (WhatsApp)" %}
+                {% elif key == 'daftar_barang' %}{% set friendly_name = "📋 Daftar Semua Barang" %}
+                {% elif key == 'info_barang' %}{% set friendly_name = "ℹ️ Detail Informasi Barang" %}
+                {% elif key == 'rekom_produk' %}{% set friendly_name = "💡 Rekomendasi Oli & Suku Cadang" %}
+                {% elif key == 'sapaan' %}{% set friendly_name = "👋 Sapaan & Salam Pembuka" %}
+                {% elif key == 'akhir_percakapan' %}{% set friendly_name = "🚪 Ucapan Terima Kasih" %}
+                {% elif key == 'bantuan_umum' %}{% set friendly_name = "❓ Menu Bantuan Chatbot" %}
+                {% else %}{% set friendly_name = key %}
+                {% endif %}
+
+                <tr>
+                    <td>
+                        <strong>{{ friendly_name }}</strong>
+                        <span class="intent-sub">Intent: {{ key }}</span>
+                    </td>
+                    <td>{{ (val.precision * 100) | round(2) }}%</td>
+                    <td>{{ (val.recall * 100) | round(2) }}%</td>
+                    <td><strong>{{ (val['f1-score'] * 100) | round(2) }}%</strong></td>
+                    <td>
+                        {% if val['f1-score'] >= 0.80 %}
+                        <span class="badge badge-success">Sangat Stabil</span>
+                        {% elif val['f1-score'] >= 0.60 %}
+                        <span class="badge badge-warning">Cukup Baik</span>
+                        {% else %}
+                        <span class="badge badge-danger">Perlu Perbaikan</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PLOTS GRID -->
+    <h2 class="section-title">📊 Visualisasi Grafik Ilmiah (Bahan Skripsi)</h2>
+    <div class="plots-grid">
+        <div class="plot-card">
+            <h3>1. Confusion Matrix (Penyebaran Tebakan Model)</h3>
+            <div class="plot-img-container">
+                <img src="/static/images/confusion_matrix.png?t={{ range(1, 99999) | random }}" alt="Confusion Matrix">
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
+                Grafik ini memetakan jawaban tebakan chatbot (sumbu X) dibandingkan dengan label asli yang benar (sumbu Y). Diagonal biru tebal menandakan akurasi tebakan yang tepat.
+            </p>
+        </div>
+        <div class="plot-card">
+            <h3>2. Classification Report Heatmap (Performa Nilai Presisi & Sensitivitas)</h3>
+            <div class="plot-img-container">
+                <img src="/static/images/classification_report.png?t={{ range(1, 99999) | random }}" alt="Classification Report Heatmap">
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
+                Memetakan perbandingan nilai presisi, daya tangkap, dan skor f1-score untuk masing-masing topik secara visual. Semakin biru warna kotak, semakin baik performa tebakannya.
+            </p>
+        </div>
+    </div>
+
+    <!-- FAQ SECTION -->
+    <div class="faq-section">
+        <h2 style="font-size: 18px; margin-bottom: 15px;">💡 Panduan Singkat Membaca Istilah (FAQ)</h2>
+        
+        <div class="faq-item">
+            <div class="faq-title">Apakah Keakuratan Jawaban (Precision) itu?</div>
+            <div class="faq-desc">
+                Seberapa jujur/tepat tebakan chatbot. Misalnya, dari 10 kali chatbot menebak topik adalah "Cek Stok", berapa kali tebakan itu benar. Jika precision 80%, artinya 8 tebakannya benar dan 2 tebakannya meleset.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-title">Apakah Daya Tangkap (Recall) itu?</div>
+            <div class="faq-desc">
+                Kepekaan chatbot menangkap pembicaraan. Misalnya, ada 10 pelanggan bertanya tentang "Biaya Servis", seberapa banyak yang berhasil dikenali oleh chatbot. Jika recall 90%, artinya chatbot mengenali 9 pertanyaan dan melewatkan 1 pertanyaan ke menu fallback.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-title">Mengapa Topik "Ucapan Terima Kasih" Kestabilannya Rendah?</div>
+            <div class="faq-desc">
+                Kata penutup atau penutup pembicaraan biasanya hanya berupa kata-kata sangat singkat (contoh: "oke", "bye", "makasih", "cukup"). Kata-kata pendek ini memiliki sedikit petunjuk huruf, sehingga model kadang keliru memprediksinya sebagai sapaan pembuka atau menu bantuan. Ini wajar dalam NLP.
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div style="padding: 40px; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px solid var(--border-color);">
+        <h3 style="margin-bottom: 10px;">Data performa belum tersedia</h3>
+        <p style="color: var(--text-muted);">Silakan jalankan script retraining model (<code>python scripts/augment_and_retrain.py</code>) di terminal untuk memicu evaluasi pertama.</p>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

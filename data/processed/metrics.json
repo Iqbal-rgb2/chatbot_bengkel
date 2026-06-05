@@ -1,0 +1,92 @@
+{
+    "accuracy": 0.8301886792452831,
+    "total_test_samples": 106,
+    "timestamp": "2026-06-06 06:17:07",
+    "classification_report": {
+        "akhir_percakapan": {
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1-score": 0.3333333333333333,
+            "support": 5.0
+        },
+        "bantuan_umum": {
+            "precision": 0.7857142857142857,
+            "recall": 1.0,
+            "f1-score": 0.88,
+            "support": 11.0
+        },
+        "cek_stok": {
+            "precision": 0.7692307692307693,
+            "recall": 1.0,
+            "f1-score": 0.8695652173913043,
+            "support": 10.0
+        },
+        "daftar_barang": {
+            "precision": 1.0,
+            "recall": 0.7142857142857143,
+            "f1-score": 0.8333333333333334,
+            "support": 7.0
+        },
+        "harga_servis": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1-score": 0.6666666666666666,
+            "support": 6.0
+        },
+        "info_barang": {
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1-score": 0.8888888888888888,
+            "support": 10.0
+        },
+        "jadwal_bengkel": {
+            "precision": 1.0,
+            "recall": 0.7777777777777778,
+            "f1-score": 0.875,
+            "support": 9.0
+        },
+        "kontak_admin": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 9.0
+        },
+        "layanan_servis": {
+            "precision": 0.6923076923076923,
+            "recall": 1.0,
+            "f1-score": 0.8181818181818182,
+            "support": 9.0
+        },
+        "lokasi_bengkel": {
+            "precision": 0.8571428571428571,
+            "recall": 0.75,
+            "f1-score": 0.8,
+            "support": 8.0
+        },
+        "rekom_produk": {
+            "precision": 1.0,
+            "recall": 0.5714285714285714,
+            "f1-score": 0.7272727272727273,
+            "support": 7.0
+        },
+        "sapaan": {
+            "precision": 0.6818181818181818,
+            "recall": 1.0,
+            "f1-score": 0.8108108108108109,
+            "support": 15.0
+        },
+        "accuracy": 0.8301886792452831,
+        "macro avg": {
+            "precision": 0.8988511488511488,
+            "recall": 0.7761243386243386,
+            "f1-score": 0.7919210663232402,
+            "support": 106.0
+        },
+        "weighted avg": {
+            "precision": 0.8740599023617892,
+            "recall": 0.8301886792452831,
+            "f1-score": 0.8175117799953732,
+            "support": 106.0
+        }
+    }
+}

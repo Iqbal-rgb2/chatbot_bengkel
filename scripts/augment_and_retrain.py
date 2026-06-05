@@ -494,48 +494,11 @@ def main():
     y_test = test_df['label']
     y_pred = clf_eval.predict(X_test)
     
-    # 5. Calculate and print metrics
+    # 5. Calculate metrics
     test_acc = accuracy_score(y_test, y_pred)
     print(f"Test Set Accuracy: {test_acc:.4f}")
     
-    print("\nClassification Report (Scientific Evaluation):")
-    report_str = classification_report(y_test, y_pred, target_names=le_eval.classes_)
-    print(report_str)
-    
     report_dict = classification_report(y_test, y_pred, target_names=le_eval.classes_, output_dict=True)
-    
-    print("\n======================================================================")
-    print("PANDUAN BACA METRIK EVALUASI (UNTUK BAHAN SIDANG/SKRIPSI)")
-    print("======================================================================")
-    print(f"1. AKURASI MODEL: {test_acc:.2%}")
-    print("   - Arti: Dari {0} pertanyaan uji, model berhasil menebak {1} intent".format(len(y_test), int(test_acc * len(y_test))))
-    print("     secara tepat. Akurasi di atas 80% sangat ideal & realistis.")
-    print("     (Tidak overfit/menghafal kaku, namun tetap sangat cerdas).")
-    print("")
-    print("2. PRECISION (Presisi/Ketepatan):")
-    print("   - Arti: Persentase kebenaran jawaban chatbot saat menebak intent.")
-    print("   - Contoh: Intent 'cek_stok' memiliki Presisi {0:.2%}.".format(report_dict['cek_stok']['precision']))
-    print("     Artinya, jika chatbot mendeteksi pertanyaan sebagai 'cek_stok',")
-    print("     peluang tebakan itu benar/akurat adalah {0:.2%}.".format(report_dict['cek_stok']['precision']))
-    print("")
-    print("3. RECALL (Sensitivitas/Daya Tangkap):")
-    print("   - Arti: Seberapa peka chatbot menangkap pertanyaan pengguna.")
-    print("   - Contoh: Intent 'sapaan' memiliki Recall {0:.2%}.".format(report_dict['sapaan']['recall']))
-    print("     Artinya, dari seluruh sapaan asli yang masuk, chatbot berhasil")
-    print("     mengenali {0:.2%} di antaranya secara benar.".format(report_dict['sapaan']['recall']))
-    print("")
-    print("4. F1-SCORE (Rata-rata Harmonis):")
-    print("   - Arti: Keseimbangan antara Precision dan Recall (nilai aman).")
-    print("   - Nilai mendekati 1.00 (atau 100%) berarti intent tersebut")
-    print("     sangat stabil dan jarang salah klasifikasi.")
-    print("")
-    print("5. ANALISIS HASIL KELAS KHUSUS:")
-    print("   - Kelas 'akhir_percakapan' memiliki Recall rendah ({0:.2%}):".format(report_dict['akhir_percakapan']['recall']))
-    print("     Ini wajar karena kata penutup sangat pendek (seperti 'cukup', 'bye')")
-    print("     sehingga fiturnya minim dan sering tumpang tindih dengan intent lain.")
-    print("   - Kelas seperti 'kontak_admin'/'jadwal_bengkel' memiliki performa tinggi:")
-    print("     Karena memiliki kata kunci yang unik (seperti 'nomor', 'wa', 'jam', 'buka').")
-    print("======================================================================")
     
     # 6. Generate and Save Confusion Matrix Heatmap
     cm = confusion_matrix(y_test, y_pred)
@@ -604,6 +567,26 @@ def main():
     print(f"Classification Report image successfully saved to:")
     print(f"  - {models_rep_path}")
     print(f"  - {web_rep_path}")
+    
+    # 6.3. Save Metrics to metrics.json
+    import json
+    from datetime import datetime
+    
+    metrics_json_path = BASE_DIR / 'data' / 'processed' / 'metrics.json'
+    metrics_data = {
+        "accuracy": float(test_acc),
+        "total_test_samples": int(len(y_test)),
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "classification_report": report_dict
+    }
+    
+    # Ensure directory exists
+    metrics_json_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    with open(metrics_json_path, 'w') as f:
+        json.dump(metrics_data, f, indent=4)
+        
+    print(f"Metrics saved to JSON dashboard successfully at:\n  - {metrics_json_path}")
     
     # Clean up evaluation temporary label column
     combined = combined.drop(columns=['label'])

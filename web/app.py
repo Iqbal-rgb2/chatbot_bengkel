@@ -1764,6 +1764,34 @@ def log_chat():
     )
 
 # =====================================
+# PERFORMA & EVALUASI CHATBOT
+# =====================================
+@app.route('/performa')
+def performa():
+
+    if 'login' not in session:
+
+        return redirect(
+            url_for('login')
+        )
+
+    import json
+    metrics_path = os.path.join(app.root_path, '..', 'data', 'processed', 'metrics.json')
+    metrics = None
+    
+    if os.path.exists(metrics_path):
+        try:
+            with open(metrics_path, 'r') as f:
+                metrics = json.load(f)
+        except Exception as e:
+            print(f"Error loading metrics.json: {e}")
+
+    return render_template(
+        'performa.html',
+        metrics=metrics
+    )
+
+# =====================================
 # UPDATE KLASIFIKASI LOG CHAT
 # =====================================
 @app.route(
