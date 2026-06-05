@@ -10,6 +10,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 
@@ -459,12 +463,92 @@ def main():
     combined.to_csv(OUTPUT_PATH, index=False)
     print(f'Original dataset size: {len(df)} rows')
     print(f'Augmented dataset size: {len(combined)} rows')
+
+    # ====================================================
+    # METRIK EVALUASI ILMIAH (TRAIN-TEST SPLIT 80-20)
+    # ====================================================
+    print('\n=== Running Train-Test Split Evaluation (80-20) ===')
+    
+    # 1. Encode intent labels
+    le_eval = LabelEncoder()
+    combined['label'] = le_eval.fit_transform(combined['intent'])
+    
+    # 2. Split dataset with stratification to preserve class distribution
+    train_df, test_df = train_test_split(
+        combined,
+        test_size=0.2,
+        random_state=42,
+        stratify=combined['label']
+    )
+    
+    # 3. Fit Vectorizer and Classifier on training split
+    vec_eval = TfidfVectorizer()
+    X_train = vec_eval.fit_transform(train_df['processed_question'])
+    y_train = train_df['label']
+    
+    clf_eval = MultinomialNB()
+    clf_eval.fit(X_train, y_train)
+    
+    # 4. Predict on test split
+    X_test = vec_eval.transform(test_df['processed_question'])
+    y_test = test_df['label']
+    y_pred = clf_eval.predict(X_test)
+    
+    # 5. Calculate and print metrics
+    test_acc = accuracy_score(y_test, y_pred)
+    print(f"Test Set Accuracy: {test_acc:.4f}")
+    
+    print("\nClassification Report (Scientific Evaluation):")
+    print(classification_report(y_test, y_pred, target_names=le_eval.classes_))
+    
+    # 6. Generate and Save Confusion Matrix Heatmap
+    cm = confusion_matrix(y_test, y_pred)
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt='d',
+        cmap='Blues',
+        xticklabels=le_eval.classes_,
+        yticklabels=le_eval.classes_,
+        cbar=True,
+        square=True
+    )
+    plt.title('Confusion Matrix - Chatbot Intent Classification (80-20 Split)', fontsize=14, fontweight='bold', pad=20)
+    plt.xlabel('Predicted Intent', fontsize=12, labelpad=10)
+    plt.ylabel('True Intent', fontsize=12, labelpad=10)
+    plt.xticks(rotation=45, ha='right', fontsize=10)
+    plt.yticks(rotation=0, fontsize=10)
+    plt.tight_layout()
+    
+    models_cm_path = BASE_DIR / 'models' / 'confusion_matrix.png'
+    web_cm_path = BASE_DIR / 'web' / 'static' / 'images' / 'confusion_matrix.png'
+    
+    # Ensure directories exist
+    models_cm_path.parent.mkdir(parents=True, exist_ok=True)
+    web_cm_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    plt.savefig(models_cm_path, dpi=300)
+    plt.savefig(web_cm_path, dpi=300)
+    plt.close()
+    
+    print(f"Confusion Matrix successfully saved to:")
+    print(f"  - {models_cm_path}")
+    print(f"  - {web_cm_path}")
+    
+    # Clean up evaluation temporary label column
+    combined = combined.drop(columns=['label'])
+    
+    # ====================================================
+    # FINAL MODEL RETRAINING (100% DATA FOR PRODUCTION)
+    # ====================================================
+    print('\n=== Training Production Model (100% Data) ===')
     vectorizer, model, label_encoder = train_models(combined)
-    print('Retraining complete.')
+    print('Retraining complete. Production pickles updated.')
 
     test_questions = make_synthetic_questions()
     metrics, results = evaluate_model(vectorizer, model, label_encoder, combined, test_questions)
-    print('\n=== Evaluation on 100 synthetic questions ===')
+    print('\n=== Production Model Evaluation on 100 synthetic questions ===')
     print(f"Total questions: {metrics['total_questions']}")
     print(f"Fallback count: {metrics['fallback_count']}")
     print(f"Fallback rate: {metrics['fallback_rate']:.2%}")
