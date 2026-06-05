@@ -63,30 +63,33 @@
 
     <!-- WELCOME SCREEN -->
     <div id="welcome-screen" class="welcome-screen">
-        <div class="welcome-logo-container">
-            <img src="{{ url_for('static', filename='images/welcome-logo-light.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-light">
-            <img src="{{ url_for('static', filename='images/welcome-logo-dark.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-dark">
+        <div class="welcome-middle">
+            <div class="welcome-logo-container">
+                <img src="{{ url_for('static', filename='images/welcome-logo-light.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-light">
+                <img src="{{ url_for('static', filename='images/welcome-logo-dark.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-dark">
+            </div>
+            <h2 id="welcome-greeting" class="welcome-greeting">Halo, Pelanggan!</h2>
         </div>
-        <h2 id="welcome-greeting" class="welcome-greeting">Halo, Pelanggan!</h2>
-        <p class="welcome-sub">Ada yang bisa kami bantu hari ini?</p>
         
-        <div class="welcome-input-area">
-            <input
-                type="text"
-                id="welcome-input"
-                placeholder="Tulis pertanyaan..."
-                onkeypress="handleWelcomeEnter(event)"
-            >
-            <button onclick="sendMessage()">
-                Kirim
-            </button>
-        </div>
+        <div class="welcome-bottom">
+            <div class="welcome-input-area">
+                <input
+                    type="text"
+                    id="welcome-input"
+                    placeholder="Tulis pertanyaan..."
+                    onkeypress="handleWelcomeEnter(event)"
+                >
+                <button onclick="sendMessage()">
+                    Kirim
+                </button>
+            </div>
 
-        <div class="welcome-chips">
-            <button onclick="sendSuggestion('Jam Buka Bengkel')">📅 Jam Buka & Lokasi</button>
-            <button onclick="sendSuggestion('Biaya Servis Motor')">💰 Estimasi Biaya Servis</button>
-            <button onclick="sendSuggestion('Motor saya brebet')">🛠️ Masalah Motor Brebet/Mogok</button>
-            <button onclick="sendSuggestion('Rekomendasi oli untuk beat')">📦 Ketersediaan Sparepart & Oli</button>
+            <div class="welcome-chips">
+                <button onclick="sendSuggestion('Jam Buka Bengkel')">📅 Jam Buka & Lokasi</button>
+                <button onclick="sendSuggestion('Biaya Servis Motor')">💰 Estimasi Biaya Servis</button>
+                <button onclick="sendSuggestion('Motor saya brebet')">🛠️ Masalah Motor Brebet/Mogok</button>
+                <button onclick="sendSuggestion('Rekomendasi oli untuk beat')">📦 Ketersediaan Sparepart & Oli</button>
+            </div>
         </div>
     </div>
 

@@ -683,11 +683,28 @@ input:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 24px 20px;
+    justify-content: space-between;
+    padding: 32px 20px 16px;
     text-align: center;
     animation: fadeIn 0.4s ease-out;
     overflow-y: auto;
+}
+
+.welcome-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.welcome-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 }
 
 .welcome-logo-container {
