@@ -268,22 +268,22 @@ def is_bengkel_domain(text):
         "cvt", "rantai", "lampu", "starter", "brebet", "mogok", "mati", "hidup",
         "panas", "bunyi", "bocor", "gas", "tarikan", "tune", "up", "matic", "beat",
         "vario", "nmax", "scoopy", "pcx", "filter", "udara", "honda", "yamaha",
-        "mio", "jadwal", "buka", "jam", "hari", "minggu", "sabtu", "pagi", "siang",
-        "sore", "sekarang", "kontak", "admin", "whatsapp", "nomor", "petugas",
-        "chat", "produk", "barang", "rekomendasi", "cocok", "bagus", "terbaik",
-        "knalpot", "bensin", "tektek", "asap", "putih", "percaya", "dipercaya",
-        "murah", "velg", "spion", "cdi", "roller", "switch", "alamat", "rute",
-        "maps", "lokasi", "biaya", "ongkos", "tarif", "ngelitik", "goyang",
-        "komstir", "stabil", "setang", "stang", "suspensi", "memantul", "keras",
-        "drop", "tekor", "selip", "loyo", "gigi", "atas", "tinggi", "rpm", "bawah",
-        "langsam", "blong", "piston", "seher", "klep", "noken", "shock", "shockbreaker",
-        "karbu", "injektor", "pelek", "radiator", "coolant", "gasket", "paking",
-        "kopling", "cakram", "kaliper", "tromol", "spidometer", "speedometer",
-        "klakson", "dinamo", "koil", "spul", "kiprok", "ecu", "fuse", "cangklong",
-        "accu", "sekring", "bongkar", "pasang", "ganti", "tambah", "kurang", "aus",
-        "retak", "patah", "kendor", "kencang", "setel", "stel", "bersihkan",
-        "perbaiki", "benerin", "rusak", "ngobos", "ngebul", "kasar", "halus",
-        "oleng", "slip", "seret", "macet", "overheat", "tanjakan", "nanjak"
+        "mio", "jadwal", "buka", "jam", "minggu", "sabtu", "kontak", "admin",
+        "whatsapp", "nomor", "petugas", "chat", "produk", "barang", "rekomendasi",
+        "cocok", "bagus", "terbaik", "knalpot", "bensin", "tektek", "asap", "putih",
+        "percaya", "dipercaya", "murah", "velg", "spion", "cdi", "roller", "switch",
+        "alamat", "rute", "maps", "lokasi", "biaya", "ongkos", "tarif", "ngelitik",
+        "goyang", "komstir", "stabil", "setang", "stang", "suspensi", "memantul",
+        "keras", "drop", "tekor", "selip", "loyo", "gigi", "atas", "tinggi", "rpm",
+        "bawah", "langsam", "blong", "piston", "seher", "klep", "noken", "shock",
+        "shockbreaker", "karbu", "injektor", "pelek", "radiator", "coolant",
+        "gasket", "paking", "kopling", "cakram", "kaliper", "tromol", "spidometer",
+        "speedometer", "klakson", "dinamo", "koil", "spul", "kiprok", "ecu",
+        "fuse", "cangklong", "accu", "sekring", "bongkar", "pasang", "ganti",
+        "tambah", "kurang", "aus", "retak", "patah", "kendor", "kencang", "setel",
+        "stel", "bersihkan", "perbaiki", "benerin", "rusak", "ngobos", "ngebul",
+        "kasar", "halus", "oleng", "slip", "seret", "macet", "overheat", "tanjakan",
+        "nanjak"
     ]
     text = str(text).lower()
     words = re.findall(r'[a-zA-Z]+', text)
@@ -291,6 +291,9 @@ def is_bengkel_domain(text):
 
 
 def evaluate_model(vectorizer, model, label_encoder, dataset, test_questions):
+    THRESHOLD_NAIVE_BAYES = 0.15
+    THRESHOLD_COSINE_SIMILARITY = 0.30
+
     results = []
     for question in test_questions:
         processed = preprocess_text(question)
@@ -298,12 +301,34 @@ def evaluate_model(vectorizer, model, label_encoder, dataset, test_questions):
         pred = model.predict(x)[0]
         intent = label_encoder.inverse_transform([pred])[0]
         confidence = model.predict_proba(x).max()
-        fallback = confidence < 0.10 and intent not in ['sapaan', 'akhir_percakapan', 'bantuan_umum']
-        fallback = fallback or (not is_bengkel_domain(question) and intent not in ['sapaan', 'akhir_percakapan', 'bantuan_umum'])
+
+        fallback = (confidence < THRESHOLD_NAIVE_BAYES)
+        if not fallback:
+            if intent not in ['sapaan', 'akhir_percakapan', 'bantuan_umum']:
+                if not is_bengkel_domain(question):
+                    fallback = True
+
+        best_similarity = 0.0
+        if not fallback:
+            filtered_data = dataset[dataset['intent'] == intent]
+            if not filtered_data.empty:
+                intent_vectors = vectorizer.transform(filtered_data['processed_question'])
+                similarities = cosine_similarity(x, intent_vectors)
+                best_similarity = similarities.max()
+                if best_similarity < THRESHOLD_COSINE_SIMILARITY:
+                    fallback = True
+            else:
+                fallback = True
+
+        if not fallback:
+            combined_confidence = float(confidence * best_similarity)
+        else:
+            combined_confidence = float(confidence)
+
         results.append({
             'question': question,
             'predicted_intent': intent,
-            'confidence': float(confidence),
+            'confidence': combined_confidence,
             'fallback': fallback
         })
 

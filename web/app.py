@@ -72,6 +72,9 @@ DATABASE_PATH = os.path.join(
     'chatbot.db'
 )
 
+THRESHOLD_NAIVE_BAYES = 0.15
+THRESHOLD_COSINE_SIMILARITY = 0.35
+
 
 def get_db_connection():
 
@@ -193,13 +196,8 @@ domain_keywords = [
     "jadwal",
     "buka",
     "jam",
-    "hari",
     "minggu",
     "sabtu",
-    "pagi",
-    "siang",
-    "sore",
-    "sekarang",
     "kontak",
     "admin",
     "whatsapp",
@@ -1307,7 +1305,9 @@ def score_barang_match(text, nama_barang, kategori):
         "ecu", "sekring", "fuse", "starter", "piston", "seher", "klep", "noken",
         "shock", "shockbreaker", "injektor", "radiator", "coolant", "spidometer",
         "speedometer", "dinamo", "koil", "spul", "kiprok", "cangklong", "cvt",
-        "mesin", "injeksi", "stang", "setang", "komstir", "suspensi"
+        "mesin", "injeksi", "stang", "setang", "komstir", "suspensi",
+        "spakbor", "slebor", "fender", "mika", "reflektor", "bohlam", "led",
+        "gir", "gear", "vanbelt", "vbelt", "kamprat", "keteng", "as", "kabel", "skok"
     }
 
     user_parts = text_words.intersection(part_keywords)
@@ -2166,7 +2166,7 @@ def chat():
     # FALLBACK
     # =====================================
     if (
-        confidence < 0.1
+        confidence < THRESHOLD_NAIVE_BAYES
         or (
             not is_bengkel_domain(normalized_input)
             and predicted_intent not in [
@@ -2234,7 +2234,7 @@ def chat():
 
     best_similarity = similarities.max()
 
-    if best_similarity < 0.25:
+    if best_similarity < THRESHOLD_COSINE_SIMILARITY:
 
         fallback_intent, response, action = get_fallback_response(
             normalized_input
@@ -2262,7 +2262,7 @@ def chat():
 
             'action': action,
 
-            'confidence': float(confidence),
+            'confidence': float(confidence * best_similarity),
 
             'suggestions': suggestions
 
@@ -2345,6 +2345,8 @@ def chat():
         response
     )
 
+    combined_confidence = float(confidence * best_similarity)
+
     session['last_suggestions'] = suggestions
     return jsonify({
 
@@ -2354,7 +2356,7 @@ def chat():
 
         'action': action,
 
-        'confidence': float(confidence),
+        'confidence': combined_confidence,
 
         'suggestions': suggestions
 
