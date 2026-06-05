@@ -12,6 +12,11 @@
 
     <title>Chat Kurnia</title>
 
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
@@ -25,7 +30,13 @@
 
     <!-- HEADER -->
     <div class="header">
-        <h1>Chat Kurnia</h1>
+        <div class="header-info">
+            <h1>Chat Kurnia</h1>
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span>Asisten Virtual</span>
+            </div>
+        </div>
         <div class="header-actions">
             <button
                 id="reset-btn"
@@ -53,8 +64,8 @@
     <!-- WELCOME SCREEN -->
     <div id="welcome-screen" class="welcome-screen">
         <div class="welcome-logo-container">
-            <img src="{{ url_for('static', filename='images/welcome-logo-light.png') }}" alt="Logo Chatbot" class="welcome-logo welcome-logo-light">
-            <img src="{{ url_for('static', filename='images/welcome-logo-dark.png') }}" alt="Logo Chatbot" class="welcome-logo welcome-logo-dark">
+            <img src="{{ url_for('static', filename='images/welcome-logo-light.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-light">
+            <img src="{{ url_for('static', filename='images/welcome-logo-dark.png') }}?v=1.1" alt="Logo Chatbot" class="welcome-logo welcome-logo-dark">
         </div>
         <h2 id="welcome-greeting" class="welcome-greeting">Halo, Pelanggan!</h2>
         <p class="welcome-sub">Ada yang bisa kami bantu hari ini?</p>
