@@ -869,14 +869,23 @@ def check_conversational_context(user_input):
         "boleh", "iya", "ya", "mau", "oke", "ok", "silakan", "silahkan", 
         "boleh dong", "kirim dong", "minta dong", "yup", "sip", "okey", "y",
         "boleh deh", "bolehdeh", "yo", "yoi", "mau dong", "mau ya", "tentu",
-        "kirim", "minta", "oke deh", "okedeh"
+        "kirim", "minta", "oke deh", "okedeh", "yes", "yoa", "iy", "io",
+        "ya dong", "yadong", "bolehlah", "boleh lah", "maulah", "mau lah",
+        "siap", "siaap", "siappp", "kuy", "gas", "gaskan", "cuzz", "plis",
+        "please", "ok deh", "ok dah", "oke dah", "okelah", "oke lah",
+        "minta tolong", "tolong", "minta infonya", "infonya", "lakukan",
+        "proses", "lanjut", "lanjutkan", "tentu saja", "tentunya", "please dong"
     }
     
     # List kata penolakan bahasa Indonesia
     reject_words = {
         "tidak", "nggak", "ngga", "ga", "gak", "no", "engga", "enggak", 
         "tidak usah", "ga usah", "g usah", "gosa", "gosaah", "no thanks",
-        "nanti saja", "nanti", "belum"
+        "nanti saja", "nanti", "belum", "g", "ndak", "nda", "ora", "ogah",
+        "gamau", "ga mau", "nanti deh", "nanti aja", "nantiaja", "ntar",
+        "ntar aja", "ntar saja", "tar aja", "skip", "cancel", "batal",
+        "batalkan", "tidak perlu", "ga perlu", "ga usah deh", "g usah deh",
+        "tidak usah deh", "gaperlu", "ndak usah", "nda usah"
     }
     
     # Jika input adalah konfirmasi dan ada suggestion sebelumnya
