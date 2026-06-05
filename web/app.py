@@ -228,7 +228,8 @@ abbreviation_words = {
     "helo": "halo",
     "asslmkm": "assalamualaikum",
     "brake": "rem",
-    "sedia": "tersedia"
+    "sedia": "tersedia",
+    "nanjak": "tanjakan"
 }
 
 # =====================================
@@ -695,6 +696,143 @@ def prioritize_intent(text, predicted_intent):
 # =====================================
 # DAFTAR BARANG TERSEDIA
 # =====================================
+# =====================================
+# FORMAT HTML TABLE HELPER
+# =====================================
+def format_barang_table(results, show_kategori=False, show_price_stock=True):
+    html = '<div class="chat-table-container"><table class="chat-table">'
+    html += '<thead><tr>'
+    html += '<th style="text-align: left;">Nama Barang</th>'
+    
+    # Check if 'kategori' exists in the results keys
+    has_kategori = False
+    if results and 'kategori' in results[0].keys():
+        has_kategori = show_kategori
+        
+    if has_kategori:
+        html += '<th style="text-align: left;">Kategori</th>'
+    if show_price_stock:
+        html += '<th style="text-align: left;">Stok</th>'
+        html += '<th style="text-align: left;">Harga</th>'
+    html += '</tr></thead><tbody>'
+    
+    for row in results:
+        html += '<tr>'
+        html += f'<td>{row["nama_barang"]}</td>'
+        if has_kategori:
+            html += f'<td>{row["kategori"].capitalize()}</td>'
+        if show_price_stock:
+            stok = row["stok"]
+            harga = row["harga"]
+            html += f'<td>{stok} pcs</td>'
+            html += f'<td>Rp{harga:,}</td>'
+        html += '</tr>'
+        
+    html += '</tbody></table></div>'
+    return html
+
+# =====================================
+# CONVERSATIONAL FOLLOW-UP SUGGESTIONS
+# =====================================
+def add_conversational_follow_up(intent, response, normalized_input):
+    suggestions = []
+    follow_up_text = ""
+    
+    text = normalized_input.lower()
+    
+    # 1. LAYANAN SERVIS (DIAGNOSA KELUHAN)
+    if intent == "layanan_servis":
+        if "brebet" in text:
+            follow_up_text = "<br><br>Apakah Anda ingin mengecek ketersediaan sparepart terkait (seperti busi, karburator, filter udara) atau melihat estimasi biaya servis?"
+            suggestions = ["Cek Stok Busi", "Cek Stok Karburator", "Biaya Servis Lengkap"]
+        elif "mogok" in text:
+            follow_up_text = "<br><br>Apakah Anda ingin mengecek ketersediaan aki/busi, atau ingin langsung menghubungi petugas bengkel kami?"
+            suggestions = ["Cek Stok Aki", "Cek Stok Busi", "Hubungi WhatsApp"]
+        elif "rem" in text:
+            follow_up_text = "<br><br>Apakah Anda ingin mengecek ketersediaan kampas rem atau memeriksa biaya ganti kampas rem?"
+            suggestions = ["Cek Kampas Rem", "Biaya Servis Rem", "Lokasi Bengkel"]
+        elif "cvt" in text or "roller" in text or "van belt" in text or "belt" in text:
+            follow_up_text = "<br><br>Apakah Anda ingin mengecek ketersediaan sparepart CVT (seperti roller, v-belt) atau menanyakan biaya servis CVT?"
+            suggestions = ["Cek Roller CVT", "Cek CVT Belt", "Biaya Servis Ringan"]
+        else:
+            follow_up_text = "<br><br>Apakah Anda ingin berkonsultasi lebih lanjut dengan mekanik kami via WhatsApp, atau memeriksa biaya servis?"
+            suggestions = ["Hubungi WhatsApp", "Biaya Servis Lengkap", "Lokasi Bengkel"]
+            
+    # 2. REKOMENDASI PRODUK & DAFTAR BARANG
+    elif intent in ["rekom_produk", "daftar_barang"]:
+        # Coba deteksi motor
+        motor = None
+        for m in ["beat", "vario", "mio", "nmax", "scoopy", "pcx", "supra"]:
+            if m in text:
+                motor = m.capitalize()
+                break
+        
+        # Coba deteksi kategori
+        kategori = None
+        for k in ["oli", "ban", "aki", "busi", "kampas", "roller", "rantai"]:
+            if k in text:
+                kategori = k
+                break
+                
+        if motor and kategori:
+            follow_up_text = f"<br><br>Apakah Anda ingin mengecek ketersediaan stok {kategori} untuk motor {motor} saat ini?"
+            suggestions = [f"Stok {kategori} {motor}", f"Biaya Servis {motor}", "Lokasi Bengkel"]
+        elif motor:
+            follow_up_text = f"<br><br>Apakah Anda ingin mengecek ketersediaan stok suku cadang khusus untuk motor {motor}?"
+            suggestions = [f"Stok barang {motor}", f"Biaya Servis {motor}", "Lokasi Bengkel"]
+        elif kategori:
+            follow_up_text = f"<br><br>Apakah Anda ingin menanyakan produk {kategori} yang cocok untuk tipe motor Anda?"
+            suggestions = [f"Oli yang cocok untuk Beat", f"Ban yang cocok untuk Vario", "Biaya Ganti Oli"]
+        else:
+            follow_up_text = "<br><br>Apakah Anda ingin mencari rekomendasi sparepart untuk tipe motor tertentu?"
+            suggestions = ["Oli untuk Beat", "Ban untuk Vario", "Kampas Rem Supra"]
+
+    # 3. CEK STOK & INFO BARANG
+    elif intent in ["cek_stok", "info_barang"]:
+        # Coba deteksi motor/barang
+        motor = None
+        for m in ["beat", "vario", "mio", "nmax", "scoopy", "pcx", "supra"]:
+            if m in text:
+                motor = m.capitalize()
+                break
+        if motor:
+            follow_up_text = f"<br><br>Apakah Anda ingin menanyakan biaya jasa pasang/servis untuk motor {motor} di bengkel kami?"
+            suggestions = [f"Biaya Servis {motor}", "Lokasi Bengkel", "Jam Buka Bengkel"]
+        else:
+            follow_up_text = "<br><br>Apakah Anda ingin berkonsultasi mengenai keluhan motor Anda atau menanyakan lokasi bengkel?"
+            suggestions = ["Motor saya brebet", "Biaya Servis Motor", "Lokasi Bengkel"]
+
+    # 4. LOKASI BENGKEL
+    elif intent == "lokasi_bengkel":
+        follow_up_text = "<br><br>Apakah Anda ingin mengetahui jam buka/tutup operasional bengkel kami hari ini?"
+        suggestions = ["Jam Buka Bengkel", "Hubungi WhatsApp", "Biaya Servis Motor"]
+
+    # 5. JADWAL BENGKEL
+    elif intent == "jadwal_bengkel":
+        follow_up_text = "<br><br>Apakah Anda membutuhkan petunjuk arah atau link rute Google Maps untuk menuju ke bengkel kami?"
+        suggestions = ["Alamat & Rute Maps", "Hubungi WhatsApp", "Lokasi Bengkel"]
+
+    # 6. HARGA SERVIS
+    elif intent == "harga_servis":
+        follow_up_text = "<br><br>Apakah Anda ingin mengecek ketersediaan stok oli atau sparepart lainnya di bengkel kami?"
+        suggestions = ["Cek Stok Oli", "Cek Stok Ban", "Jam Buka Bengkel"]
+
+    # 7. SAPAAN & BANTUAN UMUM
+    elif intent in ["sapaan", "bantuan_umum"]:
+        follow_up_text = "<br><br>Ada yang bisa kami bantu? Anda bisa menanyakan lokasi, jam buka, stok sparepart, atau mendiagnosa keluhan motor."
+        suggestions = ["Jam Buka Bengkel", "Lokasi Bengkel", "Motor saya brebet", "Oli untuk Vario"]
+
+    # 8. FALLBACK & KATA KASAR
+    else:
+        suggestions = ["Jam Buka Bengkel", "Lokasi Bengkel", "Biaya Servis Motor", "Hubungi WhatsApp"]
+        
+    return response + follow_up_text, suggestions
+
+# =====================================
+
+# =====================================
+# DAFTAR BARANG TERSEDIA
+# =====================================
 def handle_list_barang(user_input):
 
     text = user_input.lower()
@@ -702,86 +840,109 @@ def handle_list_barang(user_input):
     with get_db_connection() as conn:
         cursor = conn.cursor()
 
-        cursor.execute("""
-            SELECT nama_kategori
-            FROM kategori_barang
-        """)
+        # Ambil daftar kategori secara dinamis
+        cursor.execute("SELECT nama_kategori FROM kategori_barang")
+        kategori_barang = [row[0].lower() for row in cursor.fetchall() if row[0]]
 
-        kategori_barang = [
-            row[0].lower()
-            for row in cursor.fetchall()
-        ]
+        # Ambil daftar motor secara dinamis dari cocok_untuk
+        cursor.execute("SELECT DISTINCT LOWER(cocok_untuk) FROM barang")
+        db_motors = set()
+        for row in cursor.fetchall():
+            if row[0]:
+                for m in row[0].split(','):
+                    motor_name = m.strip()
+                    if motor_name:
+                        db_motors.add(motor_name)
 
-        selected_kategori = None
+    # Deteksi kategori yang dimaksud
+    selected_kategori = None
+    for kategori in kategori_barang:
+        if kategori in text:
+            selected_kategori = kategori
+            break
 
+    if not selected_kategori:
         for kategori in kategori_barang:
-
-            if kategori in text:
-
+            words = [w for w in kategori.split() if len(w) > 3]
+            if words and any(w in text for w in words):
                 selected_kategori = kategori
-
                 break
 
-        if selected_kategori:
+    # Deteksi motor yang dimaksud
+    selected_motor = None
+    sorted_motors = sorted(list(db_motors), key=len, reverse=True)
+    for motor in sorted_motors:
+        if motor in text:
+            selected_motor = motor
+            break
 
-            cursor.execute(
-                """
-                SELECT nama_barang,
-                       stok,
-                       harga
+    # Lakukan query berdasarkan deteksi
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+
+        if selected_kategori and selected_motor:
+            cursor.execute("""
+                SELECT nama_barang, stok, harga
                 FROM barang
-                WHERE LOWER(kategori) = ?
+                WHERE LOWER(kategori) = ? 
+                  AND LOWER(cocok_untuk) LIKE ? 
                   AND stok > 0
                 ORDER BY nama_barang
-                """,
-                (selected_kategori,)
-            )
-
-        else:
-
+            """, (selected_kategori, f"%{selected_motor}%"))
+        elif selected_kategori:
             cursor.execute("""
-                SELECT nama_barang,
-                       stok,
-                       harga
+                SELECT nama_barang, stok, harga
+                FROM barang
+                WHERE LOWER(kategori) = ? 
+                  AND stok > 0
+                ORDER BY nama_barang
+            """, (selected_kategori,))
+        elif selected_motor:
+            cursor.execute("""
+                SELECT nama_barang, stok, harga, kategori
+                FROM barang
+                WHERE LOWER(cocok_untuk) LIKE ? 
+                  AND stok > 0
+                ORDER BY kategori, nama_barang
+            """, (f"%{selected_motor}%",))
+        else:
+            cursor.execute("""
+                SELECT nama_barang, stok, harga, kategori
                 FROM barang
                 WHERE stok > 0
-                ORDER BY kategori,
-                         nama_barang
+                ORDER BY kategori, nama_barang
             """)
-
+        
         data_barang = cursor.fetchall()
 
     if not data_barang:
+        if selected_kategori and selected_motor:
+            return f"Maaf, barang kategori {selected_kategori} untuk motor {selected_motor.capitalize()} belum tersedia saat ini."
+        elif selected_kategori:
+            return f"Maaf, barang kategori {selected_kategori} belum tersedia saat ini."
+        elif selected_motor:
+            return f"Maaf, sparepart untuk motor {selected_motor.capitalize()} belum tersedia saat ini."
+        return "Barang tersedia tidak ditemukan."
 
-        if selected_kategori:
-
-            return (
-                f"Barang kategori {selected_kategori} "
-                "belum tersedia di stok bengkel."
-            )
-
+    if selected_kategori and selected_motor:
         return (
-            "Barang tersedia tidak ditemukan."
+            f"Barang kategori {selected_kategori} yang cocok untuk {selected_motor.capitalize()} "
+            f"yang tersedia:<br>" + format_barang_table(data_barang, show_kategori=False)
         )
-
-    daftar_barang = [
-        f"{nama} ({stok} pcs, Rp{harga})"
-        for nama, stok, harga in data_barang
-    ]
-
-    if selected_kategori:
-
+    elif selected_kategori:
         return (
             f"Barang kategori {selected_kategori} "
-            f"yang tersedia: "
-            + "; ".join(daftar_barang)
-            + "."
+            f"yang tersedia:<br>" + format_barang_table(data_barang, show_kategori=False)
+        )
+    elif selected_motor:
+        return (
+            f"Barang yang cocok untuk {selected_motor.capitalize()} "
+            f"yang tersedia:<br>" + format_barang_table(data_barang, show_kategori=True)
         )
 
     return (
-        "Barang yang tersedia: "
-        + "; ".join(daftar_barang)
-        + "."
+        "Barang yang tersedia:<br>"
+        + format_barang_table(data_barang, show_kategori=True)
     )
 
 # =====================================
@@ -791,106 +952,51 @@ def handle_diagnosa(user_input):
 
     text = user_input.lower()
 
-    if "brebet" in text:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT kata_kunci, solusi_analisis FROM diagnosa_keluhan")
+        data_diagnosa = cursor.fetchall()
 
-        if "gas" in text:
+    matches = []
+    for row in data_diagnosa:
+        kw = row['kata_kunci']
+        solusi = row['solusi_analisis']
+        parts = kw.split()
 
-            return (
-                "Motor brebet saat digas biasanya "
-                "disebabkan karburator atau "
-                "injektor kotor."
-            )
+        if all(part in text for part in parts):
+            matches.append((kw, solusi))
 
-        elif "tanjakan" in text:
+    if not matches:
+        return "Silakan jelaskan keluhan motor secara lebih detail."
 
-            return (
-                "Motor brebet saat tanjakan "
-                "biasanya karena suplai bahan "
-                "bakar kurang optimal atau "
-                "CVT mulai lemah."
-            )
+    # Urutkan berdasarkan panjang kata kunci terpanjang (jumlah kata/karakter)
+    # agar pencarian lebih spesifik didahulukan
+    matches = sorted(matches, key=lambda x: len(x[0]), reverse=True)
 
-        elif "dingin" in text:
+    kw = matches[0][0]
+    solusi = matches[0][1]
 
-            return (
-                "Motor brebet saat kondisi "
-                "dingin biasanya karena "
-                "busi atau setting udara "
-                "belum optimal."
-            )
+    # Dinamisasi prefix untuk keluhan umum 'brebet' jika user memberikan kondisi spesifik
+    if kw == 'brebet':
+        match_cond = re.search(r'\b(pas|saat|ketika|kalau|pada|waktu)\s+([a-zA-Z0-9\s]+)', text)
+        if match_cond:
+            kondisi = match_cond.group(2).strip()
+            solusi = solusi.replace("Motor brebet dapat", f"Motor brebet saat {kondisi} dapat")
 
-        return (
-            "Motor brebet dapat disebabkan "
-            "oleh busi, karburator, injektor, "
-            "atau filter udara."
-        )
-
-    if "mogok" in text:
-
-        return (
-            "Motor mogok bisa disebabkan aki lemah, "
-            "busi bermasalah, suplai bensin tidak lancar, "
-            "atau sistem pengapian terganggu."
-        )
-
-    if "rem" in text:
-
-        return (
-            "Masalah rem bisa disebabkan kampas rem aus, "
-            "setelan rem kurang tepat, atau komponen rem "
-            "perlu dibersihkan."
-        )
-
-    if "asap" in text:
-
-        return (
-            "Asap putih dari motor biasanya berkaitan "
-            "dengan oli yang ikut terbakar atau kondisi "
-            "mesin yang perlu diperiksa."
-        )
-
-    if "bensin" in text:
-
-        return (
-            "Jika motor kehabisan bensin, isi bahan bakar "
-            "terlebih dahulu lalu coba starter ulang. Jika "
-            "tetap bermasalah, sistem bahan bakar perlu dicek."
-        )
-
-    if "bunyi" in text:
-
-        return (
-            "Bunyi tidak normal pada motor bisa berasal dari "
-            "rantai, CVT, rem, atau bagian mesin. Sebaiknya "
-            "dicek langsung agar sumber bunyinya jelas."
-        )
-
-    return (
-        "Silakan jelaskan keluhan motor "
-        "secara lebih detail."
-    )
+    return solusi
 
 def is_known_diagnosa(text):
 
     text = text.lower()
 
-    diagnosa_keywords = [
-        "brebet",
-        "mogok",
-        "rem",
-        "bunyi",
-        "asap",
-        "bensin",
-        "susah hidup",
-        "rem keras",
-        "mesin cepat panas",
-        "mesin panas"
-    ]
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT kata_kunci FROM diagnosa_keluhan")
+        keywords = [row[0] for row in cursor.fetchall() if row[0]]
 
-    for keyword in diagnosa_keywords:
-
-        if keyword in text:
-
+    for kw in keywords:
+        parts = kw.split()
+        if all(part in text for part in parts):
             return True
 
     return False
@@ -902,28 +1008,93 @@ def handle_rekomendasi_produk(user_input):
 
     text = user_input.lower()
 
-    if "oli" in text:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
 
-        if "beat" in text:
+        # Ambil daftar kategori secara dinamis
+        cursor.execute("SELECT DISTINCT LOWER(kategori) FROM barang")
+        db_categories = [row[0] for row in cursor.fetchall() if row[0]]
 
-            return (
-                "Oli yang cocok untuk Honda "
-                "Beat adalah AHM MPX 2 "
-                "atau Motul Scooter Expert."
-            )
+        # Ambil daftar motor secara dinamis dari cocok_untuk
+        cursor.execute("SELECT DISTINCT LOWER(cocok_untuk) FROM barang")
+        db_motors = set()
+        for row in cursor.fetchall():
+            if row[0]:
+                for m in row[0].split(','):
+                    motor_name = m.strip()
+                    if motor_name:
+                        db_motors.add(motor_name)
 
-        elif "vario" in text:
+    # Urutkan berdasarkan panjang teks menurun agar pencocokan spesifik didahulukan
+    sorted_categories = sorted(db_categories, key=len, reverse=True)
+    detected_kategori = None
+    for kat in sorted_categories:
+        if kat in text:
+            detected_kategori = kat
+            break
 
-            return (
-                "Oli yang cocok untuk Honda "
-                "Vario adalah AHM MPX 2 "
-                "atau Yamalube Super Matic."
-            )
+    if not detected_kategori:
+        for kat in sorted_categories:
+            words = [w for w in kat.split() if len(w) > 3]
+            if words and any(w in text for w in words):
+                detected_kategori = kat
+                break
 
-    return (
-        "Silakan sebutkan jenis motor "
-        "atau produk yang ingin dicari."
-    )
+    sorted_motors = sorted(list(db_motors), key=len, reverse=True)
+    detected_motor = None
+    for motor in sorted_motors:
+        if motor in text:
+            detected_motor = motor
+            break
+
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+
+        if detected_kategori and detected_motor:
+            cursor.execute("""
+                SELECT nama_barang, harga, stok 
+                FROM barang 
+                WHERE LOWER(kategori) = ? 
+                  AND LOWER(cocok_untuk) LIKE ? 
+                  AND stok > 0
+            """, (detected_kategori, f"%{detected_motor}%"))
+            results = cursor.fetchall()
+
+            if not results:
+                return f"Maaf, rekomendasi {detected_kategori} yang cocok untuk motor {detected_motor.capitalize()} belum tersedia saat ini."
+
+            return f"Rekomendasi {detected_kategori} yang cocok untuk {detected_motor.capitalize()}:<br>" + format_barang_table(results, show_kategori=False, show_price_stock=True)
+
+        elif detected_kategori:
+            cursor.execute("""
+                SELECT nama_barang, harga, stok, cocok_untuk 
+                FROM barang 
+                WHERE LOWER(kategori) = ? 
+                  AND stok > 0
+            """, (detected_kategori,))
+            results = cursor.fetchall()
+
+            if not results:
+                return f"Maaf, stok barang untuk kategori {detected_kategori} belum tersedia saat ini."
+
+            return f"Berikut rekomendasi produk kategori {detected_kategori.capitalize()} yang tersedia:<br>" + format_barang_table(results, show_kategori=False, show_price_stock=True)
+
+        elif detected_motor:
+            cursor.execute("""
+                SELECT nama_barang, kategori, harga, stok 
+                FROM barang 
+                WHERE LOWER(cocok_untuk) LIKE ? 
+                  AND stok > 0
+            """, (f"%{detected_motor}%",))
+            results = cursor.fetchall()
+
+            if not results:
+                return f"Maaf, rekomendasi sparepart untuk motor {detected_motor.capitalize()} belum tersedia saat ini."
+
+            return f"Berikut beberapa sparepart yang cocok untuk {detected_motor.capitalize()}:<br>" + format_barang_table(results, show_kategori=True, show_price_stock=True)
+
+        else:
+            return "Silakan sebutkan tipe motor (seperti Beat, Vario, Mio) atau jenis sparepart (seperti Oli, Ban, Aki) yang Anda cari untuk mendapatkan rekomendasi."
 
 # =====================================
 # PENCOCOKAN BARANG
@@ -1693,21 +1864,33 @@ def chat():
 
             'action': None,
 
-            'confidence': 0
+            'confidence': 0,
+
+            'suggestions': []
 
         })
 
     # =====================================
     # DETEKSI KATA KASAR
     # =====================================
-    warning_message = ""
-
     if detect_bad_words(user_input):
-
-        warning_message = (
-            "Mohon gunakan bahasa "
-            "yang sopan &#128522;<br><br>"
+        response = "Mohon gunakan bahasa yang sopan dan santun ya. Ada yang bisa kami bantu terkait kebutuhan motor Anda?"
+        response, suggestions = add_conversational_follow_up("bad_words", response, user_input)
+        
+        simpan_log_chat(
+            user_input,
+            user_input,
+            "sarkasme_kasar",
+            response
         )
+        
+        return jsonify({
+            'intent': 'sarkasme_kasar',
+            'response': response,
+            'action': None,
+            'confidence': 1.0,
+            'suggestions': suggestions
+        })
 
     # =====================================
     # PREPROCESSING
@@ -1774,6 +1957,12 @@ def chat():
             normalized_input
         )
 
+        response, suggestions = add_conversational_follow_up(
+            fallback_intent,
+            response,
+            normalized_input
+        )
+
         simpan_log_chat(
             user_input,
             normalized_input,
@@ -1789,7 +1978,9 @@ def chat():
 
             'action': action,
 
-            'confidence': float(confidence)
+            'confidence': float(confidence),
+
+            'suggestions': suggestions
 
         })
 
@@ -1824,6 +2015,12 @@ def chat():
             normalized_input
         )
 
+        response, suggestions = add_conversational_follow_up(
+            fallback_intent,
+            response,
+            normalized_input
+        )
+
         simpan_log_chat(
             user_input,
             normalized_input,
@@ -1839,7 +2036,9 @@ def chat():
 
             'action': action,
 
-            'confidence': float(confidence)
+            'confidence': float(confidence),
+
+            'suggestions': suggestions
 
         })
 
@@ -1907,7 +2106,11 @@ def chat():
             normalized_input
         )
 
-    response = warning_message + response
+    response, suggestions = add_conversational_follow_up(
+        predicted_intent,
+        response,
+        normalized_input
+    )
 
     simpan_log_chat(
         user_input,
@@ -1924,7 +2127,9 @@ def chat():
 
         'action': action,
 
-        'confidence': float(confidence)
+        'confidence': float(confidence),
+
+        'suggestions': suggestions
 
     })
 

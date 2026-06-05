@@ -93,6 +93,18 @@ CREATE TABLE IF NOT EXISTS log_chat (
 )
 ''')
 
+# =========================
+# BUAT TABEL DIAGNOSA KELUHAN
+# =========================
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS diagnosa_keluhan (
+    id_diagnosa INTEGER PRIMARY KEY AUTOINCREMENT,
+    kata_kunci TEXT NOT NULL UNIQUE,
+    gejala TEXT NOT NULL,
+    solusi_analisis TEXT NOT NULL
+)
+''')
+
 cursor.execute(
     "PRAGMA table_info(log_chat)"
 )

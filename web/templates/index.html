@@ -241,6 +241,16 @@
                 chatBox
             );
 
+            // DYNAMIC SUGGESTIONS
+            if (data.suggestions && data.suggestions.length > 0) {
+                let suggestionsHtml = '<div class="chat-suggestions">';
+                data.suggestions.forEach(sug => {
+                    suggestionsHtml += `<button onclick="sendSuggestion('${escapeHtml(sug)}')">${escapeHtml(sug)}</button>`;
+                });
+                suggestionsHtml += '</div>';
+                chatBox.innerHTML += suggestionsHtml;
+            }
+
             scrollChat();
 
         } catch(error) {
@@ -439,6 +449,14 @@
         document.getElementById(
             "user-input"
         ).value = button.innerText;
+    }
+
+    // =========================
+    // SEND SUGGESTION (DYNAMIC)
+    // =========================
+    function sendSuggestion(text) {
+        document.getElementById("user-input").value = text;
+        sendMessage();
     }
 
 </script>
