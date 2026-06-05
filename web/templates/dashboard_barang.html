@@ -2,198 +2,446 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Dashboard Barang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Barang - Chat Kurnia Admin</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-app: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --success-hover: #059669;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --warning: #f59e0b;
         }
 
-        body{
-            background:#f5f5f5;
-            padding:30px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .container{
-            max-width:1200px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:12px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        body {
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         }
 
-        .header h1{
-            font-size:28px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
         }
 
-        .logout-btn{
-            background:#dc3545;
-            color:white;
-            border:none;
-            padding:10px 18px;
-            border-radius:8px;
-            cursor:pointer;
-            text-decoration:none;
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .logout-btn:hover{
-            opacity:0.9;
+        .header h1::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--primary);
+            border-radius: 4px;
         }
 
-        /* =========================
-           FORM TAMBAH BARANG
-        ========================= */
-
-        .form-container{
-            margin-bottom:30px;
-            padding:20px;
-            background:#f9f9f9;
-            border-radius:10px;
+        .logout-btn {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
-        .form-container h2{
-            margin-bottom:15px;
+        .logout-btn:hover {
+            background-color: var(--danger-hover);
         }
 
-        .add-form{
-            display:grid;
-            grid-template-columns:
-                repeat(4, 1fr)
-                auto;
-            gap:10px;
+        /* Menu Fitur Cards */
+        .menu-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .menu-card {
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 22px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-card:hover {
+            background: #ffffff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.05), 0 4px 6px -2px rgba(79, 70, 229, 0.02);
+        }
+
+        .menu-card h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Form Tambah Barang */
+        .form-container {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .form-container h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .add-form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) auto;
+            gap: 12px;
+            align-items: center;
         }
 
         .add-form input,
-        .add-form select{
-            padding:10px;
-            border:1px solid #ccc;
-            border-radius:6px;
+        .add-form select,
+        .edit-form input,
+        .edit-form select {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            width: 100%;
         }
 
-        .add-btn{
-            background:#007bff;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:6px;
-            cursor:pointer;
+        .add-form input:focus,
+        .add-form select:focus,
+        .edit-form input:focus,
+        .edit-form select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
         }
 
-        .add-btn:hover{
-            opacity:0.9;
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        /* =========================
-           TABLE
-        ========================= */
+        .add-btn:hover {
+            background: var(--primary-hover);
+        }
 
-        table{
-            width:100%;
-            border-collapse:collapse;
+        /* Responsive Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         table th,
-        table td{
-            border:1px solid #ddd;
-            padding:12px;
-            text-align:center;
+        table td {
+            padding: 14px 16px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
         }
 
-        table th{
-            background:#333;
-            color:white;
+        table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        .edit-form{
-            display:flex;
-            flex-direction:column;
-            gap:8px;
+        /* Fixed column widths */
+        table th:nth-child(1), table td:nth-child(1) { width: 5%; text-align: center; } /* ID */
+        table th:nth-child(2), table td:nth-child(2) { width: 25%; } /* Nama */
+        table th:nth-child(3), table td:nth-child(3) { width: 15%; } /* Kategori */
+        table th:nth-child(4), table td:nth-child(4) { width: 13%; } /* Harga */
+        table th:nth-child(5), table td:nth-child(5) { width: 10%; } /* Stok */
+        table th:nth-child(6), table td:nth-child(6) { width: 32%; } /* Aksi (Form Edit & Delete) */
+
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .item-category {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #f1f5f9;
+            color: #475569;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .item-stock {
+            font-weight: 600;
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .stock-normal {
+            background-color: #ecfdf5;
+            color: #065f46;
+        }
+
+        .stock-low {
+            background-color: #fffbeb;
+            color: #92400e;
+        }
+
+        .stock-empty {
+            background-color: #fef2f2;
+            color: #991b1b;
+        }
+
+        /* Compact Edit Form in Table Cell */
+        .edit-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .edit-form input,
-        .edit-form select{
-            padding:6px;
+        .edit-form select {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 6px;
         }
 
-        .update-btn{
-            background:#28a745;
-            color:white;
-            border:none;
-            padding:8px;
-            border-radius:6px;
-            cursor:pointer;
+        .edit-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
         }
 
-        .delete-btn{
-            background:#dc3545;
-            color:white;
-            border:none;
-            padding:8px;
-            border-radius:6px;
-            cursor:pointer;
-            text-decoration:none;
-            display:inline-block;
+        .update-btn {
+            flex: 1;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
-        .update-btn:hover,
-        .delete-btn:hover{
-            opacity:0.9;
+        .update-btn:hover {
+            background: var(--success-hover);
         }
 
-        .menu-box{
-            display:grid;
-            grid-template-columns:repeat(2, 1fr);
-            gap:15px;
-            margin-bottom:30px;
+        .delete-btn {
+            flex: 1;
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
-        .menu-card{
-            background:#f9f9f9;
-            border:1px solid #ddd;
-            border-radius:10px;
-            padding:20px;
-            text-decoration:none;
-            color:#333;
-            transition:0.2s;
+        .delete-btn:hover {
+            background: var(--danger-hover);
         }
 
-        .menu-card:hover{
-            background:#eef5ff;
-            border-color:#007bff;
+        /* Responsive adaptations */
+        @media (max-width: 1024px) {
+            .add-form {
+                grid-template-columns: 1fr 1fr;
+            }
+            .add-btn {
+                grid-column: span 2;
+            }
+            table th:nth-child(6), table td:nth-child(6) { width: 40%; }
+            table th:nth-child(2), table td:nth-child(2) { width: 20%; }
         }
 
-        .menu-card h2{
-            font-size:20px;
-            margin-bottom:8px;
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            .menu-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            table th:nth-child(3), table td:nth-child(3) { display: none; } /* Hide Kategori Column */
+            table th:nth-child(2), table td:nth-child(2) { width: 30%; }
+            table th:nth-child(6), table td:nth-child(6) { width: 45%; }
         }
 
-        .menu-card p{
-            color:#666;
-            line-height:1.4;
+        @media (max-width: 580px) {
+            .add-form {
+                grid-template-columns: 1fr;
+            }
+            .add-btn {
+                grid-column: span 1;
+            }
+            /* Stack table to cards for mobile screens */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tbody tr {
+                margin-bottom: 20px;
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 15px;
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            }
+            table td {
+                border: none;
+                border-bottom: 1px dashed #f1f5f9;
+                position: relative;
+                padding: 10px 0;
+                padding-left: 30%;
+                width: 100% !important;
+                text-align: left !important;
+            }
+            table td:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            table td::before {
+                position: absolute;
+                left: 0;
+                width: 25%;
+                font-weight: 700;
+                color: var(--text-muted);
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+            table td:nth-of-type(1)::before { content: "ID"; }
+            table td:nth-of-type(2)::before { content: "Nama"; }
+            table td:nth-of-type(3)::before { content: "Kategori"; }
+            table td:nth-of-type(4)::before { content: "Harga"; }
+            table td:nth-of-type(5)::before { content: "Stok"; }
+            table td:nth-of-type(6)::before { content: "Aksi Edit"; }
         }
-
     </style>
-
 </head>
 
 <body>
@@ -202,228 +450,120 @@
 
     <!-- HEADER -->
     <div class="header">
-
         <h1>Dashboard Barang</h1>
-
-        <a
-            href="/logout"
-            class="logout-btn"
-        >
+        <a href="/logout" class="logout-btn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
             Logout
         </a>
-
     </div>
 
     <!-- MENU FITUR -->
     <div class="menu-box">
-
-        <a
-            href="/riwayat_stok"
-            class="menu-card"
-        >
-
-            <h2>Riwayat Stok</h2>
-
-            <p>
-                Lihat catatan perubahan stok barang oleh petugas.
-            </p>
-
+        <a href="/riwayat_stok" class="menu-card">
+            <h2>
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;">
+                    <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"/>
+                    <path d="M6 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+                </svg>
+                Riwayat Stok
+            </h2>
+            <p>Lihat catatan lengkap mengenai setiap penambahan, pengurangan, dan perubahan stok barang oleh petugas.</p>
         </a>
 
-        <a
-            href="/log_chat"
-            class="menu-card"
-        >
-
-            <h2>Log Chat</h2>
-
-            <p>
-                Lihat riwayat pertanyaan pengguna dan jawaban chatbot.
-            </p>
-
+        <a href="/log_chat" class="menu-card">
+            <h2>
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;">
+                    <path d="M3 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H3zm10 11H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1z"/>
+                    <path d="M14 6a1 1 0 0 1 .707-.293l1.5 1.5a1 1 0 0 1 0 1.414l-1.5 1.5A1 1 0 0 1 14 9.5V6z"/>
+                </svg>
+                Log Chat
+            </h2>
+            <p>Lihat riwayat pertanyaan pengguna, hasil fuzzy matching, prediksi intent model, serta tanggapan chatbot.</p>
         </a>
-
     </div>
 
     <!-- FORM TAMBAH BARANG -->
     <div class="form-container">
-
-        <h2>Tambah Barang</h2>
-
-        <form
-            action="/tambah_barang"
-            method="POST"
-            class="add-form"
-        >
-
-            <input
-                type="text"
-                name="nama_barang"
-                placeholder="Nama barang"
-                required
-            >
-
-            <select
-                name="kategori"
-                required
-            >
-
-                <option value="">
-                    Pilih kategori
-                </option>
-
+        <h2>Tambah Barang Baru</h2>
+        <form action="/tambah_barang" method="POST" class="add-form">
+            <input type="text" name="nama_barang" placeholder="Nama barang (contoh: Aki GS Astra)" required>
+            
+            <select name="kategori" required>
+                <option value="">Pilih kategori...</option>
                 {% for kategori in data_kategori %}
-
-                <option value="{{ kategori[0] }}">
-                    {{ kategori[0] }}
-                </option>
-
+                <option value="{{ kategori[0] }}">{{ kategori[0] | capitalize }}</option>
                 {% endfor %}
-
             </select>
 
-            <input
-                type="number"
-                name="harga"
-                placeholder="Harga"
-                required
-            >
+            <input type="number" name="harga" placeholder="Harga (Rp)" required min="0">
+            <input type="number" name="stok" placeholder="Stok Awal" required min="0">
 
-            <input
-                type="number"
-                name="stok"
-                placeholder="Stok"
-                required
-            >
-
-            <button
-                type="submit"
-                class="add-btn"
-            >
-                Tambah
+            <button type="submit" class="add-btn">
+                Tambah Barang
             </button>
-
         </form>
-
     </div>
 
     <!-- TABLE -->
-    <table>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Barang</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for barang in data_barang %}
+                <tr>
+                    <td style="text-align: center; font-weight: 600; color: var(--text-muted);">{{ barang[0] }}</td>
+                    <td class="item-name">{{ barang[1] }}</td>
+                    <td><span class="item-category">{{ barang[2] | capitalize }}</span></td>
+                    <td class="item-price">Rp{{ barang[3] }}</td>
+                    <td>
+                        {% if barang[4] == 0 %}
+                        <span class="stock-badge stock-empty">Habis (0)</span>
+                        {% elif barang[4] <= 5 %}
+                        <span class="stock-badge stock-low">Menipis ({{ barang[4] }})</span>
+                        {% else %}
+                        <span class="stock-badge stock-normal">Tersedia ({{ barang[4] }})</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- FORM EDIT -->
+                        <form action="/edit_barang/{{ barang[0] }}" method="POST" class="edit-form">
+                            <input type="text" name="nama_barang" value="{{ barang[1] }}" required placeholder="Nama barang">
+                            
+                            <select name="kategori" required>
+                                {% for kategori in data_kategori %}
+                                <option value="{{ kategori[0] }}" {% if kategori[0]|lower == barang[2]|lower %}selected{% endif %}>
+                                    {{ kategori[0] | capitalize }}
+                                </option>
+                                {% endfor %}
+                            </select>
 
-        <thead>
+                            <input type="number" name="harga" value="{{ barang[3] }}" required placeholder="Harga" min="0">
+                            <input type="number" name="stok" value="{{ barang[4] }}" required placeholder="Stok" min="0">
 
-            <tr>
-
-                <th>ID</th>
-
-                <th>Nama Barang</th>
-
-                <th>Kategori</th>
-
-                <th>Harga</th>
-
-                <th>Stok</th>
-
-                <th>Aksi</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            {% for barang in data_barang %}
-
-            <tr>
-
-                <td>{{ barang[0] }}</td>
-
-                <td>{{ barang[1] }}</td>
-
-                <td>{{ barang[2] }}</td>
-
-                <td>Rp{{ barang[3] }}</td>
-
-                <td>{{ barang[4] }}</td>
-
-                <td>
-
-                    <!-- FORM EDIT -->
-                    <form
-                        action="/edit_barang/{{ barang[0] }}"
-                        method="POST"
-                        class="edit-form"
-                    >
-
-                        <input
-                            type="text"
-                            name="nama_barang"
-                            value="{{ barang[1] }}"
-                            required
-                        >
-
-                        <select
-                            name="kategori"
-                            required
-                        >
-
-                            {% for kategori in data_kategori %}
-
-                            <option
-                                value="{{ kategori[0] }}"
-                                {% if kategori[0]|lower == barang[2]|lower %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ kategori[0] }}
-                            </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                        <input
-                            type="number"
-                            name="harga"
-                            value="{{ barang[3] }}"
-                            required
-                        >
-
-                        <input
-                            type="number"
-                            name="stok"
-                            value="{{ barang[4] }}"
-                            required
-                        >
-
-                        <button
-                            type="submit"
-                            class="update-btn"
-                        >
-                            Update
-                        </button>
-
-                    </form>
-
-                    <br>
-
-                    <!-- HAPUS -->
-                    <a
-                        href="/hapus_barang/{{ barang[0] }}"
-                        class="delete-btn"
-                    >
-                        Hapus
-                    </a>
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
+                            <div class="edit-actions" style="grid-column: span 2;">
+                                <button type="submit" class="update-btn">Update</button>
+                                <a href="/hapus_barang/{{ barang[0] }}" class="delete-btn" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</a>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 

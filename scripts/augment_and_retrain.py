@@ -78,7 +78,11 @@ def make_templates():
             'hei bengkel', 'hola bengkel', 'apa kabar bengkel', 'kabar baik',
             'ada yang bisa dibantu', 'hai admin', 'pagi', 'siang', 'malam',
             'halo semuanya', 'apa kabar', 'salam kenal', 'selamat datang',
-            'halo semua', 'hallo semua'
+            'halo semua', 'hallo semua', "assalamu'alaikum", "syalom", "salam sejahtera",
+            "pagi min", "siang min", "sore min", "malam min", "halo kurnia", "hai kurnia",
+            "hallo kurnia", "halo kak", "pagi kak", "siang kak", "sore kak", "malam kak",
+            "halo petugas", "permisi petugas", "punten mang", "sampurasun", "spada",
+            "permisi min", "oi", "oy"
         ],
         'bantuan_umum': [
             'tolong bantu saya', 'bantu saya', 'minta bantuan', 'saya perlu bantuan',
@@ -87,7 +91,9 @@ def make_templates():
             'tunjukkan apa yang bisa ditanyakan', 'saya butuh informasi',
             'bantuan untuk bengkel', 'bantu jawab pertanyaan bengkel', 'chatbot ini bisa apa',
             'apakah kamu bisa bantu servis', 'apakah kamu bisa bantu stok',
-            'apakah kamu bisa bantu lokasi', 'apa saja info bengkel', 'bisa bantu masalah motor'
+            'apakah kamu bisa bantu lokasi', 'apa saja info bengkel', 'bisa bantu masalah motor',
+            'bisa tolong', 'tolong infonya', 'tanya dong', 'tanya min', 'mau tanya min',
+            'bisa nanya'
         ],
         'akhir_percakapan': [
             'terima kasih', 'makasih', 'matur nuwun', 'sudah cukup', 'cukup',
@@ -257,12 +263,27 @@ def load_models():
 
 def is_bengkel_domain(text):
     keywords = [
-        'motor', 'bengkel', 'servis', 'service', 'oli', 'busi', 'aki', 'ban',
-        'rem', 'mesin', 'injeksi', 'karburator', 'sparepart', 'stok', 'kampas',
-        'cvt', 'rantai', 'lampu', 'starter', 'brebet', 'mogok', 'mati', 'hidup',
-        'panas', 'bunyi', 'bocor', 'gas', 'tarikan', 'tune', 'matic', 'beat',
-        'vario', 'nmax', 'scoopy', 'pcx', 'filter', 'udara', 'honda', 'yamaha',
-        'mio'
+        "motor", "bengkel", "servis", "service", "oli", "busi", "aki", "ban",
+        "rem", "mesin", "injeksi", "karburator", "sparepart", "stok", "kampas",
+        "cvt", "rantai", "lampu", "starter", "brebet", "mogok", "mati", "hidup",
+        "panas", "bunyi", "bocor", "gas", "tarikan", "tune", "up", "matic", "beat",
+        "vario", "nmax", "scoopy", "pcx", "filter", "udara", "honda", "yamaha",
+        "mio", "jadwal", "buka", "jam", "hari", "minggu", "sabtu", "pagi", "siang",
+        "sore", "sekarang", "kontak", "admin", "whatsapp", "nomor", "petugas",
+        "chat", "produk", "barang", "rekomendasi", "cocok", "bagus", "terbaik",
+        "knalpot", "bensin", "tektek", "asap", "putih", "percaya", "dipercaya",
+        "murah", "velg", "spion", "cdi", "roller", "switch", "alamat", "rute",
+        "maps", "lokasi", "biaya", "ongkos", "tarif", "ngelitik", "goyang",
+        "komstir", "stabil", "setang", "stang", "suspensi", "memantul", "keras",
+        "drop", "tekor", "selip", "loyo", "gigi", "atas", "tinggi", "rpm", "bawah",
+        "langsam", "blong", "piston", "seher", "klep", "noken", "shock", "shockbreaker",
+        "karbu", "injektor", "pelek", "radiator", "coolant", "gasket", "paking",
+        "kopling", "cakram", "kaliper", "tromol", "spidometer", "speedometer",
+        "klakson", "dinamo", "koil", "spul", "kiprok", "ecu", "fuse", "cangklong",
+        "accu", "sekring", "bongkar", "pasang", "ganti", "tambah", "kurang", "aus",
+        "retak", "patah", "kendor", "kencang", "setel", "stel", "bersihkan",
+        "perbaiki", "benerin", "rusak", "ngobos", "ngebul", "kasar", "halus",
+        "oleng", "slip", "seret", "macet", "overheat", "tanjakan", "nanjak"
     ]
     text = str(text).lower()
     words = re.findall(r'[a-zA-Z]+', text)

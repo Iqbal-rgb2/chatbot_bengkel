@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Chatbot Bengkel</title>
+    <title>Chat Kurnia</title>
 
     <link
         rel="stylesheet"
@@ -25,96 +25,102 @@
 
     <!-- HEADER -->
     <div class="header">
-
-        <h1>Chatbot Bengkel</h1>
-
-        <button
-            id="dark-toggle"
-            class="dark-btn"
-            onclick="toggleDarkMode()"
-        >
-            &#127769;
-        </button>
-
+        <h1>Chat Kurnia</h1>
+        <div class="header-actions">
+            <button
+                id="reset-btn"
+                class="header-icon-btn"
+                onclick="resetChat()"
+                title="Reset Chat"
+                style="display: none;"
+            >
+                &#8635;
+            </button>
+            <button
+                id="dark-toggle"
+                class="header-icon-btn"
+                onclick="toggleDarkMode()"
+                title="Ubah Tema"
+            >
+                &#127769;
+            </button>
+            <a href="/login" class="petugas-btn">
+                &#128100; Petugas
+            </a>
+        </div>
     </div>
 
-    <!-- SUGGESTION -->
-    <div class="suggestion-box">
+    <!-- WELCOME SCREEN -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-logo-container">
+            <img src="{{ url_for('static', filename='images/welcome-logo-light.png') }}" alt="Logo Chatbot" class="welcome-logo welcome-logo-light">
+            <img src="{{ url_for('static', filename='images/welcome-logo-dark.png') }}" alt="Logo Chatbot" class="welcome-logo welcome-logo-dark">
+        </div>
+        <h2 id="welcome-greeting" class="welcome-greeting">Halo, Pelanggan!</h2>
+        <p class="welcome-sub">Ada yang bisa kami bantu hari ini?</p>
+        
+        <div class="welcome-input-area">
+            <input
+                type="text"
+                id="welcome-input"
+                placeholder="Tulis pertanyaan..."
+                onkeypress="handleWelcomeEnter(event)"
+            >
+            <button onclick="sendMessage()">
+                Kirim
+            </button>
+        </div>
 
-        <button onclick="setSuggestion(this)">
-            Jam buka bengkel
-        </button>
-
-        <button onclick="setSuggestion(this)">
-            Lokasi bengkel
-        </button>
-
-        <button onclick="setSuggestion(this)">
-            Oli untuk Beat
-        </button>
-
-        <button onclick="setSuggestion(this)">
-            Motor saya brebet
-        </button>
-
-    </div>
-
-    <!-- =========================
-     TOP BAR PETUGAS
-    ========================= -->
-    <div class="top-bar">
-
-    <a href="/login" class="petugas-btn">
-        &#128100; Petugas
-    </a>
-
+        <div class="welcome-chips">
+            <button onclick="sendSuggestion('Jam Buka Bengkel')">📅 Jam Buka & Lokasi</button>
+            <button onclick="sendSuggestion('Biaya Servis Motor')">💰 Estimasi Biaya Servis</button>
+            <button onclick="sendSuggestion('Motor saya brebet')">🛠️ Masalah Motor Brebet/Mogok</button>
+            <button onclick="sendSuggestion('Rekomendasi oli untuk beat')">📦 Ketersediaan Sparepart & Oli</button>
+        </div>
     </div>
 
     <!-- CHAT BOX -->
     <div
         id="chat-box"
         class="chat-box"
+        style="display: none;"
     ></div>
 
     <!-- INPUT -->
-    <div class="input-area">
-
+    <div id="input-area-container" class="input-area" style="display: none;">
         <input
             type="text"
             id="user-input"
             placeholder="Tulis pertanyaan..."
             onkeypress="handleEnter(event)"
         >
-
         <button onclick="sendMessage()">
             Kirim
         </button>
-
     </div>
 
-    <!-- RESET BUTTON -->
-    <div class="reset-container">
 
-        <button
-            class="reset-btn"
-            onclick="resetChat()"
-        >
-            Reset Chat
-        </button>
-
-    </div>
 
 </div>
 
 <script>
 
+    let isTyping = false;
+
     // =========================
-    // ENTER
+    // ENTER (WELCOME SCREEN)
+    // =========================
+    function handleWelcomeEnter(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+
+    // =========================
+    // ENTER (CHAT BOX)
     // =========================
     function handleEnter(event) {
-
         if (event.key === "Enter") {
-
             sendMessage();
         }
     }
@@ -123,17 +129,9 @@
     // GET CURRENT TIME
     // =========================
     function getCurrentTime() {
-
         const now = new Date();
-
-        const hours = String(
-            now.getHours()
-        ).padStart(2, "0");
-
-        const minutes = String(
-            now.getMinutes()
-        ).padStart(2, "0");
-
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
         return `${hours}:${minutes}`;
     }
 
@@ -141,7 +139,6 @@
     // ESCAPE HTML
     // =========================
     function escapeHtml(text) {
-
         return text
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -151,127 +148,250 @@
     }
 
     // =========================
+    // TOGGLE INPUT STATE
+    // =========================
+    function toggleInputState(disabled) {
+        const welcomeInput = document.getElementById("welcome-input");
+        const userInput = document.getElementById("user-input");
+        const welcomeButton = document.querySelector(".welcome-input-area button");
+        const inputButton = document.querySelector(".input-area button");
+        
+        if (welcomeInput) welcomeInput.disabled = disabled;
+        if (userInput) userInput.disabled = disabled;
+        if (welcomeButton) welcomeButton.disabled = disabled;
+        if (inputButton) inputButton.disabled = disabled;
+        
+        if (disabled) {
+            if (userInput) userInput.classList.add("input-disabled");
+            if (welcomeInput) welcomeInput.classList.add("input-disabled");
+        } else {
+            if (userInput) userInput.classList.remove("input-disabled");
+            if (welcomeInput) welcomeInput.classList.remove("input-disabled");
+        }
+    }
+
+    // =========================
+    // HTML TOKENIZER FOR TYPING
+    // =========================
+    function tokenizeHtml(htmlString) {
+        const tokens = [];
+        let i = 0;
+        while (i < htmlString.length) {
+            if (htmlString[i] === '<') {
+                let tagEnd = htmlString.indexOf('>', i);
+                if (tagEnd !== -1) {
+                    const tagContent = htmlString.substring(i + 1, tagEnd).toLowerCase();
+                    // Treat full table elements or container divs as single tokens to prevent broken DOM states
+                    if (tagContent.startsWith('table') || tagContent.startsWith('div class="chat-table-container"')) {
+                        let tableEnd = htmlString.toLowerCase().indexOf('</table>', tagEnd);
+                        if (tableEnd !== -1) {
+                            let endOffset = tableEnd + 8;
+                            if (tagContent.startsWith('div class="chat-table-container"')) {
+                                let divEnd = htmlString.toLowerCase().indexOf('</div>', endOffset);
+                                if (divEnd !== -1) {
+                                    endOffset = divEnd + 6;
+                                }
+                            }
+                            tokens.push(htmlString.substring(i, endOffset));
+                            i = endOffset;
+                            continue;
+                        }
+                    }
+                    tokens.push(htmlString.substring(i, tagEnd + 1));
+                    i = tagEnd + 1;
+                } else {
+                    tokens.push(htmlString[i]);
+                    i++;
+                }
+            } else {
+                tokens.push(htmlString[i]);
+                i++;
+            }
+        }
+        return tokens;
+    }
+
+    // =========================
+    // TYPING ANIMATION EFFECT
+    // =========================
+    function typeMessage(element, htmlString, onComplete) {
+        const tokens = tokenizeHtml(htmlString);
+        let currentToken = 0;
+        
+        function showNextToken() {
+            if (currentToken < tokens.length) {
+                element.innerHTML += tokens[currentToken];
+                currentToken++;
+                scrollChat();
+                
+                let delay = 18;
+                const token = tokens[currentToken - 1];
+                if (token.startsWith('<')) {
+                    delay = 0;
+                } else if (token === ' ') {
+                    delay = 8;
+                }
+                
+                setTimeout(showNextToken, delay);
+            } else {
+                if (onComplete) onComplete();
+            }
+        }
+        
+        showNextToken();
+    }
+
+    // =========================
     // SEND MESSAGE
     // =========================
     async function sendMessage() {
+        if (isTyping) return;
 
-        const input = document.getElementById(
-            "user-input"
-        );
+        const welcomeScreen = document.getElementById("welcome-screen");
+        const chatBox = document.getElementById("chat-box");
+        const inputAreaContainer = document.getElementById("input-area-container");
+        const resetBtn = document.getElementById("reset-btn");
+        
+        let input;
+        let isWelcome = false;
+        
+        if (welcomeScreen && welcomeScreen.style.display !== "none") {
+            input = document.getElementById("welcome-input");
+            isWelcome = true;
+        } else {
+            input = document.getElementById("user-input");
+        }
 
         const message = input.value.trim();
-
         if (message === "") return;
 
-        const safeMessage = escapeHtml(
-            message
-        );
+        const safeMessage = escapeHtml(message);
 
-        const chatBox = document.getElementById(
-            "chat-box"
-        );
+        // Transition out of welcome screen if active
+        if (isWelcome) {
+            welcomeScreen.style.display = "none";
+            chatBox.style.display = "block";
+            inputAreaContainer.style.display = "flex";
+            if (resetBtn) resetBtn.style.display = "inline-flex";
+            
+            // Set focus to the bottom input box
+            setTimeout(() => {
+                document.getElementById("user-input").focus();
+            }, 50);
+        }
 
         // USER MESSAGE
         chatBox.innerHTML += `
             <div class="user-message">
-
                 <div>
                     <b>Anda:</b> ${safeMessage}
                 </div>
-
                 <div class="chat-time">
                     ${getCurrentTime()}
                 </div>
-
             </div>
         `;
 
         input.value = "";
-
         scrollChat();
 
-        try {
+        // Lock inputs during typing
+        isTyping = true;
+        toggleInputState(true);
 
+        try {
             const response = await fetch(
                 "/chat",
                 {
-
                     method: "POST",
-
                     headers: {
-                        "Content-Type":
-                        "application/json"
+                        "Content-Type": "application/json"
                     },
-
                     body: JSON.stringify({
                         message: message
                     })
-
                 }
             );
 
             if (!response.ok) {
-
-                throw new Error(
-                    "Server error"
-                );
+                throw new Error("Server error");
             }
 
             const data = await response.json();
 
-            // BOT MESSAGE
+            // Prepare bot message container (empty content span)
+            const botMessageId = "bot-msg-" + Date.now();
             chatBox.innerHTML += `
-                <div class="bot-message">
-
+                <div class="bot-message" id="${botMessageId}">
                     <div>
                         <b>Chatbot:</b>
-                        ${data.response}
+                        <span class="bot-content"></span>
                     </div>
-
-                    <div class="chat-time">
+                    <div class="chat-time" style="opacity: 0; transition: opacity 0.3s;">
                         ${getCurrentTime()}
                     </div>
-
                 </div>
             `;
-
-            // ACTION BUTTON
-            handleAction(
-                data.action,
-                chatBox
-            );
-
-            // DYNAMIC SUGGESTIONS
-            if (data.suggestions && data.suggestions.length > 0) {
-                let suggestionsHtml = '<div class="chat-suggestions">';
-                data.suggestions.forEach(sug => {
-                    suggestionsHtml += `<button onclick="sendSuggestion('${escapeHtml(sug)}')">${escapeHtml(sug)}</button>`;
-                });
-                suggestionsHtml += '</div>';
-                chatBox.innerHTML += suggestionsHtml;
-            }
-
+            
             scrollChat();
+            
+            const botMsgEl = document.getElementById(botMessageId);
+            const contentSpan = botMsgEl.querySelector(".bot-content");
+            const timeEl = botMsgEl.querySelector(".chat-time");
+
+            // Type message letter-by-letter
+            typeMessage(contentSpan, data.response, () => {
+                // Unlock inputs
+                isTyping = false;
+                toggleInputState(false);
+                
+                // Set focus back to input box
+                const userInput = document.getElementById("user-input");
+                if (userInput) userInput.focus();
+                
+                // Show timestamp
+                timeEl.style.opacity = "0.72";
+                
+                // Render trigger action and dynamic suggestions
+                handleAction(data.action, chatBox);
+
+                if (data.suggestions && data.suggestions.length > 0) {
+                    let suggestionsHtml = '<div class="chat-suggestions" style="opacity: 0; transition: opacity 0.3s;">';
+                    data.suggestions.forEach(sug => {
+                        suggestionsHtml += `<button onclick="sendSuggestion('${escapeHtml(sug)}')">${escapeHtml(sug)}</button>`;
+                    });
+                    suggestionsHtml += '</div>';
+                    chatBox.innerHTML += suggestionsHtml;
+                    
+                    setTimeout(() => {
+                        const sugDiv = chatBox.querySelector(".chat-suggestions:last-of-type");
+                        if (sugDiv) sugDiv.style.opacity = "1";
+                        scrollChat();
+                    }, 50);
+                }
+                scrollChat();
+            });
 
         } catch(error) {
-
             console.error(error);
+            isTyping = false;
+            toggleInputState(false);
+            
+            // Set focus back to input box
+            const userInput = document.getElementById("user-input");
+            if (userInput) userInput.focus();
 
             chatBox.innerHTML += `
                 <div class="bot-message">
-
                     <div>
                         <b>Chatbot:</b>
                         Terjadi kesalahan server.
                     </div>
-
                     <div class="chat-time">
                         ${getCurrentTime()}
                     </div>
-
                 </div>
             `;
-
             scrollChat();
         }
     }
@@ -395,69 +515,84 @@
     // RESET CHAT
     // =========================
     function resetChat() {
-
-        document.getElementById(
-            "chat-box"
-        ).innerHTML = "";
+        document.getElementById("chat-box").innerHTML = "";
+        
+        // Hide chat items and show welcome screen
+        document.getElementById("chat-box").style.display = "none";
+        document.getElementById("input-area-container").style.display = "none";
+        const resetBtn = document.getElementById("reset-btn");
+        if (resetBtn) resetBtn.style.display = "none";
+        
+        const welcomeScreen = document.getElementById("welcome-screen");
+        welcomeScreen.style.display = "flex";
+        document.getElementById("welcome-input").value = "";
+        
+        // Update greeting based on current time
+        updateGreeting();
     }
 
     // =========================
     // AUTO SCROLL
     // =========================
     function scrollChat() {
-
-        const chatBox = document.getElementById(
-            "chat-box"
-        );
-
-        chatBox.scrollTop =
-        chatBox.scrollHeight;
+        const chatBox = document.getElementById("chat-box");
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     // =========================
     // DARK MODE
     // =========================
     function toggleDarkMode() {
-
-        document.body.classList.toggle(
-            "dark-mode"
-        );
-
-        const button = document.getElementById(
-            "dark-toggle"
-        );
-
-        if (
-            document.body.classList.contains(
-                "dark-mode"
-            )
-        ) {
-
+        document.body.classList.toggle("dark-mode");
+        const button = document.getElementById("dark-toggle");
+        if (document.body.classList.contains("dark-mode")) {
             button.innerHTML = "&#9728;";
-
         } else {
-
             button.innerHTML = "&#127769;";
         }
-    }
-
-    // =========================
-    // SUGGESTION BUTTON
-    // =========================
-    function setSuggestion(button) {
-
-        document.getElementById(
-            "user-input"
-        ).value = button.innerText;
     }
 
     // =========================
     // SEND SUGGESTION (DYNAMIC)
     // =========================
     function sendSuggestion(text) {
-        document.getElementById("user-input").value = text;
+        const welcomeScreen = document.getElementById("welcome-screen");
+        if (welcomeScreen && welcomeScreen.style.display !== "none") {
+            document.getElementById("welcome-input").value = text;
+        } else {
+            document.getElementById("user-input").value = text;
+        }
         sendMessage();
     }
+
+    // =========================
+    // DYNAMIC GREETING BASED ON TIME
+    // =========================
+    function updateGreeting() {
+        const greetingEl = document.getElementById("welcome-greeting");
+        if (!greetingEl) return;
+        
+        const now = new Date();
+        const hour = now.getHours();
+        let greeting = "Halo, Pelanggan!";
+        
+        if (hour >= 4 && hour < 11) {
+            greeting = "Selamat Pagi, Pelanggan!";
+        } else if (hour >= 11 && hour < 15) {
+            greeting = "Selamat Siang, Pelanggan!";
+        } else if (hour >= 15 && hour < 19) {
+            greeting = "Selamat Sore, Pelanggan!";
+        } else {
+            greeting = "Selamat Malam, Pelanggan!";
+        }
+        
+        greetingEl.innerText = greeting;
+    }
+
+    // Initialize greeting on load
+    window.addEventListener("DOMContentLoaded", () => {
+        updateGreeting();
+    });
 
 </script>
 

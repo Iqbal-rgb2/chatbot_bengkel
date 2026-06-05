@@ -122,10 +122,27 @@ bad_words = [
     "anjing",
     "anjeng",
     "bangsat",
+    "bgst",
     "tolol",
     "goblok",
+    "bego",
     "kontol",
-    "memek"
+    "memek",
+    "peler",
+    "pantek",
+    "babi",
+    "asu",
+    "jancok",
+    "jancuk",
+    "bajingan",
+    "brengsek",
+    "sialan",
+    "kampret",
+    "keparat",
+    "lonte",
+    "perek",
+    "jablay",
+    "idiot"
 ]
 
 # =====================================
@@ -215,9 +232,6 @@ domain_keywords = [
     "biaya",
     "ongkos",
     "tarif",
-    "hujan",
-    "air",
-    "basah",
     "ngelitik",
     "goyang",
     "komstir",
@@ -237,7 +251,64 @@ domain_keywords = [
     "rpm",
     "bawah",
     "langsam",
-    "blong"
+    "blong",
+    # Kata Kunci Bengkel Tambahan
+    "piston",
+    "seher",
+    "klep",
+    "noken",
+    "shock",
+    "shockbreaker",
+    "karbu",
+    "injektor",
+    "pelek",
+    "radiator",
+    "coolant",
+    "gasket",
+    "paking",
+    "kopling",
+    "cakram",
+    "kaliper",
+    "tromol",
+    "spidometer",
+    "speedometer",
+    "klakson",
+    "dinamo",
+    "koil",
+    "spul",
+    "kiprok",
+    "ecu",
+    "fuse",
+    "cangklong",
+    "accu",
+    "sekring",
+    "bongkar",
+    "pasang",
+    "ganti",
+    "tambah",
+    "kurang",
+    "aus",
+    "retak",
+    "patah",
+    "kendor",
+    "kencang",
+    "setel",
+    "stel",
+    "bersihkan",
+    "perbaiki",
+    "benerin",
+    "rusak",
+    "ngobos",
+    "ngebul",
+    "kasar",
+    "halus",
+    "oleng",
+    "slip",
+    "seret",
+    "macet",
+    "overheat",
+    "tanjakan",
+    "nanjak"
 ]
 
 # =====================================
@@ -259,7 +330,38 @@ abbreviation_words = {
     "asslmkm": "assalamualaikum",
     "brake": "rem",
     "sedia": "tersedia",
-    "nanjak": "tanjakan"
+    "nanjak": "tanjakan",
+    # Singkatan Umum Baru
+    "klo": "kalau",
+    "kalo": "kalau",
+    "tp": "tapi",
+    "dgn": "dengan",
+    "sy": "saya",
+    "utk": "untuk",
+    "blm": "belum",
+    "belom": "belum",
+    "bwt": "buat",
+    "lg": "lagi",
+    "tny": "tanya",
+    "kpn": "kapan",
+    # Singkatan Bengkel Baru
+    "mtr": "motor",
+    "bngkl": "bengkel",
+    "bngk": "bengkel",
+    "srvs": "servis",
+    "serv": "servis",
+    "sprprt": "sparepart",
+    "spart": "sparepart",
+    "rekom": "rekomendasi",
+    "stk": "stok",
+    "hrg": "harga",
+    "almt": "alamat",
+    "lks": "lokasi",
+    "kntk": "kontak",
+    "ol": "oli",
+    "bs": "busi",
+    "ak": "aki",
+    "kmps": "kampas"
 }
 
 # =====================================
@@ -849,7 +951,7 @@ def add_conversational_follow_up(intent, response, normalized_input):
 
     # 7. SAPAAN & BANTUAN UMUM
     elif intent in ["sapaan", "bantuan_umum"]:
-        follow_up_text = "<br><br>Ada yang bisa kami bantu? Anda bisa menanyakan lokasi, jam buka, stok sparepart, atau mendiagnosa keluhan motor."
+        follow_up_text = "<br><br>Anda bisa menanyakan lokasi, jam buka, stok sparepart, atau mendiagnosa keluhan motor."
         suggestions = ["Jam Buka Bengkel", "Lokasi Bengkel", "Motor saya brebet", "Oli untuk Vario"]
 
     # 8. FALLBACK & KATA KASAR
@@ -1197,6 +1299,24 @@ def score_barang_match(text, nama_barang, kategori):
         )
     )
 
+    # List of known component/part keywords
+    part_keywords = {
+        "oli", "busi", "aki", "accu", "ban", "rem", "kampas", "cakram", "kaliper", "tromol",
+        "kopling", "gasket", "paking", "rantai", "velg", "pelek", "spion", "knalpot",
+        "lampu", "klakson", "filter", "roller", "switch", "karburator", "karbu", "cdi",
+        "ecu", "sekring", "fuse", "starter", "piston", "seher", "klep", "noken",
+        "shock", "shockbreaker", "injektor", "radiator", "coolant", "spidometer",
+        "speedometer", "dinamo", "koil", "spul", "kiprok", "cangklong", "cvt",
+        "mesin", "injeksi", "stang", "setang", "komstir", "suspensi"
+    }
+
+    user_parts = text_words.intersection(part_keywords)
+    if user_parts:
+        # Candidate item must match at least one of the user parts in its name or category
+        candidate_words = nama_words.union(kategori_words)
+        if not candidate_words.intersection(user_parts):
+            return 0
+
     nama_score = len(
         text_words.intersection(nama_words)
     )
@@ -1389,6 +1509,14 @@ def simpan_log_chat(
     jawaban
 ):
 
+    # Klasifikasi otomatis
+    if intent == 'fallback_bengkel':
+        klasifikasi = 'lingkup_bengkel_belum_ada'
+    elif intent in ['fallback_luar_bengkel', 'sarkasme_kasar', 'fallback']:
+        klasifikasi = 'melenceng'
+    else:
+        klasifikasi = 'ada_di_database'
+
     conn = sqlite3.connect(
         DATABASE_PATH
     )
@@ -1402,15 +1530,17 @@ def simpan_log_chat(
             pertanyaan,
             pertanyaan_normalisasi,
             intent,
-            jawaban
+            jawaban,
+            klasifikasi
         )
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?)
         """,
         (
             pertanyaan,
             pertanyaan_normalisasi,
             intent,
-            jawaban
+            jawaban,
+            klasifikasi
         )
     )
 
@@ -1949,7 +2079,7 @@ def chat():
     # DETEKSI KATA KASAR
     # =====================================
     if detect_bad_words(user_input):
-        response = "Mohon gunakan bahasa yang sopan dan santun ya. Ada yang bisa kami bantu terkait kebutuhan motor Anda?"
+        response = "Mohon gunakan bahasa yang sopan dan santun ya. Silakan tanyakan kebutuhan motor Anda."
         response, suggestions = add_conversational_follow_up("bad_words", response, user_input)
         
         simpan_log_chat(

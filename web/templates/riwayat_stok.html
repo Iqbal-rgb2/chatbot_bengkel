@@ -2,92 +2,289 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Riwayat Stok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Stok - Chat Kurnia Admin</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-app: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --warning: #f59e0b;
         }
 
-        body{
-            background:#f5f5f5;
-            padding:30px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .container{
-            max-width:1200px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:12px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        body {
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         }
 
-        .header h1{
-            font-size:28px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
         }
 
-        .header-actions{
-            display:flex;
-            gap:10px;
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
         }
 
         .back-btn,
-        .logout-btn{
-            color:white;
-            border:none;
-            padding:10px 18px;
-            border-radius:8px;
-            cursor:pointer;
-            text-decoration:none;
+        .logout-btn {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .back-btn{
-            background:#007bff;
+        .back-btn {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
         }
 
-        .logout-btn{
-            background:#dc3545;
+        .back-btn:hover {
+            background-color: #e2e8f0;
         }
 
-        table{
-            width:100%;
-            border-collapse:collapse;
+        .logout-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--danger-hover);
+        }
+
+        /* Responsive Table Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         table th,
-        table td{
-            border:1px solid #ddd;
-            padding:12px;
-            text-align:center;
+        table td {
+            padding: 14px 16px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
         }
 
-        table th{
-            background:#333;
-            color:white;
+        table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border-color);
         }
 
+        /* Fixed column widths */
+        table th:nth-child(1), table td:nth-child(1) { width: 8%; text-align: center; } /* ID */
+        table th:nth-child(2), table td:nth-child(2) { width: 18%; } /* Petugas */
+        table th:nth-child(3), table td:nth-child(3) { width: 22%; } /* Barang */
+        table th:nth-child(4), table td:nth-child(4) { width: 15%; } /* Aksi */
+        table th:nth-child(5), table td:nth-child(5) { width: 10%; text-align: center; } /* Stok Lama */
+        table th:nth-child(6), table td:nth-child(6) { width: 10%; text-align: center; } /* Stok Baru */
+        table th:nth-child(7), table td:nth-child(7) { width: 17%; } /* Tanggal */
+
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .petugas-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .barang-name {
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .action-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .action-tambah {
+            background-color: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .action-kurang {
+            background-color: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .action-update {
+            background-color: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .stock-val {
+            font-weight: 600;
+        }
+
+        .date-val {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive adaptations */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .back-btn, .logout-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            table th:nth-child(1), table td:nth-child(1) { width: 10%; }
+            table th:nth-child(5), table td:nth-child(5) { display: none; } /* Hide Stok Lama */
+            table th:nth-child(6), table td:nth-child(6) { display: none; } /* Hide Stok Baru */
+            table th:nth-child(7), table td:nth-child(7) { width: 25%; }
+        }
+
+        @media (max-width: 580px) {
+            /* Stack table into cards on mobile */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tbody tr {
+                margin-bottom: 15px;
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 12px;
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            }
+            table td {
+                border: none;
+                border-bottom: 1px dashed #f1f5f9;
+                position: relative;
+                padding: 8px 0;
+                padding-left: 35%;
+                width: 100% !important;
+                text-align: left !important;
+            }
+            table td:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            table td::before {
+                position: absolute;
+                left: 0;
+                width: 30%;
+                font-weight: 700;
+                color: var(--text-muted);
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+            table td:nth-of-type(1)::before { content: "ID"; }
+            table td:nth-of-type(2)::before { content: "Petugas"; }
+            table td:nth-of-type(3)::before { content: "Barang"; }
+            table td:nth-of-type(4)::before { content: "Aksi"; }
+            table td:nth-of-type(5)::before { content: "Stok Lama"; }
+            table td:nth-of-type(6)::before { content: "Stok Baru"; }
+            table td:nth-of-type(7)::before { content: "Tanggal"; }
+        }
     </style>
-
 </head>
 
 <body>
@@ -95,80 +292,60 @@
 <div class="container">
 
     <div class="header">
-
         <h1>Riwayat Stok</h1>
-
         <div class="header-actions">
-
-            <a
-                href="/dashboard_barang"
-                class="back-btn"
-            >
+            <a href="/dashboard_barang" class="back-btn">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
                 Kembali
             </a>
-
-            <a
-                href="/logout"
-                class="logout-btn"
-            >
+            <a href="/logout" class="logout-btn">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
                 Logout
             </a>
-
         </div>
-
     </div>
 
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>ID</th>
-
-                <th>Petugas</th>
-
-                <th>Barang</th>
-
-                <th>Aksi</th>
-
-                <th>Stok Lama</th>
-
-                <th>Stok Baru</th>
-
-                <th>Tanggal</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            {% for riwayat in data_riwayat %}
-
-            <tr>
-
-                <td>{{ riwayat[0] }}</td>
-
-                <td>{{ riwayat[1] }}</td>
-
-                <td>{{ riwayat[2] }}</td>
-
-                <td>{{ riwayat[3] }}</td>
-
-                <td>{{ riwayat[4] }}</td>
-
-                <td>{{ riwayat[5] }}</td>
-
-                <td>{{ riwayat[6] }}</td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Petugas</th>
+                    <th>Barang</th>
+                    <th>Aksi</th>
+                    <th>Stok Lama</th>
+                    <th>Stok Baru</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for riwayat in data_riwayat %}
+                <tr>
+                    <td style="text-align: center; font-weight: 600; color: var(--text-muted);">{{ riwayat[0] }}</td>
+                    <td class="petugas-name">{{ riwayat[1] }}</td>
+                    <td class="barang-name">{{ riwayat[2] }}</td>
+                    <td>
+                        {% if 'tambah' in riwayat[3]|lower %}
+                        <span class="action-badge action-tambah">{{ riwayat[3] | capitalize }}</span>
+                        {% elif 'kurang' in riwayat[3]|lower or 'hapus' in riwayat[3]|lower %}
+                        <span class="action-badge action-kurang">{{ riwayat[3] | capitalize }}</span>
+                        {% else %}
+                        <span class="action-badge action-update">{{ riwayat[3] | capitalize }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="stock-val" style="text-align: center;">{{ riwayat[4] }}</td>
+                    <td class="stock-val" style="text-align: center;">{{ riwayat[5] }}</td>
+                    <td class="date-val">{{ riwayat[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
