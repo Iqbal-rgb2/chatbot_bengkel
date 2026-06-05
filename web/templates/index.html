@@ -283,31 +283,69 @@
 
         // Transition out of welcome screen if active
         if (isWelcome) {
+            // Append USER MESSAGE first so it is visible when chatbox fades in
+            chatBox.innerHTML += `
+                <div class="user-message">
+                    <div>
+                        <b>Anda:</b> ${safeMessage}
+                    </div>
+                    <div class="chat-time">
+                        ${getCurrentTime()}
+                    </div>
+                </div>
+            `;
+            
+            // Add fade-out animation to welcome screen
+            welcomeScreen.classList.add("fade-out");
+            
+            // Wait for fade-out to finish (300ms)
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // Hide welcome screen, remove class for next time
             welcomeScreen.style.display = "none";
+            welcomeScreen.classList.remove("fade-out");
+            
+            // Show chat box and input area with smooth fade-in
             chatBox.style.display = "block";
+            chatBox.classList.add("fade-in-smooth");
+            
             inputAreaContainer.style.display = "flex";
-            if (resetBtn) resetBtn.style.display = "inline-flex";
+            inputAreaContainer.classList.add("fade-in-smooth");
+            
+            if (resetBtn) {
+                resetBtn.style.display = "inline-flex";
+                resetBtn.classList.add("fade-in-smooth");
+            }
+            
+            // Clean up fade-in class after animation completes
+            setTimeout(() => {
+                chatBox.classList.remove("fade-in-smooth");
+                inputAreaContainer.classList.remove("fade-in-smooth");
+                if (resetBtn) resetBtn.classList.remove("fade-in-smooth");
+            }, 300);
+            
+            input.value = "";
+            scrollChat();
             
             // Set focus to the bottom input box
             setTimeout(() => {
                 document.getElementById("user-input").focus();
             }, 50);
+        } else {
+            // USER MESSAGE (normal chat flow)
+            chatBox.innerHTML += `
+                <div class="user-message">
+                    <div>
+                        <b>Anda:</b> ${safeMessage}
+                    </div>
+                    <div class="chat-time">
+                        ${getCurrentTime()}
+                    </div>
+                </div>
+            `;
+            input.value = "";
+            scrollChat();
         }
-
-        // USER MESSAGE
-        chatBox.innerHTML += `
-            <div class="user-message">
-                <div>
-                    <b>Anda:</b> ${safeMessage}
-                </div>
-                <div class="chat-time">
-                    ${getCurrentTime()}
-                </div>
-            </div>
-        `;
-
-        input.value = "";
-        scrollChat();
 
         // Lock inputs during typing
         isTyping = true;
@@ -528,14 +566,31 @@
     // =========================
     // RESET CHAT
     // =========================
-    function resetChat() {
-        document.getElementById("chat-box").innerHTML = "";
-        
-        // Hide chat items and show welcome screen
-        document.getElementById("chat-box").style.display = "none";
-        document.getElementById("input-area-container").style.display = "none";
+    async function resetChat() {
+        const chatBox = document.getElementById("chat-box");
+        const inputAreaContainer = document.getElementById("input-area-container");
         const resetBtn = document.getElementById("reset-btn");
-        if (resetBtn) resetBtn.style.display = "none";
+        
+        // Add fade-out animation to chat box elements
+        chatBox.classList.add("fade-out");
+        inputAreaContainer.classList.add("fade-out");
+        if (resetBtn) resetBtn.classList.add("fade-out");
+        
+        // Wait for fade-out to finish (300ms)
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Clear and hide
+        chatBox.innerHTML = "";
+        chatBox.style.display = "none";
+        chatBox.classList.remove("fade-out");
+        
+        inputAreaContainer.style.display = "none";
+        inputAreaContainer.classList.remove("fade-out");
+        
+        if (resetBtn) {
+            resetBtn.style.display = "none";
+            resetBtn.classList.remove("fade-out");
+        }
         
         const welcomeScreen = document.getElementById("welcome-screen");
         welcomeScreen.style.display = "flex";
