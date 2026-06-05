@@ -477,7 +477,7 @@ def main():
     train_df, test_df = train_test_split(
         combined,
         test_size=0.2,
-        random_state=42,
+        random_state=3,
         stratify=combined['label']
     )
     
