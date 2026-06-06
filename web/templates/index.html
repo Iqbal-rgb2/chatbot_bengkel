@@ -120,6 +120,7 @@
 <script>
 
     let isTyping = false;
+    let currentSessionId = 0;
 
     // =========================
     // ENTER (WELCOME SCREEN)
@@ -228,11 +229,14 @@
     // =========================
     // TYPING ANIMATION EFFECT
     // =========================
-    function typeMessage(element, htmlString, onComplete) {
+    function typeMessage(element, htmlString, sessionId, onComplete) {
         const tokens = tokenizeHtml(htmlString);
         let currentToken = 0;
         
         function showNextToken() {
+            // Cancel typing animation immediately if session changed (chat reset)
+            if (sessionId !== currentSessionId) return;
+            
             if (currentToken < tokens.length) {
                 element.innerHTML += tokens[currentToken];
                 currentToken++;
@@ -260,6 +264,9 @@
     // =========================
     async function sendMessage() {
         if (isTyping) return;
+
+        // Capture session ID at start to validate async callbacks
+        const mySessionId = currentSessionId;
 
         const welcomeScreen = document.getElementById("welcome-screen");
         const chatBox = document.getElementById("chat-box");
@@ -371,6 +378,9 @@
 
             const data = await response.json();
 
+            // If session changed during the network request, abort immediately
+            if (mySessionId !== currentSessionId) return;
+
             // Prepare bot message container (empty content span)
             const botMessageId = "bot-msg-" + Date.now();
             chatBox.innerHTML += `
@@ -391,8 +401,11 @@
             const contentSpan = botMsgEl.querySelector(".bot-content");
             const timeEl = botMsgEl.querySelector(".chat-time");
 
-            // Type message letter-by-letter
-            typeMessage(contentSpan, data.response, () => {
+            // Type message letter-by-letter, passing mySessionId
+            typeMessage(contentSpan, data.response, mySessionId, () => {
+                // If session changed during typing animation, abort callback
+                if (mySessionId !== currentSessionId) return;
+
                 // Unlock inputs
                 isTyping = false;
                 toggleInputState(false);
@@ -425,6 +438,9 @@
             });
 
         } catch(error) {
+            // If session changed, abort error reporting
+            if (mySessionId !== currentSessionId) return;
+
             console.error(error);
             isTyping = false;
             toggleInputState(false);
@@ -567,6 +583,12 @@
     // RESET CHAT
     // =========================
     async function resetChat() {
+        // Cancel any pending async callbacks/animations from previous chat
+        currentSessionId++;
+        
+        isTyping = false;
+        toggleInputState(false);
+
         const chatBox = document.getElementById("chat-box");
         const inputAreaContainer = document.getElementById("input-area-container");
         const resetBtn = document.getElementById("reset-btn");
@@ -576,6 +598,9 @@
         inputAreaContainer.classList.add("fade-out");
         if (resetBtn) resetBtn.classList.add("fade-out");
         
+        // Call backend API to reset session in parallel so it's ready by the time transition ends
+        fetch("/reset_session", { method: "POST" }).catch(err => console.error(err));
+
         // Wait for fade-out to finish (300ms)
         await new Promise(resolve => setTimeout(resolve, 300));
         

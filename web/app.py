@@ -2073,6 +2073,14 @@ def logout():
     )
 
 # =====================================
+# RESET CHAT SESSION
+# =====================================
+@app.route('/reset_session', methods=['POST'])
+def reset_session():
+    session.pop('last_suggestions', None)
+    return jsonify({'status': 'success', 'message': 'Chat session reset'})
+
+# =====================================
 # CHAT API
 # =====================================
 @app.route(
