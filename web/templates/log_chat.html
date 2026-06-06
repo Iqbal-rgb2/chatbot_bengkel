@@ -194,6 +194,49 @@
             color: white;
         }
 
+        /* Red Theme for Melenceng Tab */
+        .tab-btn-melenceng {
+            background-color: rgba(239, 68, 68, 0.08);
+            border-color: #fca5a5;
+            color: #ef4444;
+        }
+
+        .tab-btn-melenceng:hover {
+            border-color: #ef4444;
+            color: #b91c1c;
+            background-color: rgba(239, 68, 68, 0.12);
+        }
+
+        .tab-btn-melenceng.active {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        .delete-all-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 6px;
+        }
+
+        .tab-btn-melenceng.active .delete-all-icon {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .delete-all-icon:hover {
+            background: #b91c1c !important;
+            color: white !important;
+            transform: scale(1.1);
+        }
+
         /* Responsive Table Wrapper */
         .table-responsive {
             width: 100%;
@@ -570,6 +613,25 @@
             background-color: rgba(79, 70, 229, 0.1);
         }
 
+        /* Dark Mode Red Theme for Melenceng Tab */
+        body.dark-mode .tab-btn-melenceng {
+            background-color: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        body.dark-mode .tab-btn-melenceng:hover {
+            border-color: #ef4444;
+            color: #fecaca;
+            background-color: rgba(239, 68, 68, 0.25);
+        }
+
+        body.dark-mode .tab-btn-melenceng.active {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
         body.dark-mode .table-responsive {
             background: #1e293b;
         }
@@ -656,7 +718,14 @@
             <button class="tab-btn" data-tab="belum">⏳ Belum Klasifikasi</button>
             <button class="tab-btn" data-tab="ada_di_database">🟢 Ada di Database</button>
             <button class="tab-btn" data-tab="lingkup_bengkel_belum_ada">🟡 Perlu Tambah</button>
-            <button class="tab-btn" data-tab="melenceng">🔴 Melenceng</button>
+            <button class="tab-btn tab-btn-melenceng" data-tab="melenceng">
+                🔴 Melenceng
+                <span class="delete-all-icon" onclick="deleteAllMelencengLogs(event)" title="Hapus semua log melenceng">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
+                    </svg>
+                </span>
+            </button>
         </div>
 
         <div class="search-wrapper">
@@ -710,14 +779,6 @@
                                     🔴 Melenceng
                                 </option>
                             </select>
-                            <button class="delete-btn" 
-                                    onclick="deleteLogChat('{{ log[0] }}', this)" 
-                                    title="Hapus log melenceng"
-                                    style="{% if log[6] == 'melenceng' %}display: inline-flex;{% else %}display: none;{% endif %}">
-                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
-                                </svg>
-                            </button>
                         </div>
                     </td>
                 </tr>
@@ -745,58 +806,70 @@
     function updateSelectStyle(select) {
         select.classList.remove('status-empty', 'status-ada-db', 'status-perlu-tambah', 'status-melenceng');
         const val = select.value;
-        const wrapper = select.closest('.klasifikasi-wrapper');
-        const deleteBtn = wrapper ? wrapper.querySelector('.delete-btn') : null;
-
         if (val === 'ada_di_database') {
             select.classList.add('status-ada-db');
-            if (deleteBtn) deleteBtn.style.display = 'none';
         } else if (val === 'lingkup_bengkel_belum_ada') {
             select.classList.add('status-perlu-tambah');
-            if (deleteBtn) deleteBtn.style.display = 'none';
         } else if (val === 'melenceng') {
             select.classList.add('status-melenceng');
-            if (deleteBtn) deleteBtn.style.display = 'inline-flex';
         } else {
             select.classList.add('status-empty');
-            if (deleteBtn) deleteBtn.style.display = 'none';
         }
     }
 
-    // Delete log chat (restricted to off-topic / melenceng logs)
-    function deleteLogChat(id, buttonElement) {
-        if (!confirm('Apakah Anda yakin ingin menghapus log chat melenceng ini secara permanen?')) {
+    // Delete all log chat classified as 'melenceng'
+    function deleteAllMelencengLogs(event) {
+        if (event) {
+            event.stopPropagation(); // Prevent tab filtering click when clicking the trash icon
+        }
+
+        const melencengRows = document.querySelectorAll('tr[data-klasifikasi="melenceng"]');
+        const count = melencengRows.length;
+
+        if (count === 0) {
+            showToast('Tidak ada data melenceng untuk dihapus.', 'info', 'ℹ️');
             return;
         }
 
-        showToast('Menghapus log chat...', 'info', 'ℹ️');
+        if (!confirm(`Apakah Anda yakin ingin menghapus SEMUA (${count}) data log chat melenceng secara permanen?`)) {
+            return;
+        }
 
-        fetch(`/delete_log_chat/${id}`, {
+        showToast('Menghapus semua log melenceng...', 'info', 'ℹ️');
+
+        fetch('/delete_all_melenceng_chat', {
             method: 'POST'
         })
         .then(response => response.json().then(data => ({ status: response.status, body: data })))
         .then(result => {
             if (result.status === 200) {
-                showToast('Log chat berhasil dihapus!', 'success', '✅');
+                showToast('Semua log melenceng berhasil dihapus!', 'success', '✅');
                 
-                // Remove row with a fade out transition
-                const row = buttonElement.closest('tr');
-                row.style.opacity = '0';
-                row.style.transition = 'opacity 0.3s ease';
+                // Fade out and remove all melenceng rows
+                melencengRows.forEach(row => {
+                    row.style.opacity = '0';
+                    row.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        row.remove();
+                    }, 300);
+                });
+
+                // Update UI state
                 setTimeout(() => {
-                    row.remove();
-                    // If table is empty, show empty state
-                    const tbody = document.querySelector('#log-table tbody');
-                    if (tbody && tbody.querySelectorAll('tr').length === 0) {
-                        document.getElementById('empty-state').style.display = 'block';
+                    // Reset active tab filter if we were on the melenceng tab
+                    const activeTab = document.querySelector('.tab-btn.active');
+                    if (activeTab && activeTab.getAttribute('data-tab') === 'melenceng') {
+                        document.querySelector('.tab-btn[data-tab="semua"]').click();
+                    } else {
+                        filterRows();
                     }
-                }, 300);
+                }, 350);
             } else {
                 throw new Error(result.body.message || 'Gagal menghapus');
             }
         })
         .catch(error => {
-            showToast(error.message || 'Gagal menghapus log chat.', 'error', '❌');
+            showToast(error.message || 'Gagal menghapus log melenceng.', 'error', '❌');
         });
     }
 
