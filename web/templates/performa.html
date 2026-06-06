@@ -278,7 +278,7 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
             overflow: hidden;
-            background: var(--bg-app);
+            background: #ffffff;
         }
 
         .plot-img-container img {
@@ -315,7 +315,7 @@
         .faq-title {
             font-size: 15px;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text-main);
             margin-bottom: 8px;
             cursor: pointer;
             display: flex;
@@ -431,8 +431,9 @@
             color: #fecaca;
         }
 
-        body.dark-mode .plot-img-container img {
-            filter: invert(0.9) hue-rotate(180deg);
+        body.dark-mode .plot-img-container {
+            background: #ffffff;
+            filter: brightness(0.82);
         }
     </style>
 </head>
