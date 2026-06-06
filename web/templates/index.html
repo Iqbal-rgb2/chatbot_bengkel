@@ -339,7 +339,7 @@
             }, 300);
             
             input.value = "";
-            scrollChat();
+            scrollChat(true);
             
             // Set focus to the bottom input box
             setTimeout(() => {
@@ -358,7 +358,7 @@
                 </div>
             `;
             input.value = "";
-            scrollChat();
+            scrollChat(true);
         }
 
         // Lock inputs during typing
@@ -402,7 +402,7 @@
                 </div>
             `;
             
-            scrollChat();
+            scrollChat(true);
             
             const botMsgEl = document.getElementById(botMessageId);
             const contentSpan = botMsgEl.querySelector(".bot-content");
@@ -467,7 +467,7 @@
                     </div>
                 </div>
             `;
-            scrollChat();
+            scrollChat(true);
         }
     }
 
@@ -635,9 +635,13 @@
     // =========================
     // AUTO SCROLL
     // =========================
-    function scrollChat() {
+    function scrollChat(force = false) {
         const chatBox = document.getElementById("chat-box");
-        chatBox.scrollTop = chatBox.scrollHeight;
+        // Only scroll if forced or if user is already scrolled close to the bottom
+        const isNearBottom = chatBox.scrollHeight - chatBox.clientHeight - chatBox.scrollTop < 120;
+        if (force || isNearBottom) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
     }
 
     // =========================

@@ -26,7 +26,7 @@ from werkzeug.security import check_password_hash
 app = Flask(__name__)
 
 # =====================================
-# SECRET KEY (trigger reload)
+# SECRET KEY (trigger reload: layanan keyword and autoscroll fixes)
 # =====================================
 app.secret_key = os.environ.get(
     "FLASK_SECRET_KEY",
@@ -157,6 +157,7 @@ domain_keywords = [
     "bengkel",
     "servis",
     "service",
+    "layanan",
     "oli",
     "busi",
     "aki",
@@ -711,6 +712,21 @@ def prioritize_intent(text, predicted_intent):
             "harga",
             "biaya"
         ]
+    ):
+
+        return "layanan_servis"
+
+    if contains_any(
+        text_lower,
+        [
+            "layanan",
+            "jasa",
+            "servis",
+            "service"
+        ]
+    ) and not contains_any(
+        text_lower,
+        product_keywords + ["harga", "biaya"]
     ):
 
         return "layanan_servis"

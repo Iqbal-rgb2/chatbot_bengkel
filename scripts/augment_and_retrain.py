@@ -181,7 +181,7 @@ def load_models():
 
 def is_bengkel_domain(text):
     keywords = [
-        "motor", "bengkel", "servis", "service", "oli", "busi", "aki", "ban",
+        "motor", "bengkel", "servis", "service", "layanan", "oli", "busi", "aki", "ban",
         "rem", "mesin", "injeksi", "karburator", "sparepart", "stok", "kampas",
         "cvt", "rantai", "lampu", "starter", "brebet", "mogok", "mati", "hidup",
         "panas", "bunyi", "bocor", "gas", "tarikan", "tune", "up", "matic", "beat",

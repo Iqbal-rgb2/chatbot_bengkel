@@ -37,6 +37,13 @@ def test_chat_response():
     assert data['intent'] == 'layanan_servis', f"Expected layanan_servis, got {data['intent']}"
     assert "Servis Motor Matic" in data['response'], f"Expected service list in response, got '{data['response']}'"
 
+    # 5. Workshop services query with just 'layanan' (checking keyword fix)
+    response = client.post('/chat', json=dict(message="layanan apa saja yang tersedia"))
+    data = json.loads(response.data.decode('utf-8'))
+    print(f"Query: 'layanan apa saja yang tersedia' -> Intent: {data['intent']}, Response: '{data['response'][:60]}...'")
+    assert data['intent'] == 'layanan_servis', f"Expected layanan_servis, got {data['intent']}"
+    assert "Servis Motor Matic" in data['response'], f"Expected service list in response, got '{data['response']}'"
+
     print("\n[SUCCESS] All Step 3 checks passed successfully!")
 
 if __name__ == '__main__':
