@@ -445,6 +445,159 @@
             table td:nth-of-type(5)::before { content: "Stok"; }
             table td:nth-of-type(6)::before { content: "Aksi Edit"; }
         }
+
+        /* Google-Style Search & Filter Section */
+        .search-filter-section {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .google-search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            align-items: center;
+        }
+
+        .google-search-wrapper input {
+            width: 100%;
+            padding: 14px 20px 14px 52px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            outline: none;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-main);
+        }
+
+        .google-search-wrapper input:focus,
+        .google-search-wrapper input:hover {
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .dark-mode .google-search-wrapper input:focus,
+        .dark-mode .google-search-wrapper input:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border-color: #475569;
+        }
+
+        .google-search-wrapper .search-icon {
+            position: absolute;
+            left: 20px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .google-search-wrapper .clear-icon {
+            position: absolute;
+            right: 20px;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .google-search-wrapper .clear-icon:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .dark-mode .google-search-wrapper .clear-icon:hover {
+            background-color: #334155;
+            color: #ffffff;
+        }
+
+        /* Category Pills */
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .category-pills .pill {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .category-pills .pill:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+
+        .category-pills .pill.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+        }
+
+        .dark-mode .category-pills .pill {
+            background: #1e293b;
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        .dark-mode .category-pills .pill:hover {
+            background: #334155;
+            border-color: #475569;
+            color: #ffffff;
+        }
+
+        .dark-mode .category-pills .pill.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Empty search state message styling */
+        .empty-search-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .empty-search-state svg {
+            margin: 0 auto 12px;
+            color: #cbd5e1;
+            display: block;
+        }
+
+        .dark-mode .empty-search-state svg {
+            color: #475569;
+        }
     </style>
 </head>
 
@@ -522,6 +675,32 @@
         </form>
     </div>
 
+    <!-- GOOGLE-STYLE SEARCH & FILTER -->
+    <div class="search-filter-section">
+        <div class="google-search-wrapper">
+            <span class="search-icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Cari nama barang atau kategori suku cadang..." 
+                autocomplete="off"
+            >
+            <span id="clear-search" class="clear-icon" style="display: none;">&times;</span>
+        </div>
+        
+        <div class="category-pills">
+            <button class="pill active" data-category="all">Semua Kategori</button>
+            {% for kategori in data_kategori %}
+            <button class="pill" data-category="{{ kategori[0]|lower }}">{{ kategori[0] | capitalize }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
     <!-- TABLE -->
     <div class="table-responsive">
         <table>
@@ -580,6 +759,95 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-input");
+        const clearSearch = document.getElementById("clear-search");
+        const categoryPills = document.querySelectorAll(".category-pills .pill");
+        const tableRows = document.querySelectorAll("tbody tr");
+        const tableBody = document.querySelector("tbody");
+        
+        // Create an empty state row
+        const emptyStateRow = document.createElement("tr");
+        emptyStateRow.id = "empty-state-row";
+        emptyStateRow.style.display = "none";
+        emptyStateRow.innerHTML = `
+            <td colspan="6" class="empty-search-state">
+                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Tidak ada barang yang cocok dengan kata kunci atau kategori yang Anda cari.
+            </td>
+        `;
+        tableBody.appendChild(emptyStateRow);
+
+        let activeCategory = "all";
+
+        function filterProducts() {
+            const query = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            tableRows.forEach(row => {
+                // Skip the empty state row itself
+                if (row.id === "empty-state-row") return;
+
+                const nameEl = row.querySelector(".item-name");
+                const categoryEl = row.querySelector(".item-category");
+                
+                if (!nameEl || !categoryEl) return;
+
+                const nameText = nameEl.textContent.toLowerCase();
+                const categoryText = categoryEl.textContent.toLowerCase();
+
+                const matchesQuery = nameText.includes(query) || categoryText.includes(query);
+                const matchesCategory = activeCategory === "all" || categoryText === activeCategory;
+
+                if (matchesQuery && matchesCategory) {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Show or hide empty state message
+            if (visibleCount === 0) {
+                emptyStateRow.style.display = "";
+            } else {
+                emptyStateRow.style.display = "none";
+            }
+
+            // Show or hide clear button
+            if (query.length > 0) {
+                clearSearch.style.display = "flex";
+            } else {
+                clearSearch.style.display = "none";
+            }
+        }
+
+        // Search Input Event
+        searchInput.addEventListener("input", filterProducts);
+
+        // Clear Search Event
+        clearSearch.addEventListener("click", function () {
+            searchInput.value = "";
+            filterProducts();
+            searchInput.focus();
+        });
+
+        // Category Pills Events
+        categoryPills.forEach(pill => {
+            pill.addEventListener("click", function () {
+                categoryPills.forEach(p => p.classList.remove("active"));
+                pill.classList.add("active");
+                activeCategory = pill.getAttribute("data-category");
+                filterProducts();
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
