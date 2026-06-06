@@ -249,12 +249,12 @@
                 currentToken++;
                 scrollChat();
                 
-                let delay = 18;
+                let delay = 8;
                 const token = tokens[currentToken - 1];
                 if (token.startsWith('<')) {
                     delay = 0;
                 } else if (token === ' ') {
-                    delay = 8;
+                    delay = 3;
                 }
                 
                 setTimeout(showNextToken, delay);
