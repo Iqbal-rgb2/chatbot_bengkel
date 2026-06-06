@@ -5,7 +5,8 @@ from flask import (
     jsonify,
     redirect,
     url_for,
-    session
+    session,
+    send_from_directory
 )
 
 import pandas as pd
@@ -1278,21 +1279,21 @@ def score_barang_match(text, nama_barang, kategori):
 
     text_words = set(
         re.findall(
-            r'[a-zA-Z]+',
+            r'[a-zA-Z0-9]+',
             text.lower()
         )
     )
 
     nama_words = set(
         re.findall(
-            r'[a-zA-Z]+',
+            r'[a-zA-Z0-9]+',
             nama_barang.lower()
         )
     )
 
     kategori_words = set(
         re.findall(
-            r'[a-zA-Z]+',
+            r'[a-zA-Z0-9]+',
             kategori.lower()
         )
     )
@@ -1547,6 +1548,17 @@ def simpan_log_chat(
     conn.commit()
 
     conn.close()
+
+# =====================================
+# FAVICON
+# =====================================
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon'
+    )
 
 # =====================================
 # HOME
