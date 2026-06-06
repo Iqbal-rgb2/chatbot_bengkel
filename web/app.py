@@ -539,6 +539,19 @@ def is_bengkel_domain(text):
         text
     )
 
+    blacklist_keywords = [
+        "sehat", "kesehatan", "dokter", "obat", "sakit", "klinik", "puskesmas", "rs", "medis",
+        "makan", "makanan", "minum", "minuman", "lapar", "kenyang", "restoran", "cafe", "warung", "kuliner",
+        "bank", "atm", "uang", "duit", "tabungan", "transfer", "kredit", "pinjaman", "finansial",
+        "sekolah", "kuliah", "kampus", "dosen", "belajar", "siswa", "mahasiswa", "pelajaran",
+        "politik", "pemilu", "pemerintah", "presiden", "menteri", "hukum",
+        "pulsa", "internet", "wifi", "kuota", "game", "nonton", "film"
+    ]
+
+    for word in words:
+        if word in blacklist_keywords:
+            return False
+
     for word in words:
 
         if word in domain_keywords:

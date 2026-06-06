@@ -205,6 +205,20 @@ def is_bengkel_domain(text):
     ]
     text = str(text).lower()
     words = re.findall(r'[a-zA-Z]+', text)
+    
+    blacklist_keywords = [
+        "sehat", "kesehatan", "dokter", "obat", "sakit", "klinik", "puskesmas", "rs", "medis",
+        "makan", "makanan", "minum", "minuman", "lapar", "kenyang", "restoran", "cafe", "warung", "kuliner",
+        "bank", "atm", "uang", "duit", "tabungan", "transfer", "kredit", "pinjaman", "finansial",
+        "sekolah", "kuliah", "kampus", "dosen", "belajar", "siswa", "mahasiswa", "pelajaran",
+        "politik", "pemilu", "pemerintah", "presiden", "menteri", "hukum",
+        "pulsa", "internet", "wifi", "kuota", "game", "nonton", "film"
+    ]
+    
+    for word in words:
+        if word in blacklist_keywords:
+            return False
+            
     return any(word in keywords for word in words)
 
 
