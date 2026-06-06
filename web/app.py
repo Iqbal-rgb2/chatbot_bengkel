@@ -1892,6 +1892,49 @@ def update_klasifikasi_chat(id):
     )
 
 # =====================================
+# HAPUS LOG CHAT (Hanya untuk klasifikasi 'melenceng')
+# =====================================
+@app.route(
+    '/delete_log_chat/<int:id>',
+    methods=['POST']
+)
+def delete_log_chat(id):
+
+    if 'login' not in session:
+        return {"status": "error", "message": "Unauthorized"}, 401
+
+    conn = sqlite3.connect(
+        DATABASE_PATH
+    )
+
+    cursor = conn.cursor()
+
+    # Pastikan data yang dihapus memang berklasifikasi 'melenceng'
+    cursor.execute(
+        "SELECT klasifikasi FROM log_chat WHERE id_chat = ?",
+        (id,)
+    )
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        return {"status": "error", "message": "Log tidak ditemukan"}, 404
+
+    klasifikasi = row[0]
+    if klasifikasi != 'melenceng':
+        conn.close()
+        return {"status": "error", "message": "Hanya log dengan klasifikasi 'melenceng' yang dapat dihapus"}, 400
+
+    cursor.execute(
+        "DELETE FROM log_chat WHERE id_chat = ?",
+        (id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return {"status": "success", "message": "Log chat melenceng berhasil dihapus"}, 200
+
+# =====================================
 # TAMBAH BARANG
 # =====================================
 @app.route(
