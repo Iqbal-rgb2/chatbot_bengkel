@@ -598,6 +598,42 @@
         .dark-mode .empty-search-state svg {
             color: #475569;
         }
+
+        /* Initial Placeholder Box */
+        .initial-placeholder-box {
+            text-align: center;
+            padding: 50px 30px;
+            background: #ffffff;
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            color: var(--text-muted);
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            width: 100%;
+        }
+
+        .initial-placeholder-box svg {
+            color: var(--primary);
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .initial-placeholder-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .initial-placeholder-box p {
+            font-size: 13.5px;
+            max-width: 500px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 
@@ -701,6 +737,17 @@
         </div>
     </div>
 
+    <!-- INITIAL PLACEHOLDER BOX -->
+    <div id="initial-placeholder" class="initial-placeholder-box">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <h3>Daftar Stok Suku Cadang Bengkel</h3>
+        <p>Silakan pilih salah satu kategori di atas untuk melihat barang yang tersedia, atau gunakan kolom pencarian untuk menemukan produk secara langsung.</p>
+    </div>
+
     <!-- TABLE -->
     <div class="table-responsive">
         <table>
@@ -787,6 +834,23 @@
 
         function filterProducts() {
             const query = searchInput.value.toLowerCase().trim();
+            const initialPlaceholder = document.getElementById("initial-placeholder");
+            const tableContainer = document.querySelector(".table-responsive");
+            
+            // Check if we are in "all" categories and search query is empty
+            if (activeCategory === "all" && query === "") {
+                // Hide table, show initial placeholder
+                tableContainer.style.display = "none";
+                initialPlaceholder.style.display = "flex";
+                emptyStateRow.style.display = "none";
+                clearSearch.style.display = "none";
+                return;
+            }
+
+            // Otherwise, show table, hide initial placeholder
+            tableContainer.style.display = "block";
+            initialPlaceholder.style.display = "none";
+
             let visibleCount = 0;
 
             tableRows.forEach(row => {
@@ -846,6 +910,9 @@
                 filterProducts();
             });
         });
+
+        // Initialize display state on load (hides table and shows placeholder initially)
+        filterProducts();
     });
 </script>
 
