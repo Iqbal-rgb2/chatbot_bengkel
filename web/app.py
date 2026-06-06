@@ -1935,6 +1935,43 @@ def delete_log_chat(id):
     return {"status": "success", "message": "Log chat melenceng berhasil dihapus"}, 200
 
 # =====================================
+# HAPUS SEMUA LOG CHAT MELENCENG
+# =====================================
+@app.route(
+    '/delete_all_melenceng_chat',
+    methods=['POST']
+)
+def delete_all_melenceng_chat():
+
+    if 'login' not in session:
+        return {"status": "error", "message": "Unauthorized"}, 401
+
+    conn = sqlite3.connect(
+        DATABASE_PATH
+    )
+
+    cursor = conn.cursor()
+
+    # Hitung berapa banyak data melenceng yang ada
+    cursor.execute(
+        "SELECT COUNT(*) FROM log_chat WHERE klasifikasi = 'melenceng'"
+    )
+    count = cursor.fetchone()[0]
+
+    if count == 0:
+        conn.close()
+        return {"status": "error", "message": "Tidak ada log chat melenceng untuk dihapus"}, 400
+
+    cursor.execute(
+        "DELETE FROM log_chat WHERE klasifikasi = 'melenceng'"
+    )
+
+    conn.commit()
+    conn.close()
+
+    return {"status": "success", "message": f"{count} log chat melenceng berhasil dihapus"}, 200
+
+# =====================================
 # TAMBAH BARANG
 # =====================================
 @app.route(
