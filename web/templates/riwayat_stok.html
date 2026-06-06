@@ -288,10 +288,69 @@
             table td:nth-of-type(6)::before { content: "Stok Baru"; }
             table td:nth-of-type(7)::before { content: "Tanggal"; }
         }
+
+        /* Dark Mode Overrides */
+        body.dark-mode {
+            --bg-app: #0f172a;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body.dark-mode .back-btn {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        body.dark-mode .back-btn:hover {
+            background-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .table-responsive {
+            background: #1e293b;
+        }
+
+        body.dark-mode table th {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode tbody tr:hover {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode .barang-name {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .action-tambah {
+            background-color: #064e3b;
+            color: #a7f3d0;
+            border-color: #047857;
+        }
+
+        body.dark-mode .action-kurang {
+            background-color: #78350f;
+            color: #fde68a;
+            border-color: #b45309;
+        }
+
+        body.dark-mode .action-update {
+            background-color: #1e3a8a;
+            color: #bfdbfe;
+            border-color: #2563eb;
+        }
     </style>
 </head>
 
 <body>
+<script>
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+    }
+</script>
 
 <div class="container">
 

@@ -561,8 +561,8 @@
 
         /* Category Pills */
         .category-pills {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 10px;
             width: 100%;
         }
@@ -570,7 +570,7 @@
         .category-pills .pill {
             background: #ffffff;
             border: 1px solid var(--border-color);
-            padding: 8px 18px;
+            padding: 8px 10px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
@@ -578,6 +578,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            text-align: center;
+            width: 100%;
         }
 
         .category-pills .pill:hover {
@@ -644,10 +646,75 @@
             max-width: 500px;
             line-height: 1.5;
         }
+
+        /* Dark Mode Overrides */
+        body.dark-mode {
+            --bg-app: #0f172a;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body.dark-mode .menu-card:hover {
+            background: #334155;
+        }
+
+        body.dark-mode .add-form-section {
+            background: #1e293b;
+        }
+
+        body.dark-mode .add-form input,
+        body.dark-mode .add-form select,
+        body.dark-mode .edit-form input,
+        body.dark-mode .edit-form select {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .table-responsive {
+            background: #1e293b;
+        }
+
+        body.dark-mode table th {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode tbody tr:hover {
+            background-color: #0f172a;
+        }
+
+        body.dark-mode .item-category {
+            background-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .item-price {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .initial-placeholder-box {
+            background: #1e293b;
+        }
+
+        body.dark-mode .category-pills .pill {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .category-pills .pill:hover {
+            background: #334155;
+            color: #f8fafc;
+        }
     </style>
 </head>
 
 <body>
+<script>
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+    }
+</script>
 
 <div class="container">
 
