@@ -908,3 +908,53 @@ input:focus {
 .dark-mode .input-disabled {
     background-color: #1e293b !important;
 }
+
+/* Password Input Show/Hide Toggle */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 48px !important;
+}
+
+.login-box .password-toggle-btn {
+    position: absolute;
+    right: 16px;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    transform: none !important;
+}
+
+.login-box .password-toggle-btn:hover {
+    color: #1b75bc;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.login-box .password-toggle-btn svg {
+    display: block;
+}
+
+/* Dark mode styles for password toggle button */
+.dark-mode .login-box .password-toggle-btn {
+    color: #94a3b8;
+}
+
+.dark-mode .login-box .password-toggle-btn:hover {
+    color: #38bdf8;
+}
