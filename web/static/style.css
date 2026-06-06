@@ -958,3 +958,20 @@ input:focus {
 .dark-mode .login-box .password-toggle-btn:hover {
     color: #38bdf8;
 }
+
+/* Theme Toggle Button SVG Icons */
+.sun-icon {
+    display: none;
+}
+
+.moon-icon {
+    display: block;
+}
+
+.dark-mode .sun-icon {
+    display: block;
+}
+
+.dark-mode .moon-icon {
+    display: none;
+}
