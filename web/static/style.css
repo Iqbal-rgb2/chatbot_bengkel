@@ -69,6 +69,15 @@ button {
     gap: 6px;
 }
 
+.logo-bubble-path {
+    fill: url(#logo-grad-light);
+    transition: fill 0.3s ease;
+}
+
+.dark-mode .logo-bubble-path {
+    fill: url(#logo-grad-dark);
+}
+
 .header-status {
     display: flex;
     align-items: center;

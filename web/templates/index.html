@@ -43,13 +43,19 @@
             <h1>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0; margin-right: 4px;">
                     <defs>
-                        <linearGradient id="kurnia-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <!-- Gradient for Light Mode -->
+                        <linearGradient id="logo-grad-light" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#1b75bc" />
                             <stop offset="100%" stop-color="#155e8c" />
                         </linearGradient>
+                        <!-- Gradient for Dark Mode (More vibrant blue/sky gradient) -->
+                        <linearGradient id="logo-grad-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
                     </defs>
                     <!-- Outer speech bubble representing chatbot chat -->
-                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="url(#kurnia-logo-grad)"/>
+                    <path class="logo-bubble-path" d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" />
                     <!-- Inner gear circle representing workshop/motorcycle -->
                     <circle cx="12" cy="10" r="3" stroke="#ffffff" stroke-width="1.8" fill="none"/>
                     <!-- Inner gear teeth -->
