@@ -382,6 +382,9 @@ INSERT INTO "chatbot_data" VALUES(317,'daftar_barang','ban apa saja yang tersedi
 INSERT INTO "chatbot_data" VALUES(318,'daftar_barang','sparepart yang tersedia apa saja dong','Berikut daftar sparepart yang tersedia.','list_barang');
 INSERT INTO "chatbot_data" VALUES(319,'daftar_barang','barang yang tersedia di bengkel apa saja dong','Berikut daftar barang yang tersedia.','list_barang');
 INSERT INTO "chatbot_data" VALUES(320,'daftar_barang','ada pilihan filter udara apa saja dong','Berikut daftar filter udara yang tersedia.','list_barang');
+INSERT INTO "chatbot_data" VALUES(321,'layanan_servis','layanan apa saja yang ada di bengkel','Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.','');
+INSERT INTO "chatbot_data" VALUES(322,'layanan_servis','bisa servis apa saja','Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.','');
+INSERT INTO "chatbot_data" VALUES(323,'layanan_servis','daftar layanan bengkel','Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.','');
 CREATE TABLE "kategori_barang" (
 	"id_kategori"	INTEGER,
 	"nama_kategori"	TEXT NOT NULL,
@@ -452,5 +455,5 @@ INSERT INTO "sqlite_sequence" VALUES('users',1);
 INSERT INTO "sqlite_sequence" VALUES('kategori_barang',20);
 INSERT INTO "sqlite_sequence" VALUES('log_chat',82);
 INSERT INTO "sqlite_sequence" VALUES('riwayat_stok',2);
-INSERT INTO "sqlite_sequence" VALUES('chatbot_data',320);
+INSERT INTO "sqlite_sequence" VALUES('chatbot_data',323);
 COMMIT;

@@ -319,3 +319,6 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 318,daftar_barang,sparepart yang tersedia apa saja dong,Berikut daftar sparepart yang tersedia.,list_barang,sparepart sedia apa dong
 319,daftar_barang,barang yang tersedia di bengkel apa saja dong,Berikut daftar barang yang tersedia.,list_barang,barang sedia bengkel apa dong
 320,daftar_barang,ada pilihan filter udara apa saja dong,Berikut daftar filter udara yang tersedia.,list_barang,pilih filter udara apa dong
+321,layanan_servis,layanan apa saja yang ada di bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,layan apa bengkel
+322,layanan_servis,bisa servis apa saja,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,servis apa
+323,layanan_servis,daftar layanan bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,daftar layan bengkel
