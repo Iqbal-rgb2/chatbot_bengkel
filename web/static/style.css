@@ -71,7 +71,7 @@ button {
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: #10b981;
+    color: #64748b;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -388,6 +388,10 @@ input:focus {
 
 .dark-mode .header h1 {
     color: #f8fafc;
+}
+
+.dark-mode .header-status {
+    color: #94a3b8;
 }
 
 .dark-mode .header-icon-btn {
