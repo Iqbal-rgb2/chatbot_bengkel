@@ -462,7 +462,7 @@
 
         /* Dashboard Card Container */
         .dashboard-card {
-            background: #ffffff;
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 24px;
@@ -516,7 +516,7 @@
             border: 1px solid var(--border-color);
             border-radius: 30px;
             outline: none;
-            background: #ffffff;
+            background: var(--bg-card);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             color: var(--text-main);
@@ -561,8 +561,9 @@
 
         /* Category Pills */
         .category-pills {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 10px;
             width: 100%;
         }
@@ -570,7 +571,7 @@
         .category-pills .pill {
             background: #ffffff;
             border: 1px solid var(--border-color);
-            padding: 8px 10px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
@@ -579,7 +580,6 @@
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             text-align: center;
-            width: 100%;
         }
 
         .category-pills .pill:hover {
@@ -661,15 +661,23 @@
         }
 
         body.dark-mode .add-form-section {
-            background: #1e293b;
+            background: #0f172a;
         }
 
         body.dark-mode .add-form input,
         body.dark-mode .add-form select,
         body.dark-mode .edit-form input,
         body.dark-mode .edit-form select {
-            background-color: #0f172a;
+            background-color: #1e293b;
             color: #f8fafc;
+            border-color: #334155;
+        }
+
+        body.dark-mode .add-form input:focus,
+        body.dark-mode .add-form select:focus,
+        body.dark-mode .edit-form input:focus,
+        body.dark-mode .edit-form select:focus {
+            border-color: var(--primary);
         }
 
         body.dark-mode .table-responsive {
@@ -678,10 +686,26 @@
 
         body.dark-mode table th {
             background-color: #0f172a;
+            border-bottom-color: #334155;
+        }
+
+        body.dark-mode table td {
+            border-bottom-color: #334155;
         }
 
         body.dark-mode tbody tr:hover {
-            background-color: #0f172a;
+            background-color: #151f32;
+        }
+
+        body.dark-mode tbody tr {
+            background-color: transparent;
+        }
+
+        /* Mobile table row background for dark mode */
+        @media (max-width: 768px) {
+            body.dark-mode tbody tr {
+                background-color: #1e293b;
+            }
         }
 
         body.dark-mode .item-category {
