@@ -146,19 +146,24 @@
         }
 
         /* Form Tambah Barang */
-        .form-container {
-            margin-bottom: 35px;
-            padding: 25px;
+        .add-form-section {
+            margin-bottom: 25px;
+            padding: 20px;
             background: #f8fafc;
             border: 1px solid var(--border-color);
             border-radius: 12px;
+            width: 100%;
         }
 
-        .form-container h2 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-main);
+        /* Subsection Title Style */
+        .subsection-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .add-form {
@@ -501,30 +506,9 @@
             width: 100%;
         }
 
-        .stock-management-card .category-filter-row .filter-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 4px;
-        }
-
-        .stock-management-card .category-filter-row .filter-label::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 12px;
-            background-color: var(--primary);
-            border-radius: 1px;
-            opacity: 0.7;
-        }
-
         .stock-management-card .card-divider {
             border-bottom: 1px solid var(--border-color);
+            margin-top: 10px;
             margin-bottom: 24px;
             width: 100%;
         }
@@ -727,34 +711,12 @@
         </a>
     </div>
 
-    <!-- FORM TAMBAH BARANG -->
-    <div class="form-container">
-        <h2 class="section-title">Tambah Barang Baru</h2>
-        <form action="/tambah_barang" method="POST" class="add-form">
-            <input type="text" name="nama_barang" placeholder="Nama barang (contoh: Aki GS Astra)" required>
-            
-            <select name="kategori" required>
-                <option value="">Pilih kategori...</option>
-                {% for kategori in data_kategori %}
-                <option value="{{ kategori[0] }}">{{ kategori[0] | capitalize }}</option>
-                {% endfor %}
-            </select>
-
-            <input type="number" name="harga" placeholder="Harga (Rp)" required min="0">
-            <input type="number" name="stok" placeholder="Stok Awal" required min="0">
-
-            <button type="submit" class="add-btn">
-                Tambah Barang
-            </button>
-        </form>
-    </div>
-
-    <!-- INTEGRATED CONTAINER: FILTER KATEGORI & DAFTAR STOK BARANG -->
+    <!-- INTEGRATED CONTAINER: KELOLA STOK SUKU CADANG -->
     <div class="dashboard-card stock-management-card">
         
         <!-- Header Row: Title & Google-Style Search -->
         <div class="card-header-row">
-            <h2 class="section-title">Daftar Stok Suku Cadang</h2>
+            <h2 class="section-title">Kelola Stok Suku Cadang</h2>
             <div class="google-search-wrapper">
                 <span class="search-icon">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -772,8 +734,34 @@
             </div>
         </div>
 
-        <!-- Filter Row: Category Pills -->
+        <!-- Section 1: Tambah Barang Baru Form -->
+        <div class="add-form-section">
+            <h3 class="subsection-title">Tambah Suku Cadang Baru</h3>
+            <form action="/tambah_barang" method="POST" class="add-form">
+                <input type="text" name="nama_barang" placeholder="Nama barang (contoh: Aki GS Astra)" required>
+                
+                <select name="kategori" required>
+                    <option value="">Pilih kategori...</option>
+                    {% for kategori in data_kategori %}
+                    <option value="{{ kategori[0] }}">{{ kategori[0] | capitalize }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="number" name="harga" placeholder="Harga (Rp)" required min="0">
+                <input type="number" name="stok" placeholder="Stok Awal" required min="0">
+
+                <button type="submit" class="add-btn">
+                    Tambah Barang
+                </button>
+            </form>
+        </div>
+
+        <!-- Card Section Divider -->
+        <div class="card-divider"></div>
+
+        <!-- Section 2: Pilih Kategori Suku Cadang -->
         <div class="category-filter-row">
+            <h3 class="subsection-title">Pilih Kategori Suku Cadang</h3>
             <div class="category-pills">
                 {% for kategori in data_kategori %}
                 <button class="pill" data-category="{{ kategori[0]|lower }}">{{ kategori[0] | capitalize }}</button>
