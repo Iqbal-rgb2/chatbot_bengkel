@@ -291,36 +291,36 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 290,layanan_servis,layanan apa saja yang ada di bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,layan apa bengkel
 291,layanan_servis,bisa servis apa saja,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,servis apa
 292,layanan_servis,daftar layanan bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,daftar layan bengkel
-293,layanan_servis,kamu bisa apa saja layanan bengkel,Sedang menganalisis keluhan motor.,diagnosa,kamu apa layan bengkel
+293,layanan_servis,kamu bisa apa saja layanan bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,kamu apa layan bengkel
 294,kontak_admin,kamu bisa minta nomor admin segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,kamu minta nomor admin segera
 295,sapaan,kira-kira apa kabar segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira apa kabar segera
 296,kontak_admin,apa saya mau chat petugas dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,apa mau chat tugas dong
 297,info_barang,kira-kira detail kampas rem segera,Info barang.,info_barang,kirakira detail kampas rem segera
-298,layanan_servis,bagaimana bisa service apa aja segera,Sedang menganalisis keluhan motor.,diagnosa,bagaimana service apa aja segera
+298,layanan_servis,bagaimana bisa service apa aja segera,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,bagaimana service apa aja segera
 299,layanan_servis,mohon motor susah gas dong,Sedang menganalisis keluhan motor.,diagnosa,mohon motor susah gas dong
 300,sapaan,apa halo petugas dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa halo tugas dong
 301,kontak_admin,kamu bisa nomor bengkel berapa segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,kamu nomor bengkel berapa segera
-302,layanan_servis,apa motor panas terus,Sedang menganalisis keluhan motor.,diagnosa,apa motor panas terus
+302,layanan_servis,apa motor panas terus,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,apa motor panas terus
 303,info_barang,bagaimana harga oli ahm mpx 2 dong,Info barang.,info_barang,bagaimana harga oli ahm mpx dong
 304,layanan_servis,kamu bisa motor brebet di tanjakan segera,Sedang menganalisis keluhan motor.,diagnosa,kamu motor brebet tanjak segera
 305,bantuan_umum,ada bantuan untuk bengkel sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bantu bengkel sekarang
 306,info_barang,mohon apa kelebihan oli ini segera,Info barang.,info_barang,mohon apa lebih oli segera
-307,layanan_servis,kamu bisa bisa service apa aja segera,Sedang menganalisis keluhan motor.,diagnosa,kamu service apa aja segera
+307,layanan_servis,kamu bisa bisa service apa aja segera,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,kamu service apa aja segera
 308,layanan_servis,kira-kira motor kurang tenaga segera,Sedang menganalisis keluhan motor.,diagnosa,kirakira motor kurang tenaga segera
 309,sapaan,kamu bisa halo petugas sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kamu halo tugas sekarang
 310,kontak_admin,apa hubungi petugas bengkel sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,apa hubung tugas bengkel sekarang
-311,bantuan_umum,bagaimana apakah kamu bisa bantu servis sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bagaimana kamu bantu servis sekarang
-312,bantuan_umum,kamu bisa bantu jawab pertanyaan bengkel sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu bantu jawab tanya bengkel sekarang
+311,bantuan_umum,bagaimana apakah kamu bisa bantu servis sekarang,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,bagaimana kamu bantu servis sekarang
+312,bantuan_umum,kamu bisa bantu jawab pertanyaan bengkel sekarang,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kamu bantu jawab tanya bengkel sekarang
 313,lokasi_bengkel,kamu bisa posisi bengkel dimana dong,Bengkel berada di depan Masjid Senduro.,open_maps,kamu posisi bengkel dong
 314,kontak_admin,kira-kira nomor cs bengkel sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,kirakira nomor cs bengkel sekarang
-315,bantuan_umum,kamu bisa apakah kamu bisa bantu servis sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu kamu bantu servis sekarang
+315,bantuan_umum,kamu bisa apakah kamu bisa bantu servis sekarang,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kamu kamu bantu servis sekarang
 316,info_barang,mohon info suku cadang sekarang,Info barang.,info_barang,mohon info suku cadang sekarang
-317,layanan_servis,ada bisa servis apa aja segera,Sedang menganalisis keluhan motor.,diagnosa,servis apa aja segera
-318,bantuan_umum,apa apa saja info bengkel,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,apa apa info bengkel
-319,sapaan,kira-kira permisi sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira permisi sekarang
+317,layanan_servis,ada bisa servis apa aja segera,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,servis apa aja segera
+318,bantuan_umum,apa apa saja info bengkel,"Saya dapat membantu lokasi bengkel, jadwal, servis motor, stok barang, dan rekomendasi produk.",,apa apa info bengkel
+319,sapaan,kira-kira permisi sekarang,"Halo, silakan tanyakan kebutuhan Anda.",,kirakira permisi sekarang
 320,sapaan,kira-kira ada yang bisa dibantu dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira bantu dong
 321,daftar_barang,kamu bisa produk apa saja ready,Berikut daftar oli yang tersedia.,list_barang,kamu produk apa ready
-322,harga_servis,kamu bisa berapa biaya ganti kampas sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kamu berapa biaya ganti kampas sekarang
+322,harga_servis,kamu bisa berapa biaya ganti kampas sekarang,Biaya penggantian ban menyesuaikan jenis ban.,,kamu berapa biaya ganti kampas sekarang
 323,rekom_produk,bagaimana rekomendasi sparepart segera,Rekomendasi produk.,saran_produk,bagaimana rekomendasi sparepart segera
 324,kontak_admin,bagaimana ada nomor admin dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,bagaimana nomor admin dong
 325,kontak_admin,ada nomor telepon bengkel sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,nomor telepon bengkel sekarang
@@ -328,15 +328,15 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 327,daftar_barang,kamu bisa daftar oli yang tersedia dong,Berikut daftar oli yang tersedia.,list_barang,kamu daftar oli sedia dong
 328,harga_servis,apa harga ganti aki berapa sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,apa harga ganti aki berapa sekarang
 329,lokasi_bengkel,kamu bisa lokasi lengkap bengkel sekarang,Bengkel berada di depan Masjid Senduro.,open_maps,kamu lokasi lengkap bengkel sekarang
-330,sapaan,bagaimana pagi kak dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana pagi kak dong
-331,sapaan,mohon pagi min sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon pagi min sekarang
+330,sapaan,bagaimana pagi kak dong,"Selamat pagi, ada yang bisa kami bantu?",,bagaimana pagi kak dong
+331,sapaan,mohon pagi min sekarang,"Selamat pagi, ada yang bisa kami bantu?",,mohon pagi min sekarang
 332,info_barang,mohon detail oli enduro matic,Info barang.,info_barang,mohon detail oli enduro matic
 333,info_barang,kamu bisa informasi barang motor dong,Info barang.,info_barang,kamu informasi barang motor dong
-334,harga_servis,mohon servis lengkap habis berapa dong,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,mohon servis lengkap habis berapa dong
-335,sapaan,kamu bisa selamat sore segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kamu selamat sore segera
-336,sapaan,kamu bisa sore min sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kamu sore min sekarang
+334,harga_servis,mohon servis lengkap habis berapa dong,Biaya servis lengkap mulai dari Rp150.000.,,mohon servis lengkap habis berapa dong
+335,sapaan,kamu bisa selamat sore segera,"Selamat sore, ada yang bisa dibantu?",,kamu selamat sore segera
+336,sapaan,kamu bisa sore min sekarang,"Selamat sore, ada yang bisa dibantu?",,kamu sore min sekarang
 337,cek_stok,kira-kira ada aki gs astra segera,Sedang cek stok barang.,check_stock,kirakira aki gs astra segera
-338,harga_servis,kira-kira servis lengkap habis berapa sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kirakira servis lengkap habis berapa sekarang
+338,harga_servis,kira-kira servis lengkap habis berapa sekarang,Biaya servis lengkap mulai dari Rp150.000.,,kirakira servis lengkap habis berapa sekarang
 339,kontak_admin,kamu bisa bisa hubungi lewat whatsapp sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,kamu hubung lewat whatsapp sekarang
 340,cek_stok,kamu bisa cek stok sparepart segera,Sedang cek stok barang.,check_stock,kamu cek stok sparepart segera
 341,info_barang,apa informasi oli yamalube matic sekarang,Info barang.,info_barang,apa informasi oli yamalube matic sekarang
@@ -346,14 +346,14 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 345,sapaan,mohon hallo kurnia,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon hallo kurnia
 346,daftar_barang,mohon daftar suku cadang sekarang,Berikut daftar oli yang tersedia.,list_barang,mohon daftar suku cadang sekarang
 347,sapaan,bagaimana hai sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana hai sekarang
-348,daftar_barang,ada list barang bengkel,Berikut daftar oli yang tersedia.,list_barang,list barang bengkel
+348,daftar_barang,ada list barang bengkel,Berikut daftar barang yang tersedia.,list_barang,list barang bengkel
 349,kontak_admin,ada saya mau chat petugas sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,mau chat tugas sekarang
-350,daftar_barang,ada tunjukkan daftar barang segera,Berikut daftar oli yang tersedia.,list_barang,tunjuk daftar barang segera
-351,bantuan_umum,apa fitur chatbot apa sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,apa fitur chatbot apa sekarang
-352,layanan_servis,ada ban bocor sekarang,Sedang menganalisis keluhan motor.,diagnosa,ban bocor sekarang
-353,daftar_barang,apa ada barang apa saat ini dong,Berikut daftar oli yang tersedia.,list_barang,apa barang apa dong
-354,akhir_percakapan,kira-kira sudah jelas,"Sama-sama, semoga membantu.",,kirakira jelas
-355,bantuan_umum,mohon apa saja info bengkel dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,mohon apa info bengkel dong
+350,daftar_barang,ada tunjukkan daftar barang segera,Berikut daftar barang yang tersedia.,list_barang,tunjuk daftar barang segera
+351,bantuan_umum,apa fitur chatbot apa sekarang,"Saya dapat membantu lokasi bengkel, jadwal, servis motor, stok barang, dan rekomendasi produk.",,apa fitur chatbot apa sekarang
+352,layanan_servis,ada ban bocor sekarang,Bengkel melayani penggantian ban.,,ban bocor sekarang
+353,daftar_barang,apa ada barang apa saat ini dong,Berikut daftar barang yang tersedia.,list_barang,apa barang apa dong
+354,akhir_percakapan,kira-kira sudah jelas,"Baik, terima kasih telah menggunakan layanan chatbot bengkel.",,kirakira jelas
+355,bantuan_umum,mohon apa saja info bengkel dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,mohon apa info bengkel dong
 356,info_barang,kamu bisa detail oli enduro matic sekarang,Info barang.,info_barang,kamu detail oli enduro matic sekarang
 357,lokasi_bengkel,alamat bengkel posisi bengkel dimana,Bengkel berada di depan Masjid Senduro.,open_maps,alamat bengkel posisi bengkel
 358,rekom_produk,kamu bisa pilih oli untuk nmax segera,Rekomendasi produk.,saran_produk,kamu pilih oli nmax segera
@@ -361,143 +361,143 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 360,sapaan,apa halo semua dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa halo semua dong
 361,cek_stok,ada stok bagian motor ada dong,Sedang cek stok barang.,check_stock,stok bagi motor dong
 362,rekom_produk,mohon rekomendasi aki,Rekomendasi produk.,saran_produk,mohon rekomendasi aki
-363,daftar_barang,kamu bisa tunjukkan daftar barang,Berikut daftar oli yang tersedia.,list_barang,kamu tunjuk daftar barang
-364,daftar_barang,bagaimana daftar sparepart tersedia,Berikut daftar oli yang tersedia.,list_barang,bagaimana daftar sparepart sedia
-365,jadwal_bengkel,mohon jadwal bengkel gimana sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,mohon jadwal bengkel gimana sekarang
+363,daftar_barang,kamu bisa tunjukkan daftar barang,Berikut daftar barang yang tersedia.,list_barang,kamu tunjuk daftar barang
+364,daftar_barang,bagaimana daftar sparepart tersedia,Berikut daftar sparepart yang tersedia.,list_barang,bagaimana daftar sparepart sedia
+365,jadwal_bengkel,mohon jadwal bengkel gimana sekarang,Bengkel buka Senin-Sabtu pukul 08.00-17.00 WIB.,,mohon jadwal bengkel gimana sekarang
 366,cek_stok,apa stok oli yamalube matic dong,Sedang cek stok barang.,check_stock,apa stok oli yamalube matic dong
 367,harga_servis,kamu bisa ganti oli motor berapa segera,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kamu ganti oli motor berapa segera
 368,lokasi_bengkel,ada bengkel motor kurnia dimana sekarang,Bengkel berada di depan Masjid Senduro.,open_maps,bengkel motor kurnia sekarang
 369,rekom_produk,kamu bisa mana oli yang cocok segera,Rekomendasi produk.,saran_produk,kamu mana oli cocok segera
 370,daftar_barang,ada produk apa saja ready,Berikut daftar oli yang tersedia.,list_barang,produk apa ready
 371,rekom_produk,apa oli yang cocok untuk beat,Rekomendasi produk.,saran_produk,apa oli cocok beat
-372,jadwal_bengkel,mohon apa hari ini bengkel buka sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,mohon apa hari bengkel buka sekarang
+372,jadwal_bengkel,mohon apa hari ini bengkel buka sekarang,Bengkel buka sampai pukul 17.00 WIB.,,mohon apa hari bengkel buka sekarang
 373,akhir_percakapan,mohon saya tutup dong,"Sama-sama, semoga membantu.",,mohon tutup dong
-374,jadwal_bengkel,kamu bisa jam operasional bengkel sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,kamu jam operasional bengkel sekarang
-375,akhir_percakapan,apa bye dong,"Sama-sama, semoga membantu.",,apa bye dong
+374,jadwal_bengkel,kamu bisa jam operasional bengkel sekarang,Bengkel buka Senin-Sabtu pukul 08.00-17.00 WIB.,,kamu jam operasional bengkel sekarang
+375,akhir_percakapan,apa bye dong,Terima kasih telah menggunakan layanan chatbot bengkel.,,apa bye dong
 376,layanan_servis,mohon motor saya brebet dong,Sedang menganalisis keluhan motor.,diagnosa,mohon motor brebet dong
 377,kontak_admin,bagaimana dapat nomor whatsapp bengkel sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,bagaimana nomor whatsapp bengkel sekarang
 378,cek_stok,kira-kira stok oli yamalube matic segera,Sedang cek stok barang.,check_stock,kirakira stok oli yamalube matic segera
 379,kontak_admin,mohon nomor telepon bengkel sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,mohon nomor telepon bengkel sekarang
-380,bantuan_umum,bagaimana fitur chatbot apa,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bagaimana fitur chatbot apa
-381,bantuan_umum,kamu bisa tanya min dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu tanya min dong
+380,bantuan_umum,bagaimana fitur chatbot apa,"Saya dapat membantu lokasi bengkel, jadwal, servis motor, stok barang, dan rekomendasi produk.",,bagaimana fitur chatbot apa
+381,bantuan_umum,kamu bisa tanya min dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,kamu tanya min dong
 382,info_barang,kira-kira info aki gs astra,Info barang.,info_barang,kirakira info aki gs astra
-383,bantuan_umum,bagaimana mau tanya min segera,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bagaimana mau tanya min segera
+383,bantuan_umum,bagaimana mau tanya min segera,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,bagaimana mau tanya min segera
 384,rekom_produk,kira-kira saran produk motor dong,Rekomendasi produk.,saran_produk,kirakira saran produk motor dong
 385,info_barang,bagaimana info aki gs astra dong,Info barang.,info_barang,bagaimana info aki gs astra dong
 386,kontak_admin,ada nomor wa bengkel berapa sekarang,Nomor WhatsApp kami adalah 085606213825.,open_wa,nomor wa bengkel berapa sekarang
-387,sapaan,bagaimana pagi min dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana pagi min dong
+387,sapaan,bagaimana pagi min dong,"Selamat pagi, ada yang bisa kami bantu?",,bagaimana pagi min dong
 388,kontak_admin,kira-kira dapat nomor whatsapp bengkel dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,kirakira nomor whatsapp bengkel dong
 389,lokasi_bengkel,mohon lokasi bengkel terdekat segera,Bengkel berada di depan Masjid Senduro.,open_maps,mohon lokasi bengkel dekat segera
-390,harga_servis,kira-kira biaya servis rem dong,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kirakira biaya servis rem dong
+390,harga_servis,kira-kira biaya servis rem dong,Biaya perbaikan rem menyesuaikan kondisi dan sparepart.,,kirakira biaya servis rem dong
 391,info_barang,kira-kira detail oli enduro matic segera,Info barang.,info_barang,kirakira detail oli enduro matic segera
-392,sapaan,bagaimana pagi segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana pagi segera
+392,sapaan,bagaimana pagi segera,"Selamat pagi, ada yang bisa kami bantu?",,bagaimana pagi segera
 393,rekom_produk,kira-kira apa oli ideal untuk nmax sekarang,Rekomendasi produk.,saran_produk,kirakira apa oli ideal nmax sekarang
-394,bantuan_umum,ada tanya min segera,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,tanya min segera
+394,bantuan_umum,ada tanya min segera,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,tanya min segera
 395,sapaan,apa halo kurnia segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa halo kurnia segera
 396,rekom_produk,kamu bisa mana oli yang cocok dong,Rekomendasi produk.,saran_produk,kamu mana oli cocok dong
-397,harga_servis,ada harga servis motor kamu sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,harga servis motor kamu sekarang
+397,harga_servis,ada harga servis motor kamu sekarang,Biaya servis injeksi menyesuaikan kondisi motor.,,harga servis motor kamu sekarang
 398,daftar_barang,mohon oli yang tersedia ada apa saja,Berikut daftar oli yang tersedia.,list_barang,mohon oli sedia apa
 399,rekom_produk,apa rekomendasi oli vario,Rekomendasi produk.,saran_produk,apa rekomendasi oli vario
-400,jadwal_bengkel,kira-kira apa hari ini bengkel buka,Bengkel buka pukul 08.00-17.00 WIB.,,kirakira apa hari bengkel buka
-401,akhir_percakapan,ada cukup sekarang,"Sama-sama, semoga membantu.",,cukup sekarang
+400,jadwal_bengkel,kira-kira apa hari ini bengkel buka,Bengkel libur hari Minggu.,,kirakira apa hari bengkel buka
+401,akhir_percakapan,ada cukup sekarang,"Baik, terima kasih telah menggunakan layanan chatbot bengkel.",,cukup sekarang
 402,info_barang,mohon info oli terbaik dong,Info barang.,info_barang,mohon info oli baik dong
-403,sapaan,ada hola bengkel dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,hola bengkel dong
-404,jadwal_bengkel,kira-kira bengkel tutup jam berapa segera,Bengkel buka pukul 08.00-17.00 WIB.,,kirakira bengkel tutup jam berapa segera
+403,sapaan,ada hola bengkel dong,"Selamat pagi, ada yang bisa dibantu?",,hola bengkel dong
+404,jadwal_bengkel,kira-kira bengkel tutup jam berapa segera,Bengkel tutup pukul 17.00 WIB.,,kirakira bengkel tutup jam berapa segera
 405,bantuan_umum,bagaimana bantu jawab pertanyaan bengkel segera,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bagaimana bantu jawab tanya bengkel segera
-406,akhir_percakapan,kamu bisa oke makasih segera,"Sama-sama, semoga membantu.",,kamu oke makasih segera
+406,akhir_percakapan,kamu bisa oke makasih segera,"Sama-sama, semoga harimu menyenangkan.",,kamu oke makasih segera
 407,info_barang,kira-kira info sparepart segera,Info barang.,info_barang,kirakira info sparepart segera
 408,info_barang,kamu bisa detail produk motor,Info barang.,info_barang,kamu detail produk motor
-409,sapaan,mohon permisi min sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon permisi min sekarang
-410,daftar_barang,bagaimana barang senin tersedia segera,Berikut daftar oli yang tersedia.,list_barang,bagaimana barang senin sedia segera
+409,sapaan,mohon permisi min sekarang,"Halo, silakan tanyakan kebutuhan Anda.",,mohon permisi min sekarang
+410,daftar_barang,bagaimana barang senin tersedia segera,Berikut daftar barang yang tersedia.,list_barang,bagaimana barang senin sedia segera
 411,kontak_admin,ada wa bengkel berapa segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,wa bengkel berapa segera
 412,sapaan,ada hallo semua dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,hallo semua dong
-413,bantuan_umum,kira-kira bisa tolong dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kirakira dong
-414,daftar_barang,bagaimana daftar barang bengkel dong,Berikut daftar oli yang tersedia.,list_barang,bagaimana daftar barang bengkel dong
-415,bantuan_umum,kamu bisa apa saja info bengkel dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu apa info bengkel dong
+413,bantuan_umum,kira-kira bisa tolong dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,kirakira dong
+414,daftar_barang,bagaimana daftar barang bengkel dong,Berikut daftar barang yang tersedia.,list_barang,bagaimana daftar barang bengkel dong
+415,bantuan_umum,kamu bisa apa saja info bengkel dong,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kamu apa info bengkel dong
 416,lokasi_bengkel,mohon petunjuk arah bengkel dong,Bengkel berada di depan Masjid Senduro.,open_maps,mohon tunjuk arah bengkel dong
 417,layanan_servis,bagaimana motor tarikan lemah,Sedang menganalisis keluhan motor.,diagnosa,bagaimana motor tari lemah
 418,lokasi_bengkel,bagaimana posisi bengkel dimana segera,Bengkel berada di depan Masjid Senduro.,open_maps,bagaimana posisi bengkel segera
 419,akhir_percakapan,mohon thanks dong,"Sama-sama, semoga membantu.",,mohon thanks dong
 420,lokasi_bengkel,kira-kira kirim alamat bengkel segera,Bengkel berada di depan Masjid Senduro.,open_maps,kirakira kirim alamat bengkel segera
-421,akhir_percakapan,apa bye,"Sama-sama, semoga membantu.",,apa bye
-422,bantuan_umum,kamu bisa mau tanya min dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu mau tanya min dong
+421,akhir_percakapan,apa bye,Terima kasih telah menggunakan layanan chatbot bengkel.,,apa bye
+422,bantuan_umum,kamu bisa mau tanya min dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,kamu mau tanya min dong
 423,kontak_admin,mohon hubungi petugas bengkel dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,mohon hubung tugas bengkel dong
 424,rekom_produk,kamu bisa saran oli mesin sekarang,Rekomendasi produk.,saran_produk,kamu saran oli mesin sekarang
 425,sapaan,ada hai kurnia,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,hai kurnia
-426,sapaan,ada pagi kak sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,pagi kak sekarang
-427,bantuan_umum,ada chatbot ini bisa apa sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,chatbot apa sekarang
-428,sapaan,mohon punten mang segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon punten mang segera
+426,sapaan,ada pagi kak sekarang,"Selamat pagi, ada yang bisa kami bantu?",,pagi kak sekarang
+427,bantuan_umum,ada chatbot ini bisa apa sekarang,"Saya dapat membantu lokasi bengkel, jadwal, servis motor, stok barang, dan rekomendasi produk.",,chatbot apa sekarang
+428,sapaan,mohon punten mang segera,"Halo, silakan tanyakan kebutuhan Anda.",,mohon punten mang segera
 429,cek_stok,mohon ada stok oli motor segera,Sedang cek stok barang.,check_stock,mohon stok oli motor segera
 430,info_barang,ada info produk bengkel segera,Info barang.,info_barang,info produk bengkel segera
 431,cek_stok,kira-kira ada oli ahm mpx 2,Sedang cek stok barang.,check_stock,kirakira oli ahm mpx
 432,kontak_admin,kira-kira kontak admin ada segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,kirakira kontak admin segera
-433,harga_servis,kamu bisa harga servis motor matic dong,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kamu harga servis motor matic dong
-434,akhir_percakapan,bagaimana udah cukup,"Sama-sama, semoga membantu.",,bagaimana udah cukup
-435,sapaan,mohon pagi kak segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon pagi kak segera
+433,harga_servis,kamu bisa harga servis motor matic dong,Biaya servis motor matic mulai dari Rp75.000.,,kamu harga servis motor matic dong
+434,akhir_percakapan,bagaimana udah cukup,"Baik, terima kasih telah menggunakan layanan chatbot bengkel.",,bagaimana udah cukup
+435,sapaan,mohon pagi kak segera,"Selamat pagi, ada yang bisa kami bantu?",,mohon pagi kak segera
 436,sapaan,ada halo segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,halo segera
-437,jadwal_bengkel,apa jadwal bengkel gimana sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,apa jadwal bengkel gimana sekarang
-438,sapaan,kira-kira assalamu'alaikum segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira assalamualaikum segera
-439,sapaan,bagaimana assalamu'alaikum,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana assalamualaikum
+437,jadwal_bengkel,apa jadwal bengkel gimana sekarang,Bengkel buka Senin-Sabtu pukul 08.00-17.00 WIB.,,apa jadwal bengkel gimana sekarang
+438,sapaan,kira-kira assalamu'alaikum segera,"Waalaikumsalam, ada yang bisa dibantu?",,kirakira assalamualaikum segera
+439,sapaan,bagaimana assalamu'alaikum,"Waalaikumsalam, ada yang bisa dibantu?",,bagaimana assalamualaikum
 440,sapaan,ada oi,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,oi
-441,harga_servis,bagaimana berapa ongkos servis sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,bagaimana berapa ongkos servis sekarang
-442,akhir_percakapan,kamu bisa cukup sekarang,"Sama-sama, semoga membantu.",,kamu cukup sekarang
+441,harga_servis,bagaimana berapa ongkos servis sekarang,Biaya servis motor mulai dari Rp75.000.,,bagaimana berapa ongkos servis sekarang
+442,akhir_percakapan,kamu bisa cukup sekarang,"Baik, terima kasih telah menggunakan layanan chatbot bengkel.",,kamu cukup sekarang
 443,kontak_admin,mohon wa bengkel berapa segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,mohon wa bengkel berapa segera
 444,layanan_servis,kamu bisa motor panas terus segera,Sedang menganalisis keluhan motor.,diagnosa,kamu motor panas terus segera
 445,layanan_servis,ada motor kurang tenaga dong,Sedang menganalisis keluhan motor.,diagnosa,motor kurang tenaga dong
 446,info_barang,kira-kira detail produk sparepart segera,Info barang.,info_barang,kirakira detail produk sparepart segera
 447,kontak_admin,apa nomor bengkel berapa dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,apa nomor bengkel berapa dong
-448,jadwal_bengkel,kira-kira apa hari ini bengkel buka segera,Bengkel buka pukul 08.00-17.00 WIB.,,kirakira apa hari bengkel buka segera
+448,jadwal_bengkel,kira-kira apa hari ini bengkel buka segera,Bengkel libur hari Minggu.,,kirakira apa hari bengkel buka segera
 449,daftar_barang,apa oli apa saja yang ada segera,Berikut daftar oli yang tersedia.,list_barang,apa oli apa segera
 450,kontak_admin,kamu bisa nomor telepon bengkel dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,kamu nomor telepon bengkel dong
 451,kontak_admin,ada admin bisa dihubungi dong,Nomor WhatsApp kami adalah 085606213825.,open_wa,admin hubung dong
-452,daftar_barang,mohon barang apa yang tersedia segera,Berikut daftar oli yang tersedia.,list_barang,mohon barang apa sedia segera
+452,daftar_barang,mohon barang apa yang tersedia segera,Berikut daftar barang yang tersedia.,list_barang,mohon barang apa sedia segera
 453,kontak_admin,ada nomor hotline bengkel,Nomor WhatsApp kami adalah 085606213825.,open_wa,nomor hotline bengkel
 454,kontak_admin,apa hubungi petugas bengkel segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,apa hubung tugas bengkel segera
 455,daftar_barang,kamu bisa daftar komponen motor,Berikut daftar oli yang tersedia.,list_barang,kamu daftar komponen motor
 456,info_barang,bagaimana apa info oli,Info barang.,info_barang,bagaimana apa info oli
 457,sapaan,apa ada yang bisa dibantu dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa bantu dong
-458,sapaan,ada pagi kak,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,pagi kak
-459,layanan_servis,ada layanan apa saja yang ada di bengkel sekarang,Sedang menganalisis keluhan motor.,diagnosa,layan apa bengkel sekarang
-460,jadwal_bengkel,ada bengkel tutup kapan,Bengkel buka pukul 08.00-17.00 WIB.,,bengkel tutup kapan
-461,sapaan,bagaimana pagi min,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,bagaimana pagi min
+458,sapaan,ada pagi kak,"Selamat pagi, ada yang bisa kami bantu?",,pagi kak
+459,layanan_servis,ada layanan apa saja yang ada di bengkel sekarang,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,layan apa bengkel sekarang
+460,jadwal_bengkel,ada bengkel tutup kapan,Bengkel tutup pukul 17.00 WIB.,,bengkel tutup kapan
+461,sapaan,bagaimana pagi min,"Selamat pagi, ada yang bisa kami bantu?",,bagaimana pagi min
 462,info_barang,apa informasi barang motor,Info barang.,info_barang,apa informasi barang motor
-463,sapaan,kira-kira pagi bengkel sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira pagi bengkel sekarang
+463,sapaan,kira-kira pagi bengkel sekarang,"Selamat pagi, ada yang bisa dibantu?",,kirakira pagi bengkel sekarang
 464,rekom_produk,apa oli bagus untuk scoopy sekarang,Rekomendasi produk.,saran_produk,apa oli bagus scoopy sekarang
-465,layanan_servis,kira-kira layanan servis motor,Sedang menganalisis keluhan motor.,diagnosa,kirakira layan servis motor
+465,layanan_servis,kira-kira layanan servis motor,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,kirakira layan servis motor
 466,akhir_percakapan,apa cukup terima kasih sekarang,"Sama-sama, semoga membantu.",,apa cukup terima kasih sekarang
-467,harga_servis,kira-kira berapa biaya ganti ban sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kirakira berapa biaya ganti ban sekarang
-468,sapaan,apa selamat datang segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa selamat datang segera
-469,jadwal_bengkel,mohon sabtu buka tidak,Bengkel buka pukul 08.00-17.00 WIB.,,mohon sabtu buka
+467,harga_servis,kira-kira berapa biaya ganti ban sekarang,Biaya penggantian ban menyesuaikan jenis ban.,,kirakira berapa biaya ganti ban sekarang
+468,sapaan,apa selamat datang segera,"Selamat pagi, ada yang bisa kami bantu?",,apa selamat datang segera
+469,jadwal_bengkel,mohon sabtu buka tidak,Bengkel buka hari Senin-Sabtu.,,mohon sabtu buka
 470,lokasi_bengkel,mohon rute ke bengkel,Bengkel berada di depan Masjid Senduro.,open_maps,mohon rute bengkel
-471,bantuan_umum,kamu bisa apakah kamu bisa bantu servis dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu kamu bantu servis dong
+471,bantuan_umum,kamu bisa apakah kamu bisa bantu servis dong,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kamu kamu bantu servis dong
 472,bantuan_umum,kira-kira minta bantuan,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kirakira minta bantu
 473,cek_stok,bagaimana stok busi iridium sekarang,Sedang cek stok barang.,check_stock,bagaimana stok busi iridium sekarang
 474,rekom_produk,kira-kira apa oli terbaik dong,Rekomendasi produk.,saran_produk,kirakira apa oli baik dong
 475,rekom_produk,kira-kira pilih oli terbaik untuk honda,Rekomendasi produk.,saran_produk,kirakira pilih oli baik honda
 476,info_barang,kira-kira detail oli enduro matic,Info barang.,info_barang,kirakira detail oli enduro matic
-477,sapaan,apa hola bengkel dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa hola bengkel dong
+477,sapaan,apa hola bengkel dong,"Selamat pagi, ada yang bisa dibantu?",,apa hola bengkel dong
 478,layanan_servis,ada motor spin gas,Sedang menganalisis keluhan motor.,diagnosa,motor spin gas
-479,sapaan,kamu bisa apa kabar bengkel segera,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kamu apa kabar bengkel segera
-480,harga_servis,apa berapa harga perbaikan,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,apa berapa harga baik
+479,sapaan,kamu bisa apa kabar bengkel segera,"Selamat pagi, ada yang bisa dibantu?",,kamu apa kabar bengkel segera
+480,harga_servis,apa berapa harga perbaikan,Biaya perbaikan rem menyesuaikan kondisi dan sparepart.,,apa berapa harga baik
 481,layanan_servis,ada motor saya brebet dong,Sedang menganalisis keluhan motor.,diagnosa,motor brebet dong
 482,harga_servis,ada ganti oli motor berapa sekarang,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,ganti oli motor berapa sekarang
 483,akhir_percakapan,bagaimana saya tutup segera,"Sama-sama, semoga membantu.",,bagaimana tutup segera
 484,layanan_servis,kira-kira motor tarikan lemah sekarang,Sedang menganalisis keluhan motor.,diagnosa,kirakira motor tari lemah sekarang
 485,layanan_servis,mohon motor hidup mati hidup sekarang,Sedang menganalisis keluhan motor.,diagnosa,mohon motor hidup mati hidup sekarang
-486,harga_servis,kira-kira servis lengkap habis berapa segera,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,kirakira servis lengkap habis berapa segera
-487,layanan_servis,bagaimana apa saja jasa servis di sini,Sedang menganalisis keluhan motor.,diagnosa,bagaimana apa jasa servis sini
-488,layanan_servis,kamu bisa daftar layanan bengkel,Sedang menganalisis keluhan motor.,diagnosa,kamu daftar layan bengkel
+486,harga_servis,kira-kira servis lengkap habis berapa segera,Biaya servis lengkap mulai dari Rp150.000.,,kirakira servis lengkap habis berapa segera
+487,layanan_servis,bagaimana apa saja jasa servis di sini,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,bagaimana apa jasa servis sini
+488,layanan_servis,kamu bisa daftar layanan bengkel,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,kamu daftar layan bengkel
 489,cek_stok,ada cek stok sparepart,Sedang cek stok barang.,check_stock,cek stok sparepart
 490,info_barang,bagaimana detail kampas rem segera,Info barang.,info_barang,bagaimana detail kampas rem segera
-491,jadwal_bengkel,apa bengkel tutup kapan sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,apa bengkel tutup kapan sekarang
+491,jadwal_bengkel,apa bengkel tutup kapan sekarang,Bengkel tutup pukul 17.00 WIB.,,apa bengkel tutup kapan sekarang
 492,kontak_admin,bagaimana bagaimana hubungi bengkel segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,bagaimana bagaimana hubung bengkel segera
-493,bantuan_umum,kamu bisa tanya dong dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu tanya dong dong
+493,bantuan_umum,kamu bisa tanya dong dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,kamu tanya dong dong
 494,rekom_produk,ada saran oli mesin segera,Rekomendasi produk.,saran_produk,saran oli mesin segera
-495,harga_servis,apa harga servis motor matic dong,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,apa harga servis motor matic dong
-496,daftar_barang,kira-kira tunjukkan daftar barang segera,Berikut daftar oli yang tersedia.,list_barang,kirakira tunjuk daftar barang segera
+495,harga_servis,apa harga servis motor matic dong,Biaya servis motor matic mulai dari Rp75.000.,,apa harga servis motor matic dong
+496,daftar_barang,kira-kira tunjukkan daftar barang segera,Berikut daftar barang yang tersedia.,list_barang,kirakira tunjuk daftar barang segera
 497,akhir_percakapan,bagaimana selamat tinggal,"Sama-sama, semoga membantu.",,bagaimana selamat tinggal
-498,sapaan,mohon sore kak dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,mohon sore kak dong
-499,layanan_servis,mohon bisa servis apa saja,Sedang menganalisis keluhan motor.,diagnosa,mohon servis apa
+498,sapaan,mohon sore kak dong,"Selamat sore, ada yang bisa dibantu?",,mohon sore kak dong
+499,layanan_servis,mohon bisa servis apa saja,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,mohon servis apa
 500,sapaan,apa hallo semua sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa hallo semua sekarang
 501,sapaan,ada hallo dong,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,hallo dong
 502,kontak_admin,bagaimana nomor wa bengkel berapa,Nomor WhatsApp kami adalah 085606213825.,open_wa,bagaimana nomor wa bengkel berapa
@@ -508,26 +508,26 @@ id_chatbot,intent,pertanyaan,jawaban,action,processed_question
 507,rekom_produk,kamu bisa oli yang cocok untuk beat dong,Rekomendasi produk.,saran_produk,kamu oli cocok beat dong
 508,info_barang,ada informasi barang motor segera,Info barang.,info_barang,informasi barang motor segera
 509,info_barang,kira-kira info komponen motor,Info barang.,info_barang,kirakira info komponen motor
-510,bantuan_umum,kamu bisa mau tanya min segera,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu mau tanya min segera
-511,jadwal_bengkel,bagaimana jam service bengkel sekarang,Bengkel buka pukul 08.00-17.00 WIB.,,bagaimana jam service bengkel sekarang
+510,bantuan_umum,kamu bisa mau tanya min segera,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,kamu mau tanya min segera
+511,jadwal_bengkel,bagaimana jam service bengkel sekarang,Bengkel buka sampai pukul 17.00 WIB.,,bagaimana jam service bengkel sekarang
 512,sapaan,kira-kira hai kurnia,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,kirakira hai kurnia
-513,layanan_servis,apa layanan di kurnia motor sekarang,Sedang menganalisis keluhan motor.,diagnosa,apa layan kurnia motor sekarang
-514,bantuan_umum,ada chatbot ini bisa apa dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,chatbot apa dong
+513,layanan_servis,apa layanan di kurnia motor sekarang,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,apa layan kurnia motor sekarang
+514,bantuan_umum,ada chatbot ini bisa apa dong,"Saya dapat membantu lokasi bengkel, jadwal, servis motor, stok barang, dan rekomendasi produk.",,chatbot apa dong
 515,jadwal_bengkel,ada jam service bengkel dong,Bengkel buka pukul 08.00-17.00 WIB.,,jam service bengkel dong
-516,sapaan,apa malam min sekarang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,apa malam min sekarang
+516,sapaan,apa malam min sekarang,"Halo, pesan Anda tetap dapat ditanyakan melalui chatbot ini.",,apa malam min sekarang
 517,layanan_servis,kira-kira motor tarikan lemah segera,Sedang menganalisis keluhan motor.,diagnosa,kirakira motor tari lemah segera
-518,sapaan,ada selamat datang,Halo! Ada yang bisa saya bantu terkait layanan Bengkel Motor Kurnia?,,selamat datang
+518,sapaan,ada selamat datang,"Selamat pagi, ada yang bisa kami bantu?",,selamat datang
 519,bantuan_umum,bagaimana bisa tolong sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bagaimana sekarang
 520,kontak_admin,kamu bisa wa bengkel berapa segera,Nomor WhatsApp kami adalah 085606213825.,open_wa,kamu wa bengkel berapa segera
 521,cek_stok,mohon ada stok oli motor sekarang,Sedang cek stok barang.,check_stock,mohon stok oli motor sekarang
 522,lokasi_bengkel,alamat bengkel bengkel ada dimana,Bengkel berada di depan Masjid Senduro.,open_maps,alamat bengkel bengkel
-523,akhir_percakapan,apa sampai jumpa,"Sama-sama, semoga membantu.",,apa jumpa
+523,akhir_percakapan,apa sampai jumpa,Sampai jumpa kembali.,,apa jumpa
 524,bantuan_umum,ada bisa bantu masalah motor sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,bantu masalah motor sekarang
-525,bantuan_umum,ada bisa tolong dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,dong
-526,layanan_servis,mohon bisa servis apa saja dong,Sedang menganalisis keluhan motor.,diagnosa,mohon servis apa dong
-527,bantuan_umum,kamu bisa bisa tolong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kamu
-528,harga_servis,mohon harga servis motor kamu,"Biaya ganti oli mulai Rp50.000, belum termasuk harga oli tertentu.",,mohon harga servis motor kamu
-529,bantuan_umum,kira-kira kamu bisa bantu apa dong,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kirakira kamu bantu apa dong
+525,bantuan_umum,ada bisa tolong dong,Silakan tanyakan kebutuhan Anda terkait bengkel motor.,,dong
+526,layanan_servis,mohon bisa servis apa saja dong,"Bengkel Kurnia Motor melayani berbagai jasa servis, antara lain: Servis Motor Matic, Servis Injeksi, Tune Up Motor, Ganti Ban, Ganti Oli, Perbaikan Rem Motor, dan Servis Motor Karburator.",,mohon servis apa dong
+527,bantuan_umum,kamu bisa bisa tolong,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kamu
+528,harga_servis,mohon harga servis motor kamu,Biaya servis injeksi menyesuaikan kondisi motor.,,mohon harga servis motor kamu
+529,bantuan_umum,kira-kira kamu bisa bantu apa dong,"Saya dapat membantu informasi bengkel, stok barang, dan keluhan motor sederhana.",,kirakira kamu bantu apa dong
 530,bantuan_umum,kira-kira bisa tolong sekarang,"Saya dapat membantu informasi bengkel, jadwal, lokasi, servis, stok barang, dan rekomendasi produk.",,kirakira sekarang
 531,info_barang,mohon info sparepart segera,Info barang.,info_barang,mohon info sparepart segera
 532,layanan_servis,kamu bisa motor brebet saat digas,Sedang menganalisis keluhan motor.,diagnosa,kamu motor brebet gas

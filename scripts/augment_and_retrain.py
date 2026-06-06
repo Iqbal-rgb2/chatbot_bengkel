@@ -84,16 +84,34 @@ def make_templates():
 def generate_augmentations(df, target_count=240):
     templates = make_templates()
     rows = []
-    by_intent = {
-        intent: group.iloc[0].to_dict()
-        for intent, group in df.groupby('intent')
-    }
 
     for intent, phrases in templates.items():
-        base_row = by_intent[intent]
+        intent_df = df[df['intent'] == intent].reset_index(drop=True)
+        if intent_df.empty:
+            continue
+
+        # Fit a local vectorizer to match generated phrases to closest database questions
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        local_vec = TfidfVectorizer(token_pattern=r'(?u)\b\w+\b')
+        try:
+            local_vec.fit(intent_df['processed_question'])
+            db_vecs = local_vec.transform(intent_df['processed_question'])
+            has_vocab = True
+        except ValueError:
+            has_vocab = False
+
         phrase_pool = expand_phrase_variants(phrases)
 
         for phrase in phrase_pool:
+            if has_vocab:
+                processed_phrase = preprocess_text(phrase)
+                phrase_vec = local_vec.transform([processed_phrase])
+                sims = cosine_similarity(phrase_vec, db_vecs)
+                best_idx = sims.argmax()
+                base_row = intent_df.iloc[best_idx].to_dict()
+            else:
+                base_row = intent_df.iloc[0].to_dict()
+
             rows.append({
                 'intent': intent,
                 'pertanyaan': phrase,
@@ -109,10 +127,15 @@ def generate_augmentations(df, target_count=240):
     if len(augmented) < target_count:
         extra_rows = []
         existing_processed = set(augmented['processed_question']) | set(df['processed_question'])
-        base_phrases = augmented['pertanyaan'].tolist() or [row['pertanyaan'] for row in rows]
+        base_records = [r for r in rows]
 
         while len(augmented) + len(extra_rows) < target_count:
-            phrase = random.choice(base_phrases)
+            record = random.choice(base_records)
+            phrase = record['pertanyaan']
+            intent = record['intent']
+            jawaban = record['jawaban']
+            action = record['action']
+
             candidate = random.choice([
                 'tolong ', 'apakah ', 'mohon ', 'saya mau ', 'saya ingin ', 'bagaimana ', ''
             ]) + phrase
@@ -122,8 +145,8 @@ def generate_augmentations(df, target_count=240):
                 extra_rows.append({
                     'intent': intent,
                     'pertanyaan': candidate,
-                    'jawaban': base_row['jawaban'],
-                    'action': base_row['action'],
+                    'jawaban': jawaban,
+                    'action': action,
                     'processed_question': processed
                 })
                 existing_processed.add(processed)
@@ -133,6 +156,7 @@ def generate_augmentations(df, target_count=240):
 
     augmented = augmented.sample(n=target_count, random_state=42).reset_index(drop=True)
     return augmented
+
 
 
 def train_models(dataset):
