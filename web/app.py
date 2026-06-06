@@ -729,6 +729,20 @@ def prioritize_intent(text, predicted_intent):
 
         return "layanan_servis"
 
+    harga_servis_keywords = [
+        "harga", "biaya", "ongkos", "tarif", "berapa", "bayar", "tarifnya"
+    ]
+    service_action_keywords = [
+        "servis", "service", "tune", "up", "ganti", "perbaikan", "benerin", "perbaiki"
+    ]
+
+    if (
+        contains_any(text_lower, harga_servis_keywords)
+        and contains_any(text_lower, service_action_keywords)
+    ):
+
+        return "harga_servis"
+
     if contains_any(
         text_lower,
         [

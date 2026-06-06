@@ -81,7 +81,9 @@
         "harga servis motor matic", "berapa ongkos service", "harga servis full",
         "berapa harga perbaikan", "biaya service biasa", "harga service motor",
         "berapa biaya ganti ban", "harga servis berkala", "berapa biaya ganti kampas",
-        "biaya servis rem", "harga servis motor kamu"
+        "biaya servis rem", "harga servis motor kamu",
+        "tarif tune up motor", "ongkos ganti oli berapa", "biaya perbaikan rem berapa",
+        "habis berapa kalau servis", "servis injeksi bayar berapa", "ongkos pasang ban motor"
     ],
     "info_barang": [
         "informasi oli yamalube matic", "harga oli ahm mpx 2", "detail oli enduro matic",

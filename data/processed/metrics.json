@@ -1,91 +1,91 @@
 {
-    "accuracy": 0.8037383177570093,
+    "accuracy": 0.8598130841121495,
     "total_test_samples": 107,
-    "timestamp": "2026-06-06 16:48:23",
+    "timestamp": "2026-06-06 17:04:28",
     "classification_report": {
         "akhir_percakapan": {
             "precision": 1.0,
-            "recall": 0.2,
-            "f1-score": 0.3333333333333333,
+            "recall": 0.6,
+            "f1-score": 0.75,
             "support": 5.0
         },
         "bantuan_umum": {
-            "precision": 0.75,
+            "precision": 0.9,
             "recall": 0.9,
-            "f1-score": 0.8181818181818182,
+            "f1-score": 0.9,
             "support": 10.0
         },
         "cek_stok": {
-            "precision": 0.8333333333333334,
-            "recall": 0.5,
-            "f1-score": 0.625,
-            "support": 10.0
+            "precision": 0.8461538461538461,
+            "recall": 1.0,
+            "f1-score": 0.9166666666666666,
+            "support": 11.0
         },
         "daftar_barang": {
-            "precision": 1.0,
-            "recall": 1.0,
-            "f1-score": 1.0,
-            "support": 8.0
+            "precision": 0.8571428571428571,
+            "recall": 0.8571428571428571,
+            "f1-score": 0.8571428571428571,
+            "support": 7.0
         },
         "harga_servis": {
             "precision": 1.0,
-            "recall": 0.2,
-            "f1-score": 0.3333333333333333,
-            "support": 5.0
+            "recall": 0.16666666666666666,
+            "f1-score": 0.2857142857142857,
+            "support": 6.0
         },
         "info_barang": {
-            "precision": 0.631578947368421,
-            "recall": 1.0,
-            "f1-score": 0.7741935483870968,
-            "support": 12.0
+            "precision": 0.9090909090909091,
+            "recall": 0.9090909090909091,
+            "f1-score": 0.9090909090909091,
+            "support": 11.0
         },
         "jadwal_bengkel": {
             "precision": 1.0,
-            "recall": 1.0,
-            "f1-score": 1.0,
+            "recall": 0.8571428571428571,
+            "f1-score": 0.9230769230769231,
             "support": 7.0
         },
         "kontak_admin": {
             "precision": 1.0,
-            "recall": 0.9,
-            "f1-score": 0.9473684210526315,
-            "support": 10.0
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 7.0
         },
         "layanan_servis": {
-            "precision": 0.6666666666666666,
+            "precision": 0.65,
             "recall": 1.0,
-            "f1-score": 0.8,
-            "support": 12.0
+            "f1-score": 0.7878787878787878,
+            "support": 13.0
         },
         "lokasi_bengkel": {
             "precision": 1.0,
-            "recall": 0.5714285714285714,
-            "f1-score": 0.7272727272727273,
-            "support": 7.0
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 9.0
         },
         "rekom_produk": {
             "precision": 1.0,
-            "recall": 0.7142857142857143,
-            "f1-score": 0.8333333333333334,
-            "support": 7.0
+            "recall": 0.75,
+            "f1-score": 0.8571428571428571,
+            "support": 8.0
         },
         "sapaan": {
-            "precision": 0.7647058823529411,
-            "recall": 0.9285714285714286,
-            "f1-score": 0.8387096774193549,
-            "support": 14.0
+            "precision": 0.7857142857142857,
+            "recall": 0.8461538461538461,
+            "f1-score": 0.8148148148148148,
+            "support": 13.0
         },
-        "accuracy": 0.8037383177570093,
+        "accuracy": 0.8598130841121495,
         "macro avg": {
-            "precision": 0.8871904024767803,
-            "recall": 0.7428571428571428,
-            "f1-score": 0.7525605160261356,
+            "precision": 0.9123418248418248,
+            "recall": 0.8238497613497614,
+            "f1-score": 0.833460675127342,
             "support": 107.0
         },
         "weighted avg": {
-            "precision": 0.8515716173336033,
-            "recall": 0.8037383177570093,
-            "f1-score": 0.7831339833124894,
+            "precision": 0.8875885796446543,
+            "recall": 0.8598130841121495,
+            "f1-score": 0.8476758616945532,
             "support": 107.0
         }
     }
