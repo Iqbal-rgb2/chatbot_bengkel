@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(BASE_DIR, 'database', 'chatbot.db')
@@ -17,54 +18,11 @@ CREATE TABLE IF NOT EXISTS diagnosa_keluhan (
 )
 ''')
 
-# 2. Data diagnosa bawaan (sebelumnya hardcoded di Python)
-diagnosa_seed = [
-    (
-        'brebet gas', 
-        'Motor brebet saat digas', 
-        'Motor brebet saat digas biasanya disebabkan karburator atau injektor kotor.'
-    ),
-    (
-        'brebet tanjakan', 
-        'Motor brebet saat tanjakan', 
-        'Motor brebet saat tanjakan biasanya karena suplai bahan bakar kurang optimal atau CVT mulai lemah.'
-    ),
-    (
-        'brebet dingin', 
-        'Motor brebet saat kondisi dingin', 
-        'Motor brebet saat kondisi dingin biasanya karena busi atau setting udara belum optimal.'
-    ),
-    (
-        'brebet', 
-        'Motor brebet secara umum', 
-        'Motor brebet dapat disebabkan oleh busi, karburator, injektor, atau filter udara.'
-    ),
-    (
-        'mogok', 
-        'Motor mogok / mati mendadak', 
-        'Motor mogok bisa disebabkan aki lemah, busi bermasalah, suplai bensin tidak lancar, atau sistem pengapian terganggu.'
-    ),
-    (
-        'rem', 
-        'Masalah rem motor', 
-        'Masalah rem bisa disebabkan kampas rem aus, setelan rem kurang tepat, atau komponen rem perlu dibersihkan.'
-    ),
-    (
-        'asap', 
-        'Asap putih dari knalpot', 
-        'Asap putih dari motor biasanya berkaitan dengan oli yang ikut terbakar atau kondisi mesin yang perlu diperiksa.'
-    ),
-    (
-        'bensin', 
-        'Kehabisan bensin atau masalah bahan bakar', 
-        'Jika motor kehabisan bensin, isi bahan bakar terlebih dahulu lalu coba starter ulang. Jika tetap bermasalah, sistem bahan bakar perlu dicek.'
-    ),
-    (
-        'bunyi', 
-        'Bunyi tidak normal pada motor', 
-        'Bunyi tidak normal pada motor bisa berasal dari rantai, CVT, rem, atau bagian mesin. Sebaiknya dicek langsung agar sumber bunyinya jelas.'
-    )
-]
+# 2. Baca data diagnosa bawaan dari berkas JSON
+JSON_PATH = os.path.join(BASE_DIR, 'scripts', 'seeder_data', 'diagnosa_seed.json')
+with open(JSON_PATH, 'r', encoding='utf-8') as f:
+    diagnosa_data = json.load(f)
+diagnosa_seed = [(item['kata_kunci'], item['gejala'], item['solusi_analisis']) for item in diagnosa_data]
 
 # 3. Masukkan data ke database (gunakan INSERT OR IGNORE agar tidak duplikat)
 inserted_count = 0

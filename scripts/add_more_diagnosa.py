@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(BASE_DIR, 'database', 'chatbot.db')
@@ -7,48 +8,11 @@ DB_PATH = os.path.join(BASE_DIR, 'database', 'chatbot.db')
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-new_diagnosa = [
-    (
-        'mogok starter', 
-        'Motor mogok / starter tidak merespon (hanya bunyi cetek-cetek)', 
-        'Motor tidak bisa distarter biasanya disebabkan oleh aki lemah, relay starter (bendik) rusak, atau tombol/switch starter kotor.'
-    ),
-    (
-        'mogok kompresi', 
-        'Motor mogok dan kick starter terasa sangat enteng (kehilangan kompresi)', 
-        'Kondisi loss compression (hilang kompresi) biasanya memerlukan penambahan sedikit oli ke lubang busi untuk merapatkan klep kembali, atau servis besar untuk skir klep.'
-    ),
-    (
-        'rem bunyi', 
-        'Rem berdecit atau mengeluarkan suara berisik saat ditekan', 
-        'Suara mendecit pada rem disebabkan oleh kampas rem yang kotor terkena debu jalanan atau kampas rem sudah tipis sehingga besi bergesekan dengan piringan cakram.'
-    ),
-    (
-        'rem keras', 
-        'Rem terasa keras atau macet saat ditekan', 
-        'Rem keras atau macet biasanya disebabkan minyak rem yang kotor/berkurang, piston kaliper macet karena karat, atau terdapat angin palsu di sistem rem.'
-    ),
-    (
-        'bunyi cvt', 
-        'Bunyi kasar / berdecit di area CVT matic', 
-        'Bunyi kasar di CVT matic umumnya disebabkan oleh roller yang sudah peang/aus, v-belt retak, atau bearing CVT yang mulai oblak.'
-    ),
-    (
-        'bunyi rantai', 
-        'Rantai berisik, kendor, atau terasa menyentak', 
-        'Rantai berisik biasanya karena kering kurang pelumas, kendor, atau gir roda sudah tajam/aus. Solusinya lakukan pelumasan, penyetelan ulang, atau ganti gir set.'
-    ),
-    (
-        'mesin panas', 
-        'Mesin motor cepat panas atau terjadi overheat', 
-        'Mesin cepat panas disebabkan oleh air radiator habis (pada motor radiator), kualitas oli menurun karena lama tidak diganti, atau volume oli mesin berkurang drastis.'
-    ),
-    (
-        'asap hitam', 
-        'Knalpot motor mengeluarkan asap hitam pekat', 
-        'Asap hitam menandakan pembakaran terlalu boros, bisa karena filter udara kotor menyumbat pasokan oksigen, atau setelan karburator/injektor terlalu kaya bensin.'
-    )
-]
+# Baca data diagnosa tambahan dari berkas JSON
+JSON_PATH = os.path.join(BASE_DIR, 'scripts', 'seeder_data', 'new_diagnosa.json')
+with open(JSON_PATH, 'r', encoding='utf-8') as f:
+    diagnosa_data = json.load(f)
+new_diagnosa = [(item['kata_kunci'], item['gejala'], item['solusi_analisis']) for item in diagnosa_data]
 
 inserted_count = 0
 for kata_kunci, gejala, solusi in new_diagnosa:

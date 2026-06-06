@@ -1,7 +1,7 @@
 {
     "accuracy": 0.8301886792452831,
     "total_test_samples": 106,
-    "timestamp": "2026-06-06 06:17:07",
+    "timestamp": "2026-06-06 11:00:55",
     "classification_report": {
         "akhir_percakapan": {
             "precision": 1.0,
