@@ -520,12 +520,10 @@
                     <td>{{ (val.recall * 100) | round(2) }}%</td>
                     <td><strong>{{ (val['f1-score'] * 100) | round(2) }}%</strong></td>
                     <td>
-                        {% if val['f1-score'] >= 0.80 %}
-                        <span class="badge badge-success">Sangat Stabil</span>
-                        {% elif val['f1-score'] >= 0.60 %}
-                        <span class="badge badge-warning">Cukup Baik</span>
+                        {% if val['f1-score'] >= 0.95 %}
+                        <span class="badge badge-success">Stabil</span>
                         {% else %}
-                        <span class="badge badge-danger">Perlu Perbaikan</span>
+                        <span class="badge badge-warning">Cukup Stabil</span>
                         {% endif %}
                     </td>
                 </tr>
