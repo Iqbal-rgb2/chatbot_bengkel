@@ -193,6 +193,31 @@
             color: #991b1b;
         }
 
+        .status-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.dot-success {
+            background-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+
+        .status-dot.dot-warning {
+            background-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+        }
+
         /* METRICS TABLE */
         .section-title {
             font-size: 20px;
@@ -520,11 +545,15 @@
                     <td>{{ (val.recall * 100) | round(2) }}%</td>
                     <td><strong>{{ (val['f1-score'] * 100) | round(2) }}%</strong></td>
                     <td>
-                        {% if val['f1-score'] >= 0.95 %}
-                        <span class="badge badge-success">Stabil</span>
-                        {% else %}
-                        <span class="badge badge-warning">Cukup Stabil</span>
-                        {% endif %}
+                        <div class="status-container">
+                            {% if val['f1-score'] >= 0.95 %}
+                            <span class="status-dot dot-success"></span>
+                            <span>Stabil</span>
+                            {% else %}
+                            <span class="status-dot dot-warning"></span>
+                            <span>Cukup Stabil</span>
+                            {% endif %}
+                        </div>
                     </td>
                 </tr>
                 {% endif %}
