@@ -17,8 +17,8 @@
 
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
+            --primary: #1b75bc;
+            --primary-hover: #155e8c;
             --bg-app: #f8fafc;
             --bg-card: #ffffff;
             --border-color: #e2e8f0;
@@ -168,7 +168,7 @@
 
         .add-form {
             display: grid;
-            grid-template-columns: repeat(4, 1fr) auto;
+            grid-template-columns: repeat(5, 1fr) auto;
             gap: 12px;
             align-items: center;
         }
@@ -209,6 +209,10 @@
 
         .add-btn:hover {
             background: var(--primary-hover);
+        }
+
+        .cocok-input {
+            grid-column: span 1;
         }
 
         /* Responsive Table */
@@ -376,6 +380,9 @@
             .add-btn {
                 grid-column: span 2;
             }
+            .cocok-input {
+                grid-column: span 2;
+            }
             table th:nth-child(6), table td:nth-child(6) { width: 40%; }
             table th:nth-child(2), table td:nth-child(2) { width: 20%; }
         }
@@ -401,6 +408,9 @@
                 grid-template-columns: 1fr;
             }
             .add-btn {
+                grid-column: span 1;
+            }
+            .cocok-input {
                 grid-column: span 1;
             }
             /* Stack table to cards for mobile screens */
@@ -745,6 +755,178 @@
             background-color: #7f1d1d;
             color: #fecaca;
         }
+
+        /* Segmented Filter Control */
+        .filter-type-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            width: 100%;
+        }
+
+        .filter-tab {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-tab:hover {
+            color: var(--text-main);
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        body.dark-mode .filter-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-tab.active {
+            color: #ffffff;
+            background: var(--primary);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Motor Dropdown UI */
+        .motor-dropdown-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .motor-dropdown-btn {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            text-align: left;
+            cursor: pointer;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode .motor-dropdown-btn {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        .motor-dropdown-btn::after {
+            content: '▼';
+            font-size: 8px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            margin-left: 8px;
+        }
+
+        .motor-dropdown-wrapper.open .motor-dropdown-btn::after {
+            transform: rotate(180deg);
+        }
+
+        .motor-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 14px;
+            margin-top: 6px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .motor-dropdown-wrapper.open .motor-dropdown-content {
+            display: block;
+        }
+
+        .motor-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            margin-top: 12px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .motor-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .motor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .motor-pill-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 8px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            text-align: center;
+        }
+
+        body.dark-mode .motor-pill-label {
+            background: #334155;
+            color: #cbd5e1;
+        }
+
+        .motor-pill-label:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        body.dark-mode .motor-pill-label:hover {
+            background: #475569;
+            color: #ffffff;
+        }
+
+        .motor-pill-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .motor-pill-label.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Adjustments for edit form dropdown buttons */
+        .edit-form .motor-dropdown-btn {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
     </style>
 </head>
 
@@ -761,9 +943,10 @@
     <div class="header">
         <h1>Dashboard Barang</h1>
         <a href="/logout" class="logout-btn">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
             Logout
         </a>
@@ -773,10 +956,9 @@
     <div class="menu-box">
         <a href="/riwayat_stok" class="menu-card">
             <h2>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;">
-                    <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"/>
-                    <path d="M6 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;">
+                    <path d="M12 8v4l3 3"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
                 </svg>
                 Riwayat Stok
             </h2>
@@ -785,9 +967,8 @@
 
         <a href="/log_chat" class="menu-card">
             <h2>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;">
-                    <path d="M3 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H3zm10 11H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1z"/>
-                    <path d="M14 6a1 1 0 0 1 .707-.293l1.5 1.5a1 1 0 0 1 0 1.414l-1.5 1.5A1 1 0 0 1 14 9.5V6z"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 Log Chat
             </h2>
@@ -796,8 +977,10 @@
 
         <a href="/performa" class="menu-card">
             <h2>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;">
-                    <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11z"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
                 </svg>
                 Performa Chatbot
             </h2>
@@ -843,6 +1026,36 @@
 
                 <input type="number" name="harga" placeholder="Harga (Rp)" required min="0">
                 <input type="number" name="stok" placeholder="Stok Awal" required min="0">
+                <div class="motor-dropdown-wrapper cocok-input">
+                    <button type="button" class="motor-dropdown-btn" id="add-motor-trigger">Pilih Motor (0 terpilih)</button>
+                    <div class="motor-dropdown-content" id="add-motor-content">
+                        <div class="motor-section-title">Matic</div>
+                        <div class="motor-grid">
+                            {% for m in ['beat', 'vario', 'scoopy', 'mio', 'fino', 'nmax', 'aerox', 'pcx', 'lexi'] %}
+                            <label class="motor-pill-label">
+                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <div class="motor-section-title">Bebek</div>
+                        <div class="motor-grid">
+                            {% for m in ['supra', 'jupiter', 'vega', 'revo'] %}
+                            <label class="motor-pill-label">
+                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <div class="motor-section-title">Sport</div>
+                        <div class="motor-grid">
+                            {% for m in ['vixion', 'cb150r', 'rx king'] %}
+                            <label class="motor-pill-label">
+                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <input type="hidden" name="cocok_untuk" id="add-cocok-untuk" required>
+                </div>
 
                 <button type="submit" class="add-btn">
                     Tambah Barang
@@ -853,13 +1066,50 @@
         <!-- Card Section Divider -->
         <div class="card-divider"></div>
 
-        <!-- Section 2: Pilih Kategori Suku Cadang -->
+        <!-- Section 2: Pilih Kategori Suku Cadang & Jenis Motor -->
         <div class="category-filter-row">
-            <h3 class="subsection-title">Pilih Kategori Suku Cadang</h3>
-            <div class="category-pills">
+            <div class="filter-type-tabs">
+                <button type="button" class="filter-tab active" id="tab-sukucadang">Kategori Suku Cadang</button>
+                <button type="button" class="filter-tab" id="tab-motor">Kategori Jenis Motor</button>
+            </div>
+            
+            <h3 class="subsection-title" id="filter-title">Pilih Kategori Suku Cadang</h3>
+            
+            <!-- Pills for Spare Part Categories -->
+            <div class="category-pills" id="pills-sukucadang">
                 {% for kategori in data_kategori %}
                 <button class="pill" data-category="{{ kategori[0]|lower }}">{{ kategori[0] | capitalize }}</button>
                 {% endfor %}
+            </div>
+
+            <!-- Pills for Motor Categories -->
+            <div class="category-pills" id="pills-motor" style="display: none;">
+                <button class="pill" data-motor-type="matic">Matic</button>
+                <button class="pill" data-motor-type="bebek">Bebek</button>
+                <button class="pill" data-motor-type="sport">Sport</button>
+            </div>
+
+            <!-- Sub-pills for Specific Motor Models -->
+            <div id="motor-models-container" style="display: none; margin-top: 12px; border-top: 1px dashed var(--border-color); padding-top: 12px; width: 100%;">
+                <h4 class="subsection-title" style="font-size: 11px; margin-bottom: 8px;">Pilih Tipe Motor Spesifik:</h4>
+                
+                <div class="category-pills" id="pills-model-matic" style="display: none;">
+                    {% for m in ['beat', 'vario', 'scoopy', 'mio', 'fino', 'nmax', 'aerox', 'pcx', 'lexi'] %}
+                    <button class="pill" data-motor-model="{{ m }}">{{ m | capitalize }}</button>
+                    {% endfor %}
+                </div>
+                
+                <div class="category-pills" id="pills-model-bebek" style="display: none;">
+                    {% for m in ['supra', 'jupiter', 'vega', 'revo'] %}
+                    <button class="pill" data-motor-model="{{ m }}">{{ m | capitalize }}</button>
+                    {% endfor %}
+                </div>
+                
+                <div class="category-pills" id="pills-model-sport" style="display: none;">
+                    {% for m in ['vixion', 'cb150r', 'rx king'] %}
+                    <button class="pill" data-motor-model="{{ m }}">{{ m | capitalize }}</button>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
@@ -892,7 +1142,7 @@
                 </thead>
                 <tbody>
                     {% for barang in data_barang %}
-                    <tr>
+                    <tr data-category="{{ barang[2]|lower }}" data-cocok-untuk="{{ barang[5]|lower }}">
                         <td style="text-align: center; font-weight: 600; color: var(--text-muted);">{{ barang[0] }}</td>
                         <td class="item-name">{{ barang[1] }}</td>
                         <td><span class="item-category">{{ barang[2] | capitalize }}</span></td>
@@ -921,6 +1171,36 @@
 
                                 <input type="number" name="harga" value="{{ barang[3] }}" required placeholder="Harga" min="0">
                                 <input type="number" name="stok" value="{{ barang[4] }}" required placeholder="Stok" min="0">
+                                <div class="motor-dropdown-wrapper edit-motor-dropdown" style="grid-column: span 2;">
+                                    <button type="button" class="motor-dropdown-btn">Pilih Motor...</button>
+                                    <div class="motor-dropdown-content">
+                                        <div class="motor-section-title">Matic</div>
+                                        <div class="motor-grid">
+                                            {% for m in ['beat', 'vario', 'scoopy', 'mio', 'fino', 'nmax', 'aerox', 'pcx', 'lexi'] %}
+                                            <label class="motor-pill-label">
+                                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="motor-section-title">Bebek</div>
+                                        <div class="motor-grid">
+                                            {% for m in ['supra', 'jupiter', 'vega', 'revo'] %}
+                                            <label class="motor-pill-label">
+                                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="motor-section-title">Sport</div>
+                                        <div class="motor-grid">
+                                            {% for m in ['vixion', 'cb150r', 'rx king'] %}
+                                            <label class="motor-pill-label">
+                                                <input type="checkbox" value="{{ m }}" class="motor-cb"> {{ m | capitalize }}
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="cocok_untuk" value="{{ barang[5] }}" required>
+                                </div>
 
                                 <div class="edit-actions" style="grid-column: span 2;">
                                     <button type="submit" class="update-btn">Update</button>
@@ -939,13 +1219,110 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        // Dropdown Motor Logic Helper
+        const motorTypesMap = {
+            'matic': ['beat', 'vario', 'scoopy', 'mio', 'fino', 'nmax', 'aerox', 'pcx', 'lexi'],
+            'bebek': ['supra', 'jupiter', 'vega', 'revo'],
+            'sport': ['vixion', 'cb150r', 'rx king']
+        };
+
+        function setupMotorDropdown(wrapper) {
+            const btn = wrapper.querySelector(".motor-dropdown-btn");
+            const content = wrapper.querySelector(".motor-dropdown-content");
+            const hiddenInput = wrapper.querySelector("input[type='hidden']");
+            const checkboxes = wrapper.querySelectorAll(".motor-cb");
+            const labels = wrapper.querySelectorAll(".motor-pill-label");
+
+            // Toggle Open Dropdown
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                // Close other open dropdowns first
+                document.querySelectorAll(".motor-dropdown-wrapper").forEach(w => {
+                    if (w !== wrapper) w.classList.remove("open");
+                });
+                wrapper.classList.toggle("open");
+            });
+
+            // Prevent dropdown content click from closing it
+            content.addEventListener("click", function (e) {
+                e.stopPropagation();
+            });
+
+            // Update function
+            function updateSelection() {
+                const selected = [];
+                checkboxes.forEach((cb, idx) => {
+                    const label = labels[idx];
+                    if (cb.checked) {
+                        selected.push(cb.value);
+                        label.classList.add("active");
+                    } else {
+                        label.classList.remove("active");
+                    }
+                });
+
+                // Update hidden input value
+                hiddenInput.value = selected.join(", ");
+
+                // Update button text
+                if (selected.length === 0) {
+                    btn.textContent = "Pilih Motor (0 terpilih)";
+                } else if (selected.length <= 3) {
+                    // Capitalize first letter of each for display
+                    const formatted = selected.map(val => val.charAt(0).toUpperCase() + val.slice(1));
+                    btn.textContent = formatted.join(", ");
+                } else {
+                    btn.textContent = selected.length + " Motor Terpilih";
+                }
+            }
+
+            // Bind change events
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", updateSelection);
+            });
+
+            // Pre-fill selection based on hidden input value
+            const initialVal = hiddenInput.value.trim();
+            if (initialVal) {
+                const initialList = initialVal.split(",").map(s => s.trim().toLowerCase());
+                checkboxes.forEach(cb => {
+                    if (initialList.includes(cb.value.toLowerCase())) {
+                        cb.checked = true;
+                    }
+                });
+            }
+            updateSelection();
+        }
+
+        // Initialize all motor dropdowns
+        document.querySelectorAll(".motor-dropdown-wrapper").forEach(wrapper => {
+            setupMotorDropdown(wrapper);
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", function () {
+            document.querySelectorAll(".motor-dropdown-wrapper").forEach(wrapper => {
+                wrapper.classList.remove("open");
+            });
+        });
+
+        // =====================================
+        // FILTER & SEARCH LOGIC
+        // =====================================
         const searchInput = document.getElementById("search-input");
         const clearSearch = document.getElementById("clear-search");
-        const categoryPills = document.querySelectorAll(".category-pills .pill");
         const tableRows = document.querySelectorAll("tbody tr");
         const tableBody = document.querySelector("tbody");
         
-        // Create an empty state row
+        // Segmented Tabs Elements
+        const tabSukuCadang = document.getElementById("tab-sukucadang");
+        const tabMotor = document.getElementById("tab-motor");
+        const filterTitle = document.getElementById("filter-title");
+        const pillsSukuCadangContainer = document.getElementById("pills-sukucadang");
+        const pillsMotorContainer = document.getElementById("pills-motor");
+        const allCategoryPills = document.querySelectorAll(".category-pills .pill");
+
+        // Create empty state row
         const emptyStateRow = document.createElement("tr");
         emptyStateRow.id = "empty-state-row";
         emptyStateRow.style.display = "none";
@@ -960,15 +1337,28 @@
         `;
         tableBody.appendChild(emptyStateRow);
 
-        let activeCategory = "none";
+        let activeFilterType = "sukucadang"; // "sukucadang" or "motor"
+        let activeCategory = "none"; // sparepart category name
+        let activeMotorType = "none"; // "matic", "bebek", "sport"
+        let activeMotorModel = "none"; // specific motor model (e.g. "beat")
+
+        // Sub-filter DOM elements
+        const motorModelsContainer = document.getElementById("motor-models-container");
+        const pillsModelMatic = document.getElementById("pills-model-matic");
+        const pillsModelBebek = document.getElementById("pills-model-bebek");
+        const pillsModelSport = document.getElementById("pills-model-sport");
 
         function filterProducts() {
             const query = searchInput.value.toLowerCase().trim();
             const initialPlaceholder = document.getElementById("initial-placeholder");
             const tableContainer = document.querySelector(".table-responsive");
             
-            // If no category is selected and no search text is entered, show placeholder and hide table
-            if (activeCategory === "none" && query === "") {
+            // Check if filter is active
+            const hasCategoryFilter = (activeFilterType === "sukucadang" && activeCategory !== "none") ||
+                                      (activeFilterType === "motor" && activeMotorType !== "none" && activeMotorModel !== "none");
+
+            // If no category filter and no search text, show initial placeholder
+            if (!hasCategoryFilter && query === "") {
                 tableContainer.style.display = "none";
                 initialPlaceholder.style.display = "flex";
                 emptyStateRow.style.display = "none";
@@ -976,14 +1366,13 @@
                 return;
             }
 
-            // Otherwise, show table, hide initial placeholder
+            // Otherwise, show table, hide placeholder
             tableContainer.style.display = "block";
             initialPlaceholder.style.display = "none";
 
             let visibleCount = 0;
 
             tableRows.forEach(row => {
-                // Skip the empty state row itself
                 if (row.id === "empty-state-row") return;
 
                 const nameEl = row.querySelector(".item-name");
@@ -993,12 +1382,29 @@
 
                 const nameText = nameEl.textContent.toLowerCase();
                 const categoryText = categoryEl.textContent.toLowerCase();
+                const cocokUntukText = row.getAttribute("data-cocok-untuk") || "";
 
-                const matchesQuery = nameText.includes(query) || categoryText.includes(query);
+                // 1. Text Search matching
+                const matchesQuery = nameText.includes(query) || categoryText.includes(query) || cocokUntukText.includes(query);
                 
-                // If activeCategory is "none", it matches all categories (allows searching everything)
-                // Otherwise, it must match the active category exactly
-                const matchesCategory = activeCategory === "none" || categoryText === activeCategory;
+                // 2. Category Filter matching
+                let matchesCategory = true;
+                if (activeFilterType === "sukucadang") {
+                    matchesCategory = activeCategory === "none" || categoryText === activeCategory;
+                } else if (activeFilterType === "motor") {
+                    if (activeMotorType === "none") {
+                        matchesCategory = true;
+                    } else if (activeMotorModel !== "none") {
+                        // Check specific model match (exact word matching)
+                        const rowModels = cocokUntukText.split(",").map(s => s.trim().toLowerCase());
+                        matchesCategory = rowModels.includes(activeMotorModel);
+                    } else {
+                        // Check general type match
+                        const targetModels = motorTypesMap[activeMotorType];
+                        const rowModels = cocokUntukText.split(",").map(s => s.trim().toLowerCase());
+                        matchesCategory = rowModels.some(m => targetModels.includes(m));
+                    }
+                }
 
                 if (matchesQuery && matchesCategory) {
                     row.style.display = "";
@@ -1008,53 +1414,138 @@
                 }
             });
 
-            // Show or hide empty state message
+            // Show/Hide Empty state
             if (visibleCount === 0) {
                 emptyStateRow.style.display = "";
             } else {
                 emptyStateRow.style.display = "none";
             }
 
-            // Show or hide clear button
-            if (query.length > 0) {
-                clearSearch.style.display = "flex";
-            } else {
-                clearSearch.style.display = "none";
-            }
+            // Clear search button visibility
+            clearSearch.style.display = query.length > 0 ? "flex" : "none";
         }
 
-        // Search Input Event
+        // Search Input Events
         searchInput.addEventListener("input", filterProducts);
-
-        // Clear Search Event
         clearSearch.addEventListener("click", function () {
             searchInput.value = "";
             filterProducts();
             searchInput.focus();
         });
 
-        // Category Pills Events
-        categoryPills.forEach(pill => {
+        // Helper to reset specific motor models sub-pills
+        function resetMotorModelFilters() {
+            activeMotorModel = "none";
+            document.querySelectorAll("#motor-models-container .pill").forEach(p => p.classList.remove("active"));
+        }
+
+        // Tab Switching Logic
+        tabSukuCadang.addEventListener("click", function () {
+            if (activeFilterType === "sukucadang") return;
+            
+            tabSukuCadang.classList.add("active");
+            tabMotor.classList.remove("active");
+            filterTitle.textContent = "Pilih Kategori Suku Cadang";
+            pillsSukuCadangContainer.style.display = "flex";
+            pillsMotorContainer.style.display = "none";
+            motorModelsContainer.style.display = "none";
+            
+            // Reset filters
+            allCategoryPills.forEach(p => p.classList.remove("active"));
+            activeFilterType = "sukucadang";
+            activeCategory = "none";
+            activeMotorType = "none";
+            resetMotorModelFilters();
+            
+            filterProducts();
+        });
+
+        tabMotor.addEventListener("click", function () {
+            if (activeFilterType === "motor") return;
+            
+            tabMotor.classList.add("active");
+            tabSukuCadang.classList.remove("active");
+            filterTitle.textContent = "Pilih Kategori Jenis Motor";
+            pillsSukuCadangContainer.style.display = "none";
+            pillsMotorContainer.style.display = "flex";
+            motorModelsContainer.style.display = "none";
+            
+            // Reset filters
+            allCategoryPills.forEach(p => p.classList.remove("active"));
+            activeFilterType = "motor";
+            activeCategory = "none";
+            activeMotorType = "none";
+            resetMotorModelFilters();
+            
+            filterProducts();
+        });
+
+        // Category Pills Click Event (both Spare Parts & Motor types)
+        allCategoryPills.forEach(pill => {
             pill.addEventListener("click", function () {
                 const isAlreadyActive = pill.classList.contains("active");
                 
-                // De-activate all pills
-                categoryPills.forEach(p => p.classList.remove("active"));
+                // De-activate all pills in the parent container
+                const parentContainer = pill.parentElement;
+                parentContainer.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
                 
                 if (isAlreadyActive) {
-                    // If clicked the already active pill, de-select it (go back to none)
-                    activeCategory = "none";
+                    if (activeFilterType === "sukucadang") {
+                        activeCategory = "none";
+                    } else {
+                        activeMotorType = "none";
+                        motorModelsContainer.style.display = "none";
+                        resetMotorModelFilters();
+                    }
                 } else {
-                    // Otherwise, activate this pill
                     pill.classList.add("active");
-                    activeCategory = pill.getAttribute("data-category");
+                    if (activeFilterType === "sukucadang") {
+                        activeCategory = pill.getAttribute("data-category");
+                    } else {
+                        activeMotorType = pill.getAttribute("data-motor-type");
+                        resetMotorModelFilters();
+                        
+                        // Toggle motor models sub-pills visibility
+                        motorModelsContainer.style.display = "block";
+                        pillsModelMatic.style.display = "none";
+                        pillsModelBebek.style.display = "none";
+                        pillsModelSport.style.display = "none";
+
+                        if (activeMotorType === "matic") {
+                            pillsModelMatic.style.display = "flex";
+                        } else if (activeMotorType === "bebek") {
+                            pillsModelBebek.style.display = "flex";
+                        } else if (activeMotorType === "sport") {
+                            pillsModelSport.style.display = "flex";
+                        }
+                    }
                 }
                 
                 filterProducts();
             });
         });
 
-        // Initialize display state on load (hides table and shows placeholder initially)
+        // Motor Models sub-pills click handler
+        document.querySelectorAll("#motor-models-container .pill").forEach(pill => {
+            pill.addEventListener("click", function () {
+                const isAlreadyActive = pill.classList.contains("active");
+                
+                // De-activate other model pills in the same container
+                const parentContainer = pill.parentElement;
+                parentContainer.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+                
+                if (isAlreadyActive) {
+                    activeMotorModel = "none";
+                } else {
+                    pill.classList.add("active");
+                    activeMotorModel = pill.getAttribute("data-motor-model");
+                }
+                
+                filterProducts();
+            });
+        });
+
+        // Initialize display state
         filterProducts();
     });
 </script>

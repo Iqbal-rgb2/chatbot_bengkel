@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
+            --primary: #1b75bc;
+            --primary-hover: #155e8c;
             --bg-app: #f8fafc;
             --bg-card: #ffffff;
             --border-color: #e2e8f0;
@@ -449,8 +449,9 @@
     <div class="header">
         <h1>Performa & Evaluasi Chatbot</h1>
         <a href="/dashboard_barang" class="back-btn">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
             Kembali
         </a>
@@ -496,25 +497,24 @@
                 
                 {# Mapping Friendly Names #}
                 {% set friendly_name = "" %}
-                {% if key == 'cek_stok' %}{% set friendly_name = "📦 Cek Stok Barang" %}
-                {% elif key == 'harga_servis' %}{% set friendly_name = "💰 Biaya Servis & Jasa" %}
-                {% elif key == 'layanan_servis' %}{% set friendly_name = "🔧 Diagnosa Keluhan Motor" %}
-                {% elif key == 'jadwal_bengkel' %}{% set friendly_name = "📅 Jadwal Buka Bengkel" %}
-                {% elif key == 'lokasi_bengkel' %}{% set friendly_name = "📍 Alamat & Peta Lokasi" %}
-                {% elif key == 'kontak_admin' %}{% set friendly_name = "📞 Kontak Admin (WhatsApp)" %}
-                {% elif key == 'daftar_barang' %}{% set friendly_name = "📋 Daftar Semua Barang" %}
-                {% elif key == 'info_barang' %}{% set friendly_name = "ℹ️ Detail Informasi Barang" %}
-                {% elif key == 'rekom_produk' %}{% set friendly_name = "💡 Rekomendasi Oli & Suku Cadang" %}
-                {% elif key == 'sapaan' %}{% set friendly_name = "👋 Sapaan & Salam Pembuka" %}
-                {% elif key == 'akhir_percakapan' %}{% set friendly_name = "🚪 Ucapan Terima Kasih" %}
-                {% elif key == 'bantuan_umum' %}{% set friendly_name = "❓ Menu Bantuan Chatbot" %}
+                {% if key == 'cek_stok' %}{% set friendly_name = "Cek Stok Barang" %}
+                {% elif key == 'harga_servis' %}{% set friendly_name = "Biaya Servis & Jasa" %}
+                {% elif key == 'layanan_servis' %}{% set friendly_name = "Diagnosa Keluhan Motor" %}
+                {% elif key == 'jadwal_bengkel' %}{% set friendly_name = "Jadwal Buka Bengkel" %}
+                {% elif key == 'lokasi_bengkel' %}{% set friendly_name = "Alamat & Peta Lokasi" %}
+                {% elif key == 'kontak_admin' %}{% set friendly_name = "Kontak Admin (WhatsApp)" %}
+                {% elif key == 'daftar_barang' %}{% set friendly_name = "Daftar Semua Barang" %}
+                {% elif key == 'info_barang' %}{% set friendly_name = "Detail Informasi Barang" %}
+                {% elif key == 'rekom_produk' %}{% set friendly_name = "Rekomendasi Oli & Suku Cadang" %}
+                {% elif key == 'sapaan' %}{% set friendly_name = "Sapaan & Salam Pembuka" %}
+                {% elif key == 'akhir_percakapan' %}{% set friendly_name = "Ucapan Terima Kasih" %}
+                {% elif key == 'bantuan_umum' %}{% set friendly_name = "Menu Bantuan Chatbot" %}
                 {% else %}{% set friendly_name = key %}
                 {% endif %}
 
                 <tr>
                     <td>
                         <strong>{{ friendly_name }}</strong>
-                        <span class="intent-sub">Intent: {{ key }}</span>
                     </td>
                     <td>{{ (val.precision * 100) | round(2) }}%</td>
                     <td>{{ (val.recall * 100) | round(2) }}%</td>
@@ -576,12 +576,21 @@
             </div>
         </div>
 
+        {% if lowest_info %}
+        <div class="faq-item">
+            <div class="faq-title">Mengapa Topik "{{ lowest_info.friendly_name }}" Kestabilannya Rendah?</div>
+            <div class="faq-desc">
+                {{ lowest_info.explanation }}
+            </div>
+        </div>
+        {% else %}
         <div class="faq-item">
             <div class="faq-title">Mengapa Topik "Ucapan Terima Kasih" Kestabilannya Rendah?</div>
             <div class="faq-desc">
                 Kata penutup atau penutup pembicaraan biasanya hanya berupa kata-kata sangat singkat (contoh: "oke", "bye", "makasih", "cukup"). Kata-kata pendek ini memiliki sedikit petunjuk huruf, sehingga model kadang keliru memprediksinya sebagai sapaan pembuka atau menu bantuan. Ini wajar dalam NLP.
             </div>
         </div>
+        {% endif %}
     </div>
     {% else %}
     <div style="padding: 40px; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px solid var(--border-color);">

@@ -1,0 +1,326 @@
+
+-- INTENT TEMPLATES CREATE TABLE
+CREATE TABLE "intent_templates" (
+	"id"	INTEGER,
+	"intent"	TEXT NOT NULL,
+	"template_text"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+-- Templates for: sapaan
+INSERT INTO "intent_templates" VALUES(1, 'sapaan', 'halo');
+INSERT INTO "intent_templates" VALUES(2, 'sapaan', 'hai');
+INSERT INTO "intent_templates" VALUES(3, 'sapaan', 'hallo');
+INSERT INTO "intent_templates" VALUES(4, 'sapaan', 'selamat pagi');
+INSERT INTO "intent_templates" VALUES(5, 'sapaan', 'selamat siang');
+INSERT INTO "intent_templates" VALUES(6, 'sapaan', 'selamat sore');
+INSERT INTO "intent_templates" VALUES(7, 'sapaan', 'permisi');
+INSERT INTO "intent_templates" VALUES(8, 'sapaan', 'assalamualaikum');
+INSERT INTO "intent_templates" VALUES(9, 'sapaan', 'salam');
+INSERT INTO "intent_templates" VALUES(10, 'sapaan', 'pagi bengkel');
+INSERT INTO "intent_templates" VALUES(11, 'sapaan', 'halo bengkel');
+INSERT INTO "intent_templates" VALUES(12, 'sapaan', 'hei bengkel');
+INSERT INTO "intent_templates" VALUES(13, 'sapaan', 'hola bengkel');
+INSERT INTO "intent_templates" VALUES(14, 'sapaan', 'apa kabar bengkel');
+INSERT INTO "intent_templates" VALUES(15, 'sapaan', 'kabar baik');
+INSERT INTO "intent_templates" VALUES(16, 'sapaan', 'ada yang bisa dibantu');
+INSERT INTO "intent_templates" VALUES(17, 'sapaan', 'hai admin');
+INSERT INTO "intent_templates" VALUES(18, 'sapaan', 'pagi');
+INSERT INTO "intent_templates" VALUES(19, 'sapaan', 'siang');
+INSERT INTO "intent_templates" VALUES(20, 'sapaan', 'malam');
+INSERT INTO "intent_templates" VALUES(21, 'sapaan', 'halo semuanya');
+INSERT INTO "intent_templates" VALUES(22, 'sapaan', 'apa kabar');
+INSERT INTO "intent_templates" VALUES(23, 'sapaan', 'salam kenal');
+INSERT INTO "intent_templates" VALUES(24, 'sapaan', 'selamat datang');
+INSERT INTO "intent_templates" VALUES(25, 'sapaan', 'halo semua');
+INSERT INTO "intent_templates" VALUES(26, 'sapaan', 'hallo semua');
+INSERT INTO "intent_templates" VALUES(27, 'sapaan', 'assalamu''alaikum');
+INSERT INTO "intent_templates" VALUES(28, 'sapaan', 'syalom');
+INSERT INTO "intent_templates" VALUES(29, 'sapaan', 'salam sejahtera');
+INSERT INTO "intent_templates" VALUES(30, 'sapaan', 'pagi min');
+INSERT INTO "intent_templates" VALUES(31, 'sapaan', 'siang min');
+INSERT INTO "intent_templates" VALUES(32, 'sapaan', 'sore min');
+INSERT INTO "intent_templates" VALUES(33, 'sapaan', 'malam min');
+INSERT INTO "intent_templates" VALUES(34, 'sapaan', 'halo kurnia');
+INSERT INTO "intent_templates" VALUES(35, 'sapaan', 'hai kurnia');
+INSERT INTO "intent_templates" VALUES(36, 'sapaan', 'hallo kurnia');
+INSERT INTO "intent_templates" VALUES(37, 'sapaan', 'halo kak');
+INSERT INTO "intent_templates" VALUES(38, 'sapaan', 'pagi kak');
+INSERT INTO "intent_templates" VALUES(39, 'sapaan', 'siang kak');
+INSERT INTO "intent_templates" VALUES(40, 'sapaan', 'sore kak');
+INSERT INTO "intent_templates" VALUES(41, 'sapaan', 'malam kak');
+INSERT INTO "intent_templates" VALUES(42, 'sapaan', 'halo petugas');
+INSERT INTO "intent_templates" VALUES(43, 'sapaan', 'permisi petugas');
+INSERT INTO "intent_templates" VALUES(44, 'sapaan', 'punten mang');
+INSERT INTO "intent_templates" VALUES(45, 'sapaan', 'sampurasun');
+INSERT INTO "intent_templates" VALUES(46, 'sapaan', 'spada');
+INSERT INTO "intent_templates" VALUES(47, 'sapaan', 'permisi min');
+INSERT INTO "intent_templates" VALUES(48, 'sapaan', 'oi');
+INSERT INTO "intent_templates" VALUES(49, 'sapaan', 'oy');
+
+-- Templates for: bantuan_umum
+INSERT INTO "intent_templates" VALUES(50, 'bantuan_umum', 'tolong bantu saya');
+INSERT INTO "intent_templates" VALUES(51, 'bantuan_umum', 'bantu saya');
+INSERT INTO "intent_templates" VALUES(52, 'bantuan_umum', 'minta bantuan');
+INSERT INTO "intent_templates" VALUES(53, 'bantuan_umum', 'saya perlu bantuan');
+INSERT INTO "intent_templates" VALUES(54, 'bantuan_umum', 'kamu bisa bantu apa');
+INSERT INTO "intent_templates" VALUES(55, 'bantuan_umum', 'apa saja yang bisa dibantu');
+INSERT INTO "intent_templates" VALUES(56, 'bantuan_umum', 'fitur chatbot apa');
+INSERT INTO "intent_templates" VALUES(57, 'bantuan_umum', 'apa layananmu');
+INSERT INTO "intent_templates" VALUES(58, 'bantuan_umum', 'apa yang bisa kamu lakukan');
+INSERT INTO "intent_templates" VALUES(59, 'bantuan_umum', 'informasi apa saja tersedia');
+INSERT INTO "intent_templates" VALUES(60, 'bantuan_umum', 'tunjukkan apa yang bisa ditanyakan');
+INSERT INTO "intent_templates" VALUES(61, 'bantuan_umum', 'saya butuh informasi');
+INSERT INTO "intent_templates" VALUES(62, 'bantuan_umum', 'bantuan untuk bengkel');
+INSERT INTO "intent_templates" VALUES(63, 'bantuan_umum', 'bantu jawab pertanyaan bengkel');
+INSERT INTO "intent_templates" VALUES(64, 'bantuan_umum', 'chatbot ini bisa apa');
+INSERT INTO "intent_templates" VALUES(65, 'bantuan_umum', 'apakah kamu bisa bantu servis');
+INSERT INTO "intent_templates" VALUES(66, 'bantuan_umum', 'apakah kamu bisa bantu stok');
+INSERT INTO "intent_templates" VALUES(67, 'bantuan_umum', 'apakah kamu bisa bantu lokasi');
+INSERT INTO "intent_templates" VALUES(68, 'bantuan_umum', 'apa saja info bengkel');
+INSERT INTO "intent_templates" VALUES(69, 'bantuan_umum', 'bisa bantu masalah motor');
+INSERT INTO "intent_templates" VALUES(70, 'bantuan_umum', 'bisa tolong');
+INSERT INTO "intent_templates" VALUES(71, 'bantuan_umum', 'tolong infonya');
+INSERT INTO "intent_templates" VALUES(72, 'bantuan_umum', 'tanya dong');
+INSERT INTO "intent_templates" VALUES(73, 'bantuan_umum', 'tanya min');
+INSERT INTO "intent_templates" VALUES(74, 'bantuan_umum', 'mau tanya min');
+INSERT INTO "intent_templates" VALUES(75, 'bantuan_umum', 'bisa nanya');
+
+-- Templates for: akhir_percakapan
+INSERT INTO "intent_templates" VALUES(76, 'akhir_percakapan', 'terima kasih');
+INSERT INTO "intent_templates" VALUES(77, 'akhir_percakapan', 'makasih');
+INSERT INTO "intent_templates" VALUES(78, 'akhir_percakapan', 'matur nuwun');
+INSERT INTO "intent_templates" VALUES(79, 'akhir_percakapan', 'sudah cukup');
+INSERT INTO "intent_templates" VALUES(80, 'akhir_percakapan', 'cukup');
+INSERT INTO "intent_templates" VALUES(81, 'akhir_percakapan', 'itu saja');
+INSERT INTO "intent_templates" VALUES(82, 'akhir_percakapan', 'sudah jelas');
+INSERT INTO "intent_templates" VALUES(83, 'akhir_percakapan', 'oke makasih');
+INSERT INTO "intent_templates" VALUES(84, 'akhir_percakapan', 'bye');
+INSERT INTO "intent_templates" VALUES(85, 'akhir_percakapan', 'sampai jumpa');
+INSERT INTO "intent_templates" VALUES(86, 'akhir_percakapan', 'sudah membantu');
+INSERT INTO "intent_templates" VALUES(87, 'akhir_percakapan', 'terima kasih banyak');
+INSERT INTO "intent_templates" VALUES(88, 'akhir_percakapan', 'mantap terima kasih');
+INSERT INTO "intent_templates" VALUES(89, 'akhir_percakapan', 'saya tutup');
+INSERT INTO "intent_templates" VALUES(90, 'akhir_percakapan', 'sampai ketemu lagi');
+INSERT INTO "intent_templates" VALUES(91, 'akhir_percakapan', 'thanks');
+INSERT INTO "intent_templates" VALUES(92, 'akhir_percakapan', 'selamat tinggal');
+INSERT INTO "intent_templates" VALUES(93, 'akhir_percakapan', 'baik terima kasih');
+INSERT INTO "intent_templates" VALUES(94, 'akhir_percakapan', 'cukup ya');
+INSERT INTO "intent_templates" VALUES(95, 'akhir_percakapan', 'cukup terima kasih');
+INSERT INTO "intent_templates" VALUES(96, 'akhir_percakapan', 'udah cukup');
+
+-- Templates for: jadwal_bengkel
+INSERT INTO "intent_templates" VALUES(97, 'jadwal_bengkel', 'bengkel buka jam berapa');
+INSERT INTO "intent_templates" VALUES(98, 'jadwal_bengkel', 'jam operasional bengkel');
+INSERT INTO "intent_templates" VALUES(99, 'jadwal_bengkel', 'hari ini buka tidak');
+INSERT INTO "intent_templates" VALUES(100, 'jadwal_bengkel', 'buka sampai jam berapa');
+INSERT INTO "intent_templates" VALUES(101, 'jadwal_bengkel', 'bengkel tutup jam berapa');
+INSERT INTO "intent_templates" VALUES(102, 'jadwal_bengkel', 'hari minggu buka tidak');
+INSERT INTO "intent_templates" VALUES(103, 'jadwal_bengkel', 'sabtu buka tidak');
+INSERT INTO "intent_templates" VALUES(104, 'jadwal_bengkel', 'bisa servis sore');
+INSERT INTO "intent_templates" VALUES(105, 'jadwal_bengkel', 'jadwal bengkel gimana');
+INSERT INTO "intent_templates" VALUES(106, 'jadwal_bengkel', 'buka dari pagi jam berapa');
+INSERT INTO "intent_templates" VALUES(107, 'jadwal_bengkel', 'bengkel libur hari apa');
+INSERT INTO "intent_templates" VALUES(108, 'jadwal_bengkel', 'masih buka sekarang');
+INSERT INTO "intent_templates" VALUES(109, 'jadwal_bengkel', 'apa jam kerja bengkel');
+INSERT INTO "intent_templates" VALUES(110, 'jadwal_bengkel', 'jam service bengkel');
+INSERT INTO "intent_templates" VALUES(111, 'jadwal_bengkel', 'apakah bengkel buka hari ini');
+INSERT INTO "intent_templates" VALUES(112, 'jadwal_bengkel', 'bengkel tutup kapan');
+INSERT INTO "intent_templates" VALUES(113, 'jadwal_bengkel', 'jam kerja bengkel hari ini');
+INSERT INTO "intent_templates" VALUES(114, 'jadwal_bengkel', 'bengkel buka sampai sore');
+INSERT INTO "intent_templates" VALUES(115, 'jadwal_bengkel', 'apa hari ini bengkel buka');
+INSERT INTO "intent_templates" VALUES(116, 'jadwal_bengkel', 'jadwal kerja bengkel');
+
+-- Templates for: lokasi_bengkel
+INSERT INTO "intent_templates" VALUES(117, 'lokasi_bengkel', 'alamat bengkel dimana');
+INSERT INTO "intent_templates" VALUES(118, 'lokasi_bengkel', 'lokasi bengkel dimana');
+INSERT INTO "intent_templates" VALUES(119, 'lokasi_bengkel', 'bengkel ada dimana');
+INSERT INTO "intent_templates" VALUES(120, 'lokasi_bengkel', 'share lokasi bengkel');
+INSERT INTO "intent_templates" VALUES(121, 'lokasi_bengkel', 'ada maps bengkel');
+INSERT INTO "intent_templates" VALUES(122, 'lokasi_bengkel', 'kirim alamat bengkel');
+INSERT INTO "intent_templates" VALUES(123, 'lokasi_bengkel', 'bengkel dekat mana');
+INSERT INTO "intent_templates" VALUES(124, 'lokasi_bengkel', 'rute ke bengkel gimana');
+INSERT INTO "intent_templates" VALUES(125, 'lokasi_bengkel', 'posisi bengkel dimana');
+INSERT INTO "intent_templates" VALUES(126, 'lokasi_bengkel', 'lokasi lengkap bengkel');
+INSERT INTO "intent_templates" VALUES(127, 'lokasi_bengkel', 'maps kurnia motor');
+INSERT INTO "intent_templates" VALUES(128, 'lokasi_bengkel', 'saya mau ke bengkel');
+INSERT INTO "intent_templates" VALUES(129, 'lokasi_bengkel', 'bagaimana menuju bengkel');
+INSERT INTO "intent_templates" VALUES(130, 'lokasi_bengkel', 'bengkel terdekat di mana');
+INSERT INTO "intent_templates" VALUES(131, 'lokasi_bengkel', 'lokasi bengkel terdekat');
+INSERT INTO "intent_templates" VALUES(132, 'lokasi_bengkel', 'di mana bengkel berada');
+INSERT INTO "intent_templates" VALUES(133, 'lokasi_bengkel', 'alamat bengkel kurnia');
+INSERT INTO "intent_templates" VALUES(134, 'lokasi_bengkel', 'bengkel motor kurnia dimana');
+INSERT INTO "intent_templates" VALUES(135, 'lokasi_bengkel', 'rute ke bengkel');
+INSERT INTO "intent_templates" VALUES(136, 'lokasi_bengkel', 'petunjuk arah bengkel');
+
+-- Templates for: kontak_admin
+INSERT INTO "intent_templates" VALUES(137, 'kontak_admin', 'nomor wa bengkel berapa');
+INSERT INTO "intent_templates" VALUES(138, 'kontak_admin', 'wa bengkel berapa');
+INSERT INTO "intent_templates" VALUES(139, 'kontak_admin', 'nomor whatsapp bengkel');
+INSERT INTO "intent_templates" VALUES(140, 'kontak_admin', 'bisa hubungi lewat whatsapp');
+INSERT INTO "intent_templates" VALUES(141, 'kontak_admin', 'kontak admin ada');
+INSERT INTO "intent_templates" VALUES(142, 'kontak_admin', 'nomor telepon bengkel');
+INSERT INTO "intent_templates" VALUES(143, 'kontak_admin', 'minta nomor admin');
+INSERT INTO "intent_templates" VALUES(144, 'kontak_admin', 'saya mau chat petugas');
+INSERT INTO "intent_templates" VALUES(145, 'kontak_admin', 'hubungi petugas bengkel');
+INSERT INTO "intent_templates" VALUES(146, 'kontak_admin', 'nomor bengkel berapa');
+INSERT INTO "intent_templates" VALUES(147, 'kontak_admin', 'kontak bengkel');
+INSERT INTO "intent_templates" VALUES(148, 'kontak_admin', 'admin bisa dihubungi');
+INSERT INTO "intent_templates" VALUES(149, 'kontak_admin', 'bagaimana hubungi bengkel');
+INSERT INTO "intent_templates" VALUES(150, 'kontak_admin', 'ada nomor admin');
+INSERT INTO "intent_templates" VALUES(151, 'kontak_admin', 'nomor kontak bengkel');
+INSERT INTO "intent_templates" VALUES(152, 'kontak_admin', 'nomor cs bengkel');
+INSERT INTO "intent_templates" VALUES(153, 'kontak_admin', 'dapat nomor whatsapp bengkel');
+INSERT INTO "intent_templates" VALUES(154, 'kontak_admin', 'nomor hotline bengkel');
+INSERT INTO "intent_templates" VALUES(155, 'kontak_admin', 'hubungi bengkel lewat whatsapp');
+INSERT INTO "intent_templates" VALUES(156, 'kontak_admin', 'chat admin bengkel');
+
+-- Templates for: cek_stok
+INSERT INTO "intent_templates" VALUES(157, 'cek_stok', 'stok oli yamalube matic');
+INSERT INTO "intent_templates" VALUES(158, 'cek_stok', 'ada oli ahm mpx 2');
+INSERT INTO "intent_templates" VALUES(159, 'cek_stok', 'oli enduro matic ready');
+INSERT INTO "intent_templates" VALUES(160, 'cek_stok', 'cek stok oli');
+INSERT INTO "intent_templates" VALUES(161, 'cek_stok', 'ada stok aki motor');
+INSERT INTO "intent_templates" VALUES(162, 'cek_stok', 'stok ban depan ada');
+INSERT INTO "intent_templates" VALUES(163, 'cek_stok', 'apakah ada kampas rem');
+INSERT INTO "intent_templates" VALUES(164, 'cek_stok', 'stok busi iridium');
+INSERT INTO "intent_templates" VALUES(165, 'cek_stok', 'cek stok sparepart');
+INSERT INTO "intent_templates" VALUES(166, 'cek_stok', 'apakah ada oli matic');
+INSERT INTO "intent_templates" VALUES(167, 'cek_stok', 'ada stok oli motor');
+INSERT INTO "intent_templates" VALUES(168, 'cek_stok', 'stok bagian motor ada');
+INSERT INTO "intent_templates" VALUES(169, 'cek_stok', 'cek stok barang');
+INSERT INTO "intent_templates" VALUES(170, 'cek_stok', 'apakah barang ini tersedia');
+INSERT INTO "intent_templates" VALUES(171, 'cek_stok', 'stok oli, ban, aki');
+INSERT INTO "intent_templates" VALUES(172, 'cek_stok', 'ada aki gs astra');
+INSERT INTO "intent_templates" VALUES(173, 'cek_stok', 'stok filter udara');
+INSERT INTO "intent_templates" VALUES(174, 'cek_stok', 'ada barang untuk vario');
+INSERT INTO "intent_templates" VALUES(175, 'cek_stok', 'stok kampas kopling');
+INSERT INTO "intent_templates" VALUES(176, 'cek_stok', 'cek ketersediaan suku cadang');
+
+-- Templates for: daftar_barang
+INSERT INTO "intent_templates" VALUES(177, 'daftar_barang', 'oli yang tersedia ada apa saja');
+INSERT INTO "intent_templates" VALUES(178, 'daftar_barang', 'oli apa saja yang ada');
+INSERT INTO "intent_templates" VALUES(179, 'daftar_barang', 'daftar oli yang tersedia');
+INSERT INTO "intent_templates" VALUES(180, 'daftar_barang', 'barang apa yang tersedia');
+INSERT INTO "intent_templates" VALUES(181, 'daftar_barang', 'jenis sparepart apa saja');
+INSERT INTO "intent_templates" VALUES(182, 'daftar_barang', 'daftar barang bengkel');
+INSERT INTO "intent_templates" VALUES(183, 'daftar_barang', 'produk apa saja ready');
+INSERT INTO "intent_templates" VALUES(184, 'daftar_barang', 'ada barang apa saat ini');
+INSERT INTO "intent_templates" VALUES(185, 'daftar_barang', 'apa saja stok yang tersedia');
+INSERT INTO "intent_templates" VALUES(186, 'daftar_barang', 'tunjukkan daftar barang');
+INSERT INTO "intent_templates" VALUES(187, 'daftar_barang', 'daftar suku cadang');
+INSERT INTO "intent_templates" VALUES(188, 'daftar_barang', 'daftar item bengkel');
+INSERT INTO "intent_templates" VALUES(189, 'daftar_barang', 'list barang bengkel');
+INSERT INTO "intent_templates" VALUES(190, 'daftar_barang', 'barang ready apa saja');
+INSERT INTO "intent_templates" VALUES(191, 'daftar_barang', 'apa saja item motor');
+INSERT INTO "intent_templates" VALUES(192, 'daftar_barang', 'barang senin tersedia');
+INSERT INTO "intent_templates" VALUES(193, 'daftar_barang', 'daftar jenis oli');
+INSERT INTO "intent_templates" VALUES(194, 'daftar_barang', 'daftar jenis aki');
+INSERT INTO "intent_templates" VALUES(195, 'daftar_barang', 'daftar komponen motor');
+INSERT INTO "intent_templates" VALUES(196, 'daftar_barang', 'daftar sparepart tersedia');
+INSERT INTO "intent_templates" VALUES(197, 'daftar_barang', 'daftar produk bengkel');
+
+-- Templates for: harga_servis
+INSERT INTO "intent_templates" VALUES(198, 'harga_servis', 'ganti oli motor berapa');
+INSERT INTO "intent_templates" VALUES(199, 'harga_servis', 'servis motor berapa');
+INSERT INTO "intent_templates" VALUES(200, 'harga_servis', 'servis lengkap habis berapa');
+INSERT INTO "intent_templates" VALUES(201, 'harga_servis', 'berapa harga servis');
+INSERT INTO "intent_templates" VALUES(202, 'harga_servis', 'biaya service motor');
+INSERT INTO "intent_templates" VALUES(203, 'harga_servis', 'berapa ongkos servis');
+INSERT INTO "intent_templates" VALUES(204, 'harga_servis', 'harga ganti aki berapa');
+INSERT INTO "intent_templates" VALUES(205, 'harga_servis', 'biaya ganti oli');
+INSERT INTO "intent_templates" VALUES(206, 'harga_servis', 'berapa biaya tune up');
+INSERT INTO "intent_templates" VALUES(207, 'harga_servis', 'harga servis motor matic');
+INSERT INTO "intent_templates" VALUES(208, 'harga_servis', 'berapa ongkos service');
+INSERT INTO "intent_templates" VALUES(209, 'harga_servis', 'harga servis full');
+INSERT INTO "intent_templates" VALUES(210, 'harga_servis', 'berapa harga perbaikan');
+INSERT INTO "intent_templates" VALUES(211, 'harga_servis', 'biaya service biasa');
+INSERT INTO "intent_templates" VALUES(212, 'harga_servis', 'harga service motor');
+INSERT INTO "intent_templates" VALUES(213, 'harga_servis', 'berapa biaya ganti ban');
+INSERT INTO "intent_templates" VALUES(214, 'harga_servis', 'harga servis berkala');
+INSERT INTO "intent_templates" VALUES(215, 'harga_servis', 'berapa biaya ganti kampas');
+INSERT INTO "intent_templates" VALUES(216, 'harga_servis', 'biaya servis rem');
+INSERT INTO "intent_templates" VALUES(217, 'harga_servis', 'harga servis motor kamu');
+INSERT INTO "intent_templates" VALUES(218, 'harga_servis', 'tarif tune up motor');
+INSERT INTO "intent_templates" VALUES(219, 'harga_servis', 'ongkos ganti oli berapa');
+INSERT INTO "intent_templates" VALUES(220, 'harga_servis', 'biaya perbaikan rem berapa');
+INSERT INTO "intent_templates" VALUES(221, 'harga_servis', 'habis berapa kalau servis');
+INSERT INTO "intent_templates" VALUES(222, 'harga_servis', 'servis injeksi bayar berapa');
+INSERT INTO "intent_templates" VALUES(223, 'harga_servis', 'ongkos pasang ban motor');
+
+-- Templates for: info_barang
+INSERT INTO "intent_templates" VALUES(224, 'info_barang', 'informasi oli yamalube matic');
+INSERT INTO "intent_templates" VALUES(225, 'info_barang', 'harga oli ahm mpx 2');
+INSERT INTO "intent_templates" VALUES(226, 'info_barang', 'detail oli enduro matic');
+INSERT INTO "intent_templates" VALUES(227, 'info_barang', 'info oli terbaik');
+INSERT INTO "intent_templates" VALUES(228, 'info_barang', 'informasi barang');
+INSERT INTO "intent_templates" VALUES(229, 'info_barang', 'info sparepart');
+INSERT INTO "intent_templates" VALUES(230, 'info_barang', 'detail produk motor');
+INSERT INTO "intent_templates" VALUES(231, 'info_barang', 'apa spesifikasi oli');
+INSERT INTO "intent_templates" VALUES(232, 'info_barang', 'apa kelebihan oli ini');
+INSERT INTO "intent_templates" VALUES(233, 'info_barang', 'info aki gs astra');
+INSERT INTO "intent_templates" VALUES(234, 'info_barang', 'detail busi iridium');
+INSERT INTO "intent_templates" VALUES(235, 'info_barang', 'info komponen motor');
+INSERT INTO "intent_templates" VALUES(236, 'info_barang', 'detail kampas rem');
+INSERT INTO "intent_templates" VALUES(237, 'info_barang', 'informasi filter udara');
+INSERT INTO "intent_templates" VALUES(238, 'info_barang', 'info produk bengkel');
+INSERT INTO "intent_templates" VALUES(239, 'info_barang', 'detail produk sparepart');
+INSERT INTO "intent_templates" VALUES(240, 'info_barang', 'info suku cadang');
+INSERT INTO "intent_templates" VALUES(241, 'info_barang', 'informasi barang motor');
+INSERT INTO "intent_templates" VALUES(242, 'info_barang', 'detail minyak mesin');
+INSERT INTO "intent_templates" VALUES(243, 'info_barang', 'apa info oli');
+INSERT INTO "intent_templates" VALUES(244, 'info_barang', 'info sparepart motor');
+
+-- Templates for: layanan_servis
+INSERT INTO "intent_templates" VALUES(245, 'layanan_servis', 'motor saya brebet');
+INSERT INTO "intent_templates" VALUES(246, 'layanan_servis', 'motor brebet saat digas');
+INSERT INTO "intent_templates" VALUES(247, 'layanan_servis', 'motor brebet di tanjakan');
+INSERT INTO "intent_templates" VALUES(248, 'layanan_servis', 'motor tidak hidup');
+INSERT INTO "intent_templates" VALUES(249, 'layanan_servis', 'motor mati mendadak');
+INSERT INTO "intent_templates" VALUES(250, 'layanan_servis', 'motor susah distart');
+INSERT INTO "intent_templates" VALUES(251, 'layanan_servis', 'motor tersendat');
+INSERT INTO "intent_templates" VALUES(252, 'layanan_servis', 'motor kurang tenaga');
+INSERT INTO "intent_templates" VALUES(253, 'layanan_servis', 'motor ngelitik');
+INSERT INTO "intent_templates" VALUES(254, 'layanan_servis', 'knalpot motor bunyi');
+INSERT INTO "intent_templates" VALUES(255, 'layanan_servis', 'rem blong');
+INSERT INTO "intent_templates" VALUES(256, 'layanan_servis', 'ban bocor');
+INSERT INTO "intent_templates" VALUES(257, 'layanan_servis', 'motor panas terus');
+INSERT INTO "intent_templates" VALUES(258, 'layanan_servis', 'motor hidup mati hidup');
+INSERT INTO "intent_templates" VALUES(259, 'layanan_servis', 'motor mogok');
+INSERT INTO "intent_templates" VALUES(260, 'layanan_servis', 'motor tarikan lemah');
+INSERT INTO "intent_templates" VALUES(261, 'layanan_servis', 'motor bergetar');
+INSERT INTO "intent_templates" VALUES(262, 'layanan_servis', 'motor spin gas');
+INSERT INTO "intent_templates" VALUES(263, 'layanan_servis', 'motor gas tidak stabil');
+INSERT INTO "intent_templates" VALUES(264, 'layanan_servis', 'motor susah gas');
+INSERT INTO "intent_templates" VALUES(265, 'layanan_servis', 'layanan apa saja yang ada di bengkel');
+INSERT INTO "intent_templates" VALUES(266, 'layanan_servis', 'bisa servis apa saja');
+INSERT INTO "intent_templates" VALUES(267, 'layanan_servis', 'daftar layanan bengkel');
+INSERT INTO "intent_templates" VALUES(268, 'layanan_servis', 'apa saja jasa servis di sini');
+INSERT INTO "intent_templates" VALUES(269, 'layanan_servis', 'layanan di kurnia motor');
+INSERT INTO "intent_templates" VALUES(270, 'layanan_servis', 'bisa servis apa aja');
+INSERT INTO "intent_templates" VALUES(271, 'layanan_servis', 'layanan servis motor');
+INSERT INTO "intent_templates" VALUES(272, 'layanan_servis', 'bisa service apa aja');
+INSERT INTO "intent_templates" VALUES(273, 'layanan_servis', 'apa saja layanan bengkel');
+INSERT INTO "intent_templates" VALUES(274, 'layanan_servis', 'layanan bengkel');
+
+-- Templates for: rekom_produk
+INSERT INTO "intent_templates" VALUES(275, 'rekom_produk', 'oli yang cocok untuk beat');
+INSERT INTO "intent_templates" VALUES(276, 'rekom_produk', 'rekomendasi oli vario');
+INSERT INTO "intent_templates" VALUES(277, 'rekom_produk', 'oli bagus untuk scoopy');
+INSERT INTO "intent_templates" VALUES(278, 'rekom_produk', 'pilih oli untuk nmax');
+INSERT INTO "intent_templates" VALUES(279, 'rekom_produk', 'pilih oli terbaik untuk honda');
+INSERT INTO "intent_templates" VALUES(280, 'rekom_produk', 'rekomendasi oli matic');
+INSERT INTO "intent_templates" VALUES(281, 'rekom_produk', 'oli untuk motor matik');
+INSERT INTO "intent_templates" VALUES(282, 'rekom_produk', 'rekomendasi produk motor');
+INSERT INTO "intent_templates" VALUES(283, 'rekom_produk', 'apa oli terbaik');
+INSERT INTO "intent_templates" VALUES(284, 'rekom_produk', 'saran oli untuk vario');
+INSERT INTO "intent_templates" VALUES(285, 'rekom_produk', 'oli matic apa yang cocok');
+INSERT INTO "intent_templates" VALUES(286, 'rekom_produk', 'saran produk motor');
+INSERT INTO "intent_templates" VALUES(287, 'rekom_produk', 'mana oli yang cocok');
+INSERT INTO "intent_templates" VALUES(288, 'rekom_produk', 'apa oli untuk beat');
+INSERT INTO "intent_templates" VALUES(289, 'rekom_produk', 'rekomendasi aki');
+INSERT INTO "intent_templates" VALUES(290, 'rekom_produk', 'apa produk terbaik untuk motor');
+INSERT INTO "intent_templates" VALUES(291, 'rekom_produk', 'saran oli honda');
+INSERT INTO "intent_templates" VALUES(292, 'rekom_produk', 'rekomendasi sparepart');
+INSERT INTO "intent_templates" VALUES(293, 'rekom_produk', 'apa oli ideal untuk nmax');
+INSERT INTO "intent_templates" VALUES(294, 'rekom_produk', 'saran oli mesin');

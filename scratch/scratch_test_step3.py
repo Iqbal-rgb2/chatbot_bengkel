@@ -3,7 +3,7 @@ import os
 import json
 
 # Add web directory to path
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'web'))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web'))
 
 from app import app
 

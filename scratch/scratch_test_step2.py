@@ -3,7 +3,7 @@ import os
 import sqlite3
 
 # Add web directory to path
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'web'))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web'))
 
 from app import normalize_user_input, detect_bad_words, is_bengkel_domain, simpan_log_chat, handle_check_stock
 
@@ -57,7 +57,7 @@ def test_product_matching():
 def test_auto_classification():
     print("\n--- Test Auto Classification in DB ---")
     # Clean previous test entries if any
-    conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database', 'chatbot.db'))
+    conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'database', 'chatbot.db'))
     cursor = conn.cursor()
     cursor.execute("DELETE FROM log_chat WHERE pertanyaan LIKE 'TEST_AUTO_%'")
     conn.commit()

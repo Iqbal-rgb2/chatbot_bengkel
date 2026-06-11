@@ -75,10 +75,21 @@ def expand_phrase_variants(phrases):
 
 
 def make_templates():
-    import json
-    json_path = BASE_DIR / 'scripts' / 'seeder_data' / 'training_templates.json'
-    with open(json_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    import sqlite3
+    db_path = BASE_DIR / 'database' / 'chatbot.db'
+    conn = sqlite3.connect(str(db_path))
+    cursor = conn.cursor()
+    cursor.execute("SELECT intent, template_text FROM intent_templates")
+    rows = cursor.fetchall()
+    conn.close()
+    
+    # Format into dict of arrays: {intent: [template1, template2, ...]}
+    templates = {}
+    for intent, text in rows:
+        if intent not in templates:
+            templates[intent] = []
+        templates[intent].append(text)
+    return templates
 
 
 def generate_augmentations(df, target_count=240):
@@ -381,8 +392,25 @@ def make_synthetic_questions():
     return base_questions + extra
 
 
+def preprocess_dataset():
+    """Membaca chatbot_data dari database SQLite, melakukan pra-proses teks, dan mengembalikan dataframe bersih"""
+    import sqlite3
+    print("Mengekstrak dan melakukan pra-proses data dari tabel chatbot_data...")
+    db_path = BASE_DIR / 'database' / 'chatbot.db'
+    conn = sqlite3.connect(str(db_path))
+    df = pd.read_sql_query("SELECT * FROM chatbot_data", conn)
+    conn.close()
+    
+    df = df.fillna('')
+    df['processed_question'] = df['pertanyaan'].apply(preprocess_text)
+    
+    # Simpan ke dataset_clean.csv untuk kompatibilitas
+    df.to_csv(DATA_PATH, index=False)
+    return df
+
+
 def main():
-    df = pd.read_csv(DATA_PATH, keep_default_na=False)
+    df = preprocess_dataset()
     augmented = generate_augmentations(df, target_count=240)
     combined = pd.concat([df, augmented], ignore_index=True)
     combined = combined.drop_duplicates(subset=['processed_question']).reset_index(drop=True)
@@ -420,7 +448,28 @@ def main():
     # 4. Predict on test split
     X_test = vec_eval.transform(test_df['processed_question'])
     y_test = test_df['label']
-    y_pred = clf_eval.predict(X_test)
+    y_pred_raw = clf_eval.predict(X_test)
+    y_pred = []
+
+    # Import NLP helpers for rule-based intent correction
+    import sys
+    if str(BASE_DIR) not in sys.path:
+        sys.path.append(str(BASE_DIR))
+    from web.nlp.preprocessor import normalize_user_input
+    from web.nlp.classifier import prioritize_intent
+
+    for i, row in test_df.reset_index(drop=True).iterrows():
+        raw_pred_intent = le_eval.classes_[y_pred_raw[i]]
+        question = row['pertanyaan']
+        
+        # Apply production pipeline rules
+        normalized = normalize_user_input(question)
+        final_intent = prioritize_intent(normalized, raw_pred_intent)
+        
+        # Map back to label index
+        final_idx = list(le_eval.classes_).index(final_intent)
+        y_pred.append(final_idx)
+
     
     # 5. Calculate metrics
     test_acc = accuracy_score(y_test, y_pred)
