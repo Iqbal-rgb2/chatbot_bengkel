@@ -16,3 +16,6 @@ database/*.db
 
 # ML model files (generated artifacts)
 models/*.pkl
+
+# Document files (thesis drafts)
+*.docx
