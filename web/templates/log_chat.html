@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log Chat - Chat Kurnia Admin</title>
+    <title>Riwayat Chat - Chat Kurnia Admin</title>
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}?v=1.2" type="image/x-icon">
@@ -693,7 +693,7 @@
 <div class="container">
 
     <div class="header">
-        <h1>Log Chat Admin</h1>
+        <h1>Riwayat Chat</h1>
         <div class="header-actions">
             <a href="/dashboard_barang" class="back-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;">
@@ -781,7 +781,7 @@
         </table>
         
         <div id="empty-state" class="empty-state" style="display: none;">
-            Tidak ada log chat yang cocok dengan filter atau pencarian saat ini.
+            Tidak ada riwayat chat yang cocok dengan filter atau pencarian saat ini.
         </div>
     </div>
 
@@ -825,7 +825,7 @@
             return;
         }
 
-        if (!confirm(`Apakah Anda yakin ingin menghapus SEMUA (${count}) data log chat melenceng secara permanen?`)) {
+        if (!confirm(`Apakah Anda yakin ingin menghapus SEMUA (${count}) data riwayat chat melenceng secara permanen?`)) {
             return;
         }
 
@@ -837,7 +837,7 @@
         .then(response => response.json().then(data => ({ status: response.status, body: data })))
         .then(result => {
             if (result.status === 200) {
-                showToast('Semua log melenceng berhasil dihapus!', 'success', '✅');
+                showToast('Semua riwayat chat melenceng berhasil dihapus!', 'success', '✅');
                 
                 // Fade out and remove all melenceng rows
                 melencengRows.forEach(row => {
