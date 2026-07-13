@@ -231,7 +231,8 @@
         .table-container {
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             margin-bottom: 35px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
@@ -377,6 +378,9 @@
             }
             .accuracy-val {
                 font-size: 48px;
+            }
+            table {
+                min-width: 600px;
             }
         }
 

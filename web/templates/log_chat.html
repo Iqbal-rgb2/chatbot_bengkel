@@ -528,16 +528,16 @@
                 margin-bottom: 15px;
                 border: 1px solid var(--border-color);
                 border-radius: 10px;
-                background: #ffffff;
+                background: var(--bg-card);
                 box-shadow: 0 2px 4px rgba(0,0,0,0.02);
                 padding: 12px;
             }
             tbody tr:hover {
-                background-color: #ffffff;
+                background-color: var(--bg-card);
             }
             table td {
                 border: none;
-                border-bottom: 1px dashed #f1f5f9;
+                border-bottom: 1px dashed var(--border-color);
                 position: relative;
                 padding: 8px 0;
                 padding-left: 30%;
@@ -753,7 +753,7 @@
                     <td class="text-cell">{{ log[1] }}</td>
                     <td class="text-cell">{{ log[2] or '-' }}</td>
                     <td><span class="intent-badge">{{ log[3] or '-' }}</span></td>
-                    <td class="text-cell">{{ log[4] }}</td>
+                    <td class="text-cell">{{ log[4] | safe }}</td>
                     <td class="waktu-cell">{{ log[5] }}</td>
                     <td>
                         <div class="klasifikasi-wrapper">
