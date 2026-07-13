@@ -455,9 +455,12 @@
 
         @media (max-width: 768px) {
             /* Hide details on small tablet screens to prevent overflow and make reading comfortable */
-            table th:nth-child(3), table td:nth-child(3), /* Hasil Fuzzy */
-            table th:nth-child(4), table td:nth-child(4), /* Intent */
-            table th:nth-child(6), table td:nth-child(6) { /* Waktu */
+            #log-table > thead > tr > th:nth-child(3), 
+            #log-table > tbody > tr > td:nth-child(3), /* Hasil Fuzzy */
+            #log-table > thead > tr > th:nth-child(4), 
+            #log-table > tbody > tr > td:nth-child(4), /* Intent */
+            #log-table > thead > tr > th:nth-child(6), 
+            #log-table > tbody > tr > td:nth-child(6) { /* Waktu */
                 display: none;
             }
             /* Adjust remaining column widths */
@@ -517,15 +520,21 @@
             .table-responsive {
                 border: none;
             }
-            table, thead, tbody, th, td, tr {
+            #log-table, 
+            #log-table > thead, 
+            #log-table > tbody, 
+            #log-table > thead > tr, 
+            #log-table > tbody > tr, 
+            #log-table > thead > tr > th, 
+            #log-table > tbody > tr > td {
                 display: block;
             }
-            thead tr {
+            #log-table > thead > tr {
                 position: absolute;
                 top: -9999px;
                 left: -9999px;
             }
-            tbody tr {
+            #log-table > tbody > tr {
                 margin-bottom: 15px;
                 border: 1px solid var(--border-color);
                 border-radius: 10px;
@@ -533,10 +542,10 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.02);
                 padding: 12px;
             }
-            tbody tr:hover {
+            #log-table > tbody > tr:hover {
                 background-color: var(--bg-card);
             }
-            table td {
+            #log-table > tbody > tr > td {
                 border: none;
                 border-bottom: 1px dashed var(--border-color);
                 position: relative;
@@ -546,11 +555,11 @@
                 text-align: left !important;
                 font-size: 13px;
             }
-            table td:last-child {
+            #log-table > tbody > tr > td:last-child {
                 border-bottom: none;
                 padding-bottom: 0;
             }
-            table td::before {
+            #log-table > tbody > tr > td::before {
                 position: absolute;
                 left: 0;
                 width: 25%;
@@ -562,11 +571,11 @@
                 white-space: nowrap;
             }
             /* Labels */
-            table td:nth-of-type(1)::before { content: "ID"; }
-            table td:nth-of-type(2)::before { content: "Tanya"; }
+            #log-table > tbody > tr > td:nth-of-type(1)::before { content: "ID"; }
+            #log-table > tbody > tr > td:nth-of-type(2)::before { content: "Tanya"; }
             /* Fuzzy, Intent, Waktu are hidden via display:none from parent media query */
-            table td:nth-of-type(5)::before { content: "Jawab"; }
-            table td:nth-of-type(7)::before { content: "Status"; }
+            #log-table > tbody > tr > td:nth-of-type(5)::before { content: "Jawab"; }
+            #log-table > tbody > tr > td:nth-of-type(7)::before { content: "Status"; }
             
             select.status-select {
                 font-size: 12px;
@@ -680,6 +689,51 @@
             background-color: #7f1d1d;
             color: #fecaca;
             border-color: #b91c1c;
+        }
+
+        /* Pembenahan Tampilan Tabel Chat di dalam Sel Log */
+        .chat-table-container {
+            margin-top: 8px;
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            max-width: 100%;
+        }
+        
+        .chat-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            table-layout: auto !important;
+            margin: 0 !important;
+        }
+        
+        .chat-table th,
+        .chat-table td {
+            padding: 6px 10px !important;
+            font-size: 11px !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            white-space: nowrap !important;
+            width: auto !important;
+            text-align: left !important;
+        }
+        
+        .chat-table th {
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+            font-weight: 700 !important;
+            border-bottom: 2px solid #cbd5e1 !important;
+        }
+        
+        /* Dark Mode Override untuk Tabel Chat */
+        body.dark-mode .chat-table th {
+            background-color: #0f172a !important;
+            color: #cbd5e1 !important;
+            border-bottom-color: #334155 !important;
+        }
+        body.dark-mode .chat-table td {
+            color: #ffffff !important;
+            border-bottom-color: #334155 !important;
         }
     </style>
 </head>
