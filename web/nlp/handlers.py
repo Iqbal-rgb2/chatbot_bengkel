@@ -29,6 +29,18 @@ def get_user_part_keyword(text):
         return list(user_parts)[0]
     return None
 
+def get_user_descriptors(text):
+    COMMON_STOPWORDS = {
+        "apakah", "ada", "di", "sini", "saya", "mau", "beli", "jual", "ready", "stok", 
+        "bengkel", "motor", "yang", "untuk", "dan", "atau", "buat", "kah", "ga", "gak", 
+        "adakah", "punya", "cari", "tanya", "info", "harga", "seberapa", "berapa", 
+        "siap", "sedia", "permisi", "hallo", "halo", "tolong", "bisa", "cek", "kurnia",
+        "mas", "mbak", "bos", "gan", "kak", "min", "apa", "saja", "sebutkan", 
+        "tampilkan", "daftar", "pilihan", "semua", "yg", "ada", "yang", "tersedia"
+    }
+    words = set(re.findall(r'[a-zA-Z0-9]+', text.lower()))
+    return words - COMMON_STOPWORDS - PART_KEYWORDS
+
 # =====================================
 # FORMAT HTML TABLE HELPER
 # =====================================
@@ -490,15 +502,7 @@ def score_barang_match(text, nama_barang, kategori):
             return 0
 
     # Verifikasi Brand/Tipe Deskriptor untuk menghindari pencocokan salah (False Positive)
-    COMMON_STOPWORDS = {
-        "apakah", "ada", "di", "sini", "saya", "mau", "beli", "jual", "ready", "stok", 
-        "bengkel", "motor", "yang", "untuk", "dan", "atau", "buat", "kah", "ga", "gak", 
-        "adakah", "punya", "cari", "tanya", "info", "harga", "seberapa", "berapa", 
-        "siap", "sedia", "permisi", "hallo", "halo", "tolong", "bisa", "cek", "kurnia",
-        "mas", "mbak", "bos", "gan", "kak", "min"
-    }
-    
-    user_descriptors = text_words - COMMON_STOPWORDS - PART_KEYWORDS
+    user_descriptors = get_user_descriptors(text)
     if user_descriptors:
         candidate_words = nama_words.union(kategori_words)
         if not user_descriptors.intersection(candidate_words):
@@ -535,6 +539,16 @@ def find_best_barang(text, data_barang):
 def handle_check_stock(user_input):
     text = user_input.lower()
 
+    # Cek jika kueri bersifat umum (tanpa brand)
+    part_name = get_user_part_keyword(text)
+    if part_name:
+        user_descriptors = get_user_descriptors(text)
+        if not user_descriptors:
+            # Alihkan ke rekomendasi produk kategori
+            recommendation = handle_rekomendasi_produk(user_input)
+            if "rekomendasi" in recommendation.lower() or "beberapa sparepart" in recommendation.lower():
+                return recommendation
+
     with get_db_connection() as conn:
         cursor = conn.conn.cursor() if hasattr(conn, 'conn') else conn.cursor()
         cursor.execute("""
@@ -553,7 +567,6 @@ def handle_check_stock(user_input):
         return f"Ya! Kami menyediakan {barang[0]}. Stok saat ini tersedia sebanyak {stok} pcs."
 
     # Jika tidak ditemukan di database
-    part_name = get_user_part_keyword(text)
     if part_name:
         if part_name in TIDAK_DISEDIAKAN_PARTS:
             return f"Mohon maaf, bengkel kami saat ini belum menyediakan produk {part_name}. Kami hanya menyediakan suku cadang standar dan layanan servis motor Kurnia."
@@ -567,6 +580,16 @@ def handle_check_stock(user_input):
 # =====================================
 def handle_info_barang(user_input):
     text = user_input.lower()
+
+    # Cek jika kueri bersifat umum (tanpa brand)
+    part_name = get_user_part_keyword(text)
+    if part_name:
+        user_descriptors = get_user_descriptors(text)
+        if not user_descriptors:
+            # Alihkan ke rekomendasi produk kategori
+            recommendation = handle_rekomendasi_produk(user_input)
+            if "rekomendasi" in recommendation.lower() or "beberapa sparepart" in recommendation.lower():
+                return recommendation
 
     with get_db_connection() as conn:
         cursor = conn.conn.cursor() if hasattr(conn, 'conn') else conn.cursor()
@@ -587,11 +610,10 @@ def handle_info_barang(user_input):
         return f"Ya! {barang[0]} tersedia di bengkel kami dengan harga Rp{harga} dan stok {stok} pcs."
 
     # Jika tidak ditemukan di database
-    part_name = get_user_part_keyword(text)
     if part_name:
         if part_name in TIDAK_DISEDIAKAN_PARTS:
             return f"Mohon maaf, bengkel kami saat ini belum menyediakan produk {part_name}."
         else:
             return f"Mohon maaf, informasi untuk produk {part_name} tersebut saat ini belum tersedia di database kami."
 
-    return "Informasi barang tidak ditemukan. Coba gunakan nama produk atau kategori yang lebih spesifik."
+    return "Informasi barang tidak ditemukan. Coba gunakan nama produk or kategori yang lebih spesifik."
