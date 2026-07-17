@@ -3,6 +3,33 @@ from flask import session
 from web.database import get_db_connection
 
 # =====================================
+# KONSTANTA SUKU CADANG MOTOR
+# =====================================
+PART_KEYWORDS = {
+    "oli", "busi", "aki", "accu", "ban", "rem", "kampas", "cakram", "kaliper", "tromol",
+    "kopling", "gasket", "paking", "rantai", "velg", "pelek", "spion", "knalpot",
+    "lampu", "klakson", "filter", "roller", "switch", "karburator", "karbu", "cdi",
+    "ecu", "sekring", "fuse", "starter", "piston", "seher", "klep", "noken",
+    "shock", "shockbreaker", "injektor", "radiator", "coolant", "spidometer",
+    "speedometer", "dinamo", "koil", "spul", "kiprok", "cangklong", "cvt",
+    "mesin", "injeksi", "stang", "setang", "komstir", "suspensi",
+    "spakbor", "slebor", "fender", "mika", "reflektor", "bohlam", "led",
+    "gir", "gear", "vanbelt", "vbelt", "kamprat", "keteng", "as", "kabel", "skok"
+}
+
+TIDAK_DISEDIAKAN_PARTS = {
+    "knalpot", "velg", "pelek", "spion", "klakson", "spakbor", "slebor",
+    "fender", "mika", "reflektor", "bohlam", "led"
+}
+
+def get_user_part_keyword(text):
+    words = set(re.findall(r'[a-zA-Z0-9]+', text.lower()))
+    user_parts = words.intersection(PART_KEYWORDS)
+    if user_parts:
+        return list(user_parts)[0]
+    return None
+
+# =====================================
 # FORMAT HTML TABLE HELPER
 # =====================================
 def format_barang_table(results, show_kategori=False, show_price_stock=True):
@@ -456,22 +483,25 @@ def score_barang_match(text, nama_barang, kategori):
         )
     )
 
-    part_keywords = {
-        "oli", "busi", "aki", "accu", "ban", "rem", "kampas", "cakram", "kaliper", "tromol",
-        "kopling", "gasket", "paking", "rantai", "velg", "pelek", "spion", "knalpot",
-        "lampu", "klakson", "filter", "roller", "switch", "karburator", "karbu", "cdi",
-        "ecu", "sekring", "fuse", "starter", "piston", "seher", "klep", "noken",
-        "shock", "shockbreaker", "injektor", "radiator", "coolant", "spidometer",
-        "speedometer", "dinamo", "koil", "spul", "kiprok", "cangklong", "cvt",
-        "mesin", "injeksi", "stang", "setang", "komstir", "suspensi",
-        "spakbor", "slebor", "fender", "mika", "reflektor", "bohlam", "led",
-        "gir", "gear", "vanbelt", "vbelt", "kamprat", "keteng", "as", "kabel", "skok"
-    }
-
-    user_parts = text_words.intersection(part_keywords)
+    user_parts = text_words.intersection(PART_KEYWORDS)
     if user_parts:
         candidate_words = nama_words.union(kategori_words)
         if not candidate_words.intersection(user_parts):
+            return 0
+
+    # Verifikasi Brand/Tipe Deskriptor untuk menghindari pencocokan salah (False Positive)
+    COMMON_STOPWORDS = {
+        "apakah", "ada", "di", "sini", "saya", "mau", "beli", "jual", "ready", "stok", 
+        "bengkel", "motor", "yang", "untuk", "dan", "atau", "buat", "kah", "ga", "gak", 
+        "adakah", "punya", "cari", "tanya", "info", "harga", "seberapa", "berapa", 
+        "siap", "sedia", "permisi", "hallo", "halo", "tolong", "bisa", "cek", "kurnia",
+        "mas", "mbak", "bos", "gan", "kak", "min"
+    }
+    
+    user_descriptors = text_words - COMMON_STOPWORDS - PART_KEYWORDS
+    if user_descriptors:
+        candidate_words = nama_words.union(kategori_words)
+        if not user_descriptors.intersection(candidate_words):
             return 0
 
     nama_score = len(text_words.intersection(nama_words))
@@ -506,7 +536,7 @@ def handle_check_stock(user_input):
     text = user_input.lower()
 
     with get_db_connection() as conn:
-        cursor = conn.cursor()
+        cursor = conn.conn.cursor() if hasattr(conn, 'conn') else conn.cursor()
         cursor.execute("""
             SELECT nama_barang, kategori, stok
             FROM barang
@@ -520,7 +550,15 @@ def handle_check_stock(user_input):
 
     if barang:
         stok = barang[2]
-        return f"Stok {barang[0]} tersedia sebanyak {stok} pcs."
+        return f"Ya! Kami menyediakan {barang[0]}. Stok saat ini tersedia sebanyak {stok} pcs."
+
+    # Jika tidak ditemukan di database
+    part_name = get_user_part_keyword(text)
+    if part_name:
+        if part_name in TIDAK_DISEDIAKAN_PARTS:
+            return f"Mohon maaf, bengkel kami saat ini belum menyediakan produk {part_name}. Kami hanya menyediakan suku cadang standar dan layanan servis motor Kurnia."
+        else:
+            return f"Mohon maaf, produk {part_name} tersebut saat ini belum tersedia di database kami. Silakan ketik 'daftar barang' untuk melihat suku cadang yang ready."
 
     return "Barang yang dicari tidak ditemukan. Silakan ketik 'daftar barang' untuk melihat stok tersedia."
 
@@ -531,7 +569,7 @@ def handle_info_barang(user_input):
     text = user_input.lower()
 
     with get_db_connection() as conn:
-        cursor = conn.cursor()
+        cursor = conn.conn.cursor() if hasattr(conn, 'conn') else conn.cursor()
         cursor.execute("""
             SELECT nama_barang, kategori, harga, stok
             FROM barang
@@ -546,6 +584,14 @@ def handle_info_barang(user_input):
     if barang:
         harga = barang[2]
         stok = barang[3]
-        return f"{barang[0]} memiliki harga Rp{harga} dengan stok tersedia {stok} pcs."
+        return f"Ya! {barang[0]} tersedia di bengkel kami dengan harga Rp{harga} dan stok {stok} pcs."
+
+    # Jika tidak ditemukan di database
+    part_name = get_user_part_keyword(text)
+    if part_name:
+        if part_name in TIDAK_DISEDIAKAN_PARTS:
+            return f"Mohon maaf, bengkel kami saat ini belum menyediakan produk {part_name}."
+        else:
+            return f"Mohon maaf, informasi untuk produk {part_name} tersebut saat ini belum tersedia di database kami."
 
     return "Informasi barang tidak ditemukan. Coba gunakan nama produk atau kategori yang lebih spesifik."

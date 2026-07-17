@@ -1,4 +1,5 @@
 import os
+import re
 from flask import Blueprint, render_template, request, jsonify, session, send_from_directory, current_app
 from sklearn.metrics.pairwise import cosine_similarity
 from web.config import THRESHOLD_NAIVE_BAYES, THRESHOLD_COSINE_SIMILARITY
@@ -11,7 +12,8 @@ from web.nlp.classifier import (
 from web.nlp.handlers import (
     add_conversational_follow_up, check_conversational_context,
     handle_diagnosa, is_known_diagnosa, handle_rekomendasi_produk,
-    handle_check_stock, handle_info_barang, handle_list_barang
+    handle_check_stock, handle_info_barang, handle_list_barang,
+    get_user_part_keyword
 )
 
 chat_bp = Blueprint('chat', __name__)
@@ -133,13 +135,18 @@ def chat():
         prediction
     )[0]
 
-    # =====================================
-    # PRIORITAS INTENT
-    # =====================================
     predicted_intent = prioritize_intent(
         normalized_input,
         predicted_intent
     )
+
+    # Heuristic override: if input contains a part keyword and a stock inquiry word, force intent to 'cek_stok'
+    part_keyword = get_user_part_keyword(normalized_input)
+    if part_keyword:
+        words = set(re.findall(r'[a-zA-Z0-9]+', normalized_input.lower()))
+        STOCK_INDICATORS = {"ada", "jual", "ready", "stok", "cari", "tanya", "beli", "adakah"}
+        if words.intersection(STOCK_INDICATORS):
+            predicted_intent = 'cek_stok'
 
     # =====================================
     # CONFIDENCE
@@ -150,13 +157,20 @@ def chat():
 
     confidence = probabilities.max()
 
+    # Bypass classification thresholds if it is a valid stock/info check with a valid motor part keyword
+    is_valid_part_query = (
+        predicted_intent in ['cek_stok', 'info_barang'] and 
+        get_user_part_keyword(normalized_input) is not None
+    )
+
     # =====================================
     # FALLBACK
     # =====================================
     if (
-        confidence < THRESHOLD_NAIVE_BAYES
+        (confidence < THRESHOLD_NAIVE_BAYES and not is_valid_part_query)
         or (
             not is_bengkel_domain(normalized_input)
+            and not is_valid_part_query
             and predicted_intent not in [
                 'sapaan',
                 'akhir_percakapan',
@@ -211,7 +225,7 @@ def chat():
 
     best_similarity = similarities.max()
 
-    if best_similarity < THRESHOLD_COSINE_SIMILARITY:
+    if best_similarity < THRESHOLD_COSINE_SIMILARITY and not is_valid_part_query:
         fallback_intent, response, action = get_fallback_response(
             normalized_input
         )
