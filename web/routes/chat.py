@@ -144,7 +144,11 @@ def chat():
     part_keyword = get_user_part_keyword(normalized_input)
     if part_keyword:
         words = set(re.findall(r'[a-zA-Z0-9]+', normalized_input.lower()))
-        STOCK_INDICATORS = {"ada", "jual", "ready", "stok", "cari", "tanya", "beli", "adakah"}
+        STOCK_INDICATORS = {
+            "ada", "jual", "ready", "stok", "stock", "cari", "tanya", "beli", 
+            "adakah", "menyediakan", "menyedia", "tersedia", "sedia", 
+            "mempunyai", "punya", "menjual"
+        }
         if words.intersection(STOCK_INDICATORS):
             predicted_intent = 'cek_stok'
 
