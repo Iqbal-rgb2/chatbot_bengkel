@@ -62,6 +62,10 @@ abbreviation_words = {
     "brake": "rem",
     "sedia": "tersedia",
     "nanjak": "tanjakan",
+    "dapatkah": "dapatkah",
+    "bisakah": "bisakah",
+    "sanggupkah": "sanggupkah",
+    "melayani": "melayani",
     # Singkatan Umum Baru
     "klo": "kalau",
     "kalo": "kalau",

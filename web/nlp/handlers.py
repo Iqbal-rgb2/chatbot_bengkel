@@ -22,6 +22,17 @@ TIDAK_DISEDIAKAN_PARTS = {
     "fender", "mika", "reflektor", "bohlam", "led"
 }
 
+TIDAK_DISEDIAKAN_SERVIS = {
+    "cat": "pengecatan body / repaint motor",
+    "repaint": "pengecatan body / repaint motor",
+    "airbrush": "pengecatan body / repaint motor",
+    "cuci": "pencucian / cuci motor",
+    "press": "press rangka, press velg, atau press segitiga motor",
+    "bore up": "bore up mesin atau modifikasi ekstrim",
+    "boreup": "bore up mesin atau modifikasi ekstrim",
+    "mobil": "servis mobil (kami hanya melayani motor)"
+}
+
 def get_user_part_keyword(text):
     words = set(re.findall(r'[a-zA-Z0-9]+', text.lower()))
     user_parts = words.intersection(PART_KEYWORDS)
@@ -38,8 +49,15 @@ def get_user_descriptors(text):
         "mas", "mbak", "bos", "gan", "kak", "min", "apa", "saja", "sebutkan", 
         "tampilkan", "daftar", "pilihan", "semua", "yg", "ada", "yang", "tersedia"
     }
+    ACTION_VERBS = {
+        "ganti", "pasang", "beli", "tukar", "servis", "service", 
+        "perbaikan", "benerin", "perbaiki", "cuci", "cat", 
+        "repaint", "press", "boreup", "bore", "up", "mencari",
+        "memperbaiki", "menjual", "menyediakan", "menyedia"
+     }
+    CAPABILITY_WORDS = {"bisakah", "dapatkah", "bisa", "sanggupkah", "melayani", "apakah", "disini", "sini"}
     words = set(re.findall(r'[a-zA-Z0-9]+', text.lower()))
-    return words - COMMON_STOPWORDS - PART_KEYWORDS
+    return words - COMMON_STOPWORDS - PART_KEYWORDS - ACTION_VERBS - CAPABILITY_WORDS
 
 # =====================================
 # FORMAT HTML TABLE HELPER
@@ -617,3 +635,64 @@ def handle_info_barang(user_input):
             return f"Mohon maaf, informasi untuk produk {part_name} tersebut saat ini belum tersedia di database kami."
 
     return "Informasi barang tidak ditemukan. Coba gunakan nama produk or kategori yang lebih spesifik."
+
+# =====================================
+# KEMAMPUAN SERVIS (SERVIS TERSEDIA)
+# =====================================
+def get_user_service_complaint(text):
+    text = text.lower()
+    words = set(re.findall(r'[a-zA-Z0-9]+', text))
+    
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT kata_kunci FROM diagnosa_keluhan")
+        data_diagnosa = cursor.fetchall()
+        
+    matched_complaint = None
+    for row in data_diagnosa:
+        kw = row['kata_kunci'].lower()
+        parts = kw.split()
+        if all(part in words for part in parts):
+            if not matched_complaint or len(kw) > len(matched_complaint):
+                matched_complaint = kw
+                
+    return matched_complaint
+
+def handle_capability_check(user_input):
+    text = user_input.lower()
+    words = set(re.findall(r'[a-zA-Z0-9]+', text))
+    
+    # 1. Cek apakah meminta jasa yang tidak dilayani (TIDAK_DISEDIAKAN_SERVIS)
+    for key, val in TIDAK_DISEDIAKAN_SERVIS.items():
+        key_parts = key.split()
+        if all(part in words for part in key_parts):
+            return f"Mohon maaf, saat ini belum bisa. Bengkel kami belum menyediakan jasa {val}. Kami hanya melayani servis mesin standar, kelistrikan, CVT, dan ganti sparepart standar."
+            
+    # 2. Cek apakah ada keluhan spesifik yang terdaftar di database keluhan motor
+    complaint = get_user_service_complaint(text)
+    if complaint:
+        return f"Ya, tentu saja bisa! Bengkel kami melayani servis dan perbaikan untuk masalah {complaint.replace('_', ' ')}. Silakan bawa motor Anda ke Bengkel Kurnia agar mekanik kami dapat mendiagnosa kerusakannya secara langsung."
+
+    # 3. Cek apakah menanyakan jasa pemasangan / ganti sparepart (stok barang)
+    part_name = get_user_part_keyword(text)
+    action_words = {"ganti", "pasang", "beli", "tukar", "servis", "service", "perbaikan", "benerin", "perbaiki"}
+    if part_name and words.intersection(action_words):
+        with get_db_connection() as conn:
+            cursor = conn.conn.cursor() if hasattr(conn, 'conn') else conn.cursor()
+            cursor.execute("""
+                SELECT nama_barang, kategori, stok
+                FROM barang
+            """)
+            data_barang = cursor.fetchall()
+            
+        barang = find_best_barang(text, data_barang)
+        if barang:
+            return f"Ya, tentu saja bisa! Bengkel kami menyediakan {barang[0]} dan melayani jasa penggantian serta pemasangannya langsung di bengkel."
+        
+        if part_name in TIDAK_DISEDIAKAN_PARTS:
+            return f"Mohon maaf, belum bisa. Karena bengkel kami saat ini belum menyediakan produk {part_name}, kami belum melayani jasa penggantian atau pemasangan komponen tersebut."
+        else:
+            return f"Mohon maaf, saat ini belum bisa. Suku cadang {part_name} tersebut saat ini belum tersedia di database kami, sehingga kami belum bisa melayani penggantiannya saat ini."
+
+    # 4. Jika hanya bertanya servis umum
+    return "Ya, tentu saja bisa! Bengkel kami melayani berbagai servis motor, termasuk penggantian oli/aki, servis kelistrikan, karburator, CVT, hingga penanganan motor brebet, mogok, kompresi hilang, atau stang goyang."

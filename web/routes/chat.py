@@ -13,7 +13,7 @@ from web.nlp.handlers import (
     add_conversational_follow_up, check_conversational_context,
     handle_diagnosa, is_known_diagnosa, handle_rekomendasi_produk,
     handle_check_stock, handle_info_barang, handle_list_barang,
-    get_user_part_keyword
+    get_user_part_keyword, get_user_service_complaint, handle_capability_check
 )
 
 chat_bp = Blueprint('chat', __name__)
@@ -151,6 +151,45 @@ def chat():
         }
         if words.intersection(STOCK_INDICATORS):
             predicted_intent = 'cek_stok'
+
+    # Heuristic override for capability check (servis_tersedia)
+    words = set(re.findall(r'[a-zA-Z0-9]+', normalized_input.lower()))
+    CAPABILITY_INDICATORS = {"bisakah", "dapatkah", "bisa", "sanggupkah", "melayani"}
+    if words.intersection(CAPABILITY_INDICATORS):
+        action_words = {"ganti", "pasang", "beli", "tukar", "servis", "service", "perbaikan", "benerin", "perbaiki", "cuci", "cat", "repaint", "press", "boreup"}
+        from web.nlp.handlers import TIDAK_DISEDIAKAN_SERVIS
+        has_unsupported_service = any(all(part in words for part in k.split()) for k in TIDAK_DISEDIAKAN_SERVIS.keys())
+        
+        if (
+            part_keyword or 
+            get_user_service_complaint(normalized_input) is not None or 
+            words.intersection(action_words) or
+            has_unsupported_service
+        ):
+            predicted_intent = 'servis_tersedia'
+            response = handle_capability_check(normalized_input)
+            
+            response, suggestions = add_conversational_follow_up(
+                predicted_intent,
+                response,
+                normalized_input
+            )
+            
+            simpan_log_chat(
+                user_input,
+                normalized_input,
+                predicted_intent,
+                response
+            )
+            
+            session['last_suggestions'] = suggestions
+            return jsonify({
+                'intent': predicted_intent,
+                'response': response,
+                'action': 'servis_tersedia',
+                'confidence': 1.0,
+                'suggestions': suggestions
+            })
 
     # =====================================
     # CONFIDENCE
