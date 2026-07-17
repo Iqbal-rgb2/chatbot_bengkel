@@ -546,7 +546,7 @@ def handle_check_stock(user_input):
         if not user_descriptors:
             # Alihkan ke rekomendasi produk kategori
             recommendation = handle_rekomendasi_produk(user_input)
-            if "rekomendasi" in recommendation.lower() or "beberapa sparepart" in recommendation.lower():
+            if recommendation.startswith("Berikut rekomendasi") or recommendation.startswith("Berikut beberapa"):
                 return recommendation
 
     with get_db_connection() as conn:
@@ -588,7 +588,7 @@ def handle_info_barang(user_input):
         if not user_descriptors:
             # Alihkan ke rekomendasi produk kategori
             recommendation = handle_rekomendasi_produk(user_input)
-            if "rekomendasi" in recommendation.lower() or "beberapa sparepart" in recommendation.lower():
+            if recommendation.startswith("Berikut rekomendasi") or recommendation.startswith("Berikut beberapa"):
                 return recommendation
 
     with get_db_connection() as conn:
